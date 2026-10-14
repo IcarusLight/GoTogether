@@ -1,0 +1,96 @@
+{% extends 'fragment.html' if fragment else 'base.html' %}{% from 'macros.html' import csrf, car_model, train_model, mode_action, pickup_info, admin_person_actions with context %}
+{% block title %}{{ event.title }} · 一起出发{% endblock %}
+{% block content %}
+{% if not fragment %}<div class="row sync-bar"><small class="muted" data-sync-status role="status">自动同步已开启</small><button type="button" data-sync-now hidden>放弃当前选择并同步</button><a href="{{ url_for('event_detail', event_id=event.id) }}" data-sync-reload hidden>重新加载页面</a></div>{% endif %}
+<div data-live-scene data-sync-url="{{ url_for('event_sync', event_id=event.id) }}" data-revision="{{ sync_revision }}" data-viewer="{{ sync_viewer }}">
+<div class="row between page-heading" data-sync-key="heading"><div><div class="row"><a class="text-link" href="{{ url_for('admin_index' if admin else 'events') }}">← 活动</a><time class="muted">{{ event.event_date }} · 去程</time><span class="badge">{{ '登记开放' if event.is_open else '登记已关闭' }}</span></div><h1>{{ event.title }}</h1></div><div class="row">
+  <button type="button" data-share class="button">分享活动</button>
+  {% if admin or event.creator == g.person %}<a class="button quiet" href="{{ url_for('admin_edit' if admin else 'event_edit', event_id=event.id, scene=1) }}">编辑活动</a><form method="post" action="{{ url_for('admin_toggle' if admin else 'event_toggle', event_id=event.id) }}">{{ csrf() }}<input type="hidden" name="scene" value="1"><input type="hidden" name="version" value="{{ event.version }}"><input type="hidden" name="is_open" value="{{ 0 if event.is_open else 1 }}"><button type="submit">{{ '关闭登记' if event.is_open else '开放登记' }}</button></form>{% endif %}
+</div></div>
+{% if event.description %}<p class="muted prewrap event-description">{{ event.description }}</p>{% endif %}
+<div data-local id="share-box" class="panel stack compact" hidden><label>活动链接<input id="share-url" readonly aria-label="活动链接"></label><small class="muted">复制后发到部门群，同事填写姓名即可进入。</small></div>
+{% if admin %}<section class="my-arrangement row between" data-sync-key="arrangement" aria-label="管理员调度"><div><span class="badge">管理员调度模式</span><p class="muted">可调整所有人员和车辆，登记关闭后仍可操作。拖动人员到有空位的车上，或在详情中选择车辆。</p></div><div class="row"><a class="button primary" href="{{ url_for('admin_travel', event_id=event.id, scene=1) }}">添加人员</a><a class="button" href="{{ url_for('admin_event', event_id=event.id) }}">名单与后台提醒</a></div></section>
+{% else %}<section class="my-arrangement row between" data-sync-key="arrangement" aria-label="我的出行安排"><div><small class="muted">我的出行安排</small><h3>{% if not mine %}选一个适合你的出发方式{% elif mine.mode in ['drive', 'ride'] %}{% for car in cars if car.id == mine.vehicle_id %}{{ '我来开车' if mine.mode == 'drive' else '搭乘 ' ~ car.driver ~ ' 的车' }} · {{ car.departure or '出发点待定' }}{% endfor %}{% else %}{{ mode_labels[mine.mode] }}{% endif %}</h3>{% if mine and mine.note %}<p class="muted prewrap">{{ mine.note }}</p>{% endif %}</div><div class="row">{% if event.is_open %}<a class="button" href="{{ url_for('travel', event_id=event.id) }}">{{ '修改安排' if mine else '登记出行' }}</a>{% if mine %}<a class="button danger" href="{{ url_for('remove', event_id=event.id) }}">不参加了</a>{% endif %}{% else %}<p class="muted">如需调整请联系管理员</p>{% endif %}</div></section>{% endif %}
+
+<div class="plaza-layout" data-sync-key="plaza" data-plaza data-focus="{{ focus }}" data-motion="{{ motion.kind if motion else '' }}" data-motion-target="{{ motion.focus if motion else '' }}">
+  <section class="world" aria-label="出发广场">
+    <div class="row between zone-heading"><h2>拼车停车区</h2><span class="muted">{{ cars|length }} 辆车 · {{ remaining }} 个空位</span></div>
+    <div class="parking">
+      {% for car in cars %}<button type="button" class="spot" data-select="car-{{ car.id }}"{% if car.remaining > 0 and (admin or (event.is_open and (car.driver == g.person or (mine and mine.mode == 'wait')))) %} data-pickup-target="{{ car.id }}"{% endif %} aria-controls="detail-car-{{ car.id }}" aria-pressed="{{ 'true' if focus == 'car-' ~ car.id else 'false' }}" aria-label="{{ car.driver }}的车，剩余{{ car.remaining }}个座位">
+        {{ car_model(loop.index is even) }}<span class="model-label">{{ car.driver }} 的车{% if car.driver == g.person %} · 我{% endif %}</span><span class="muted model-caption">{{ '还可搭载 ' ~ car.remaining ~ ' 人' if car.remaining else '座位已满' }} · {{ car.departure_time or '时间待定' }}</span><span class="muted model-caption">{{ car.departure or '出发点待定' }}</span>{% if car.plate %}<span class="plate">{{ car.plate }}</span>{% endif %}
+      </button>{% endfor %}
+      {% if admin or (event.is_open and (not mine or mine.mode != 'drive')) %}<a class="new-vehicle" href="{{ url_for('admin_travel' if admin else 'travel', event_id=event.id, mode='drive', scene=1) }}"><span class="new-vehicle-mark" aria-hidden="true">＋</span><span>{{ '添加车辆' if admin else '我来开车' }}</span><small class="muted">{{ '填写司机和车辆信息' if admin else '把你的车停进来' }}</small></a>{% elif not cars %}<p class="empty">暂时没有车辆</p>{% endif %}
+    </div>
+    <section class="road waiting-zone" aria-label="临时等车区">
+      <div class="row between"><button type="button" class="quiet" data-select="wait" aria-controls="detail-wait" aria-pressed="{{ 'true' if focus == 'wait' else 'false' }}">临时等车区 · {{ waiting|length }} 人</button>{% if admin or event.is_open %}<a class="button" href="{{ url_for('admin_travel' if admin else 'travel', event_id=event.id, mode='wait', scene=1) }}">{{ '添加等车人员' if admin else '修改等车需求' if mine and mine.mode == 'wait' else '我也要等车' }}</a>{% endif %}</div>
+      <div class="waiting-people">
+        {% for person in waiting %}<button type="button" class="waiter" data-select="wait-{{ person.key }}" aria-controls="detail-wait-{{ person.key }}" aria-pressed="{{ 'true' if focus == 'wait-' ~ person.key else 'false' }}"{% if admin or (event.is_open and ((my_car and my_car.remaining > 0) or (person.name == g.person and remaining > 0))) %} draggable="true" data-pickup-form="pickup-{{ person.revision }}"{% endif %}>
+          <span class="walk-model" aria-hidden="true"><span class="human"></span></span><span>{{ person.name }}{% if person.name == g.person %} · 我{% endif %}</span><small class="muted">{{ person.pickup or '地点待补充' }}</small>
+        </button>{% else %}<p class="muted waiting-empty">还没有合适的车？先在这里留下上车地点和可选时间。</p>{% endfor %}
+      </div>
+      <p class="muted waiting-hint">{% if admin %}可将等车人员拖到任意有空位的车辆，也可以点击小人选择安排。{% elif event.is_open and my_car and my_car.remaining > 0 %}点击小人查看需求并接人，也可以把小人拖到自己的车上。{% elif event.is_open and mine and mine.mode == 'wait' and remaining > 0 %}可以把自己的小人拖到有空位的车辆上，也可以点击自己的小人选车上车。{% else %}点击小人查看上车需求。{% endif %}</p>
+    </section>
+    <div class="transit-zone"><div class="row between"><h2>自行出发区</h2><small class="muted">按自己的节奏走</small></div><div class="station">
+      <button type="button" class="transit-choice" data-select="public" aria-controls="detail-public" aria-pressed="{{ 'true' if focus == 'public' else 'false' }}">{{ train_model() }}<span>公共交通</span><small class="muted">{{ records|selectattr('mode', 'equalto', 'public')|list|length }} 人选择</small></button>
+      <button type="button" class="transit-choice" data-select="other" aria-controls="detail-other" aria-pressed="{{ 'true' if focus == 'other' else 'false' }}"><span class="walk-model" aria-hidden="true"><span class="human"></span></span><span>其他方式</span><small class="muted">{{ records|selectattr('mode', 'equalto', 'other')|list|length }} 人选择</small></button>
+    </div></div>
+  </section>
+  <aside class="selection-panel" aria-label="出行方式详情" aria-live="polite">
+    <section id="detail-wait" data-detail="wait" class="selection-detail stack"{% if focus != 'wait' %} hidden{% endif %}>
+      <div><span class="badge">等车中 · {{ waiting|length }} 人</span><h2>先留需求，再一起出发</h2><p class="muted">留下上车地点和可选时间，司机可以直接把你接到车上。你也可以随时自行加入合适的车辆。</p></div>
+      {% if admin or event.is_open %}<a class="button primary" href="{{ url_for('admin_travel' if admin else 'travel', event_id=event.id, mode='wait', scene=1) }}">{{ '添加等车人员' if admin else '修改等车需求' if mine and mine.mode == 'wait' else '登记等车需求' }}</a>{% endif %}
+      {% if not admin and event.is_open and mine and mine.mode == 'wait' %}<a class="button danger" href="{{ url_for('remove', event_id=event.id) }}">不参加了</a>{% endif %}
+    </section>
+    {% for person in waiting %}<section id="detail-wait-{{ person.key }}" data-detail="wait-{{ person.key }}" class="selection-detail stack"{% if focus != 'wait-' ~ person.key %} hidden{% endif %}>
+      <div><span class="badge">等车中</span><h2>{{ person.name }}</h2>{{ pickup_info(person) }}{% if person.note %}<p class="muted prewrap">{{ person.note }}</p>{% endif %}</div>
+      {% if admin %}{{ admin_person_actions(event, person, cars) }}{% elif event.is_open and my_car and my_car.remaining > 0 %}<form id="pickup-{{ person.revision }}" method="post" action="{{ url_for('collect', event_id=event.id) }}">
+        {{ csrf() }}<input type="hidden" name="name" value="{{ person.name }}"><input type="hidden" name="revision" value="{{ person.revision }}"><input type="hidden" name="vehicle_id" value="{{ my_car.id }}">
+        <button type="submit" class="primary">接到我的车上</button>
+      </form>{% elif event.is_open and person.name == g.person %}
+        <a class="button" href="{{ url_for('travel', event_id=event.id) }}">修改我的需求</a>
+        {% set available = cars|selectattr('remaining', 'gt', 0)|list %}
+        {% if available %}<form id="pickup-{{ person.revision }}" method="post" action="{{ url_for('travel', event_id=event.id) }}" class="stack compact">
+          {{ csrf() }}<input type="hidden" name="revision" value="{{ person.revision }}"><input type="hidden" name="mode" value="ride">
+          <label>我要搭乘的车辆<select name="vehicle_id" required><option value="">请选择车辆</option>{% for car in available %}<option value="{{ car.id }}">{{ car.driver }}{% if car.plate %} · {{ car.plate }}{% endif %} · 余 {{ car.remaining }} 座</option>{% endfor %}</select></label>
+          <button type="submit" class="primary">上这辆车</button>
+        </form>{% else %}<p class="muted">暂时没有空位，可以留在等车区等待。</p>{% endif %}
+        <a class="button danger" href="{{ url_for('remove', event_id=event.id) }}">不参加了</a>
+      {% elif my_car and my_car.remaining == 0 %}<p class="muted">你的车已满员</p>{% elif not event.is_open %}<p class="muted">登记已关闭</p>{% endif %}
+    </section>{% endfor %}
+    {% for car in cars %}<section id="detail-car-{{ car.id }}" data-detail="car-{{ car.id }}" class="selection-detail stack"{% if focus != 'car-' ~ car.id %} hidden{% endif %}>
+      <div><span class="badge">{{ '我的车辆' if car.driver == g.person else '可搭乘' if car.remaining else '座位已满' }}</span><h2>{{ car.driver }} 的车</h2>{% if car.plate %}<span class="plate">{{ car.plate }}</span>{% endif %}<p class="muted">{{ car.departure or '出发点待定' }}<br>{{ car.departure_time ~ ' 出发' if car.departure_time else '出发时间待定' }}</p></div>
+      <div class="seat-map" aria-label="乘员示意，不指定实际座位"><span class="seat driver occupied">司机 · {{ car.driver }}</span>{% for passenger in car.passengers %}<span class="seat occupied{% if passenger.name == g.person %} me{% endif %}"{% if admin %} draggable="true" data-pickup-form="pickup-{{ passenger.revision }}"{% endif %}>{{ passenger.name }}{% if passenger.name == g.person %} · 我{% endif %}</span>{% endfor %}{% for i in range([car.remaining, 6]|min) %}<span class="seat">空位</span>{% endfor %}</div>
+      <p class="muted">{{ car.passengers|length }} 位乘客 / 可搭载 {{ car.capacity }} 人{% if car.remaining > 6 %} · 另有 {{ car.remaining - 6 }} 个空位{% endif %}</p>
+      {% if car.note %}<p class="muted prewrap">{{ car.note }}</p>{% endif %}
+      {% if car.passengers and (admin or (event.is_open and car.driver == g.person)) %}<p class="muted">可以单独将乘客移回等车区，保留其上车需求并释放座位。</p>{% endif %}
+      {% for passenger in car.passengers %}<div data-sync-key="passenger-{{ passenger.key }}">
+        <div class="row between"><strong>{{ passenger.name }}</strong>
+          {% if admin or (event.is_open and car.driver == g.person) %}<form method="post" action="{{ url_for('admin_release' if admin else 'release', event_id=event.id) }}">
+            {{ csrf() }}<input type="hidden" name="name" value="{{ passenger.name }}"><input type="hidden" name="revision" value="{{ passenger.revision }}"><input type="hidden" name="vehicle_id" value="{{ car.id }}">
+            <button type="submit" class="danger" aria-label="将 {{ passenger.name }} 移回等车区">移回等车区</button>
+          </form>{% endif %}
+        </div>
+        {{ pickup_info(passenger) }}{% if passenger.note %}<p class="muted prewrap">{{ passenger.note }}</p>{% endif %}
+        {% if admin %}{{ admin_person_actions(event, passenger, cars) }}{% endif %}
+      </div>{% endfor %}
+      {% if admin %}<div class="row"><a class="button primary" href="{{ url_for('admin_travel', event_id=event.id, name=car.driver, scene=1) }}">管理车辆 / 司机</a><a class="button danger" href="{{ url_for('admin_remove', event_id=event.id, name=car.driver, scene=1) }}">取消车辆</a></div>
+      {% elif car.driver == g.person %}{% if event.is_open %}<a class="button primary" href="{{ url_for('travel', event_id=event.id, mode='drive') }}">管理我的车辆</a>{% endif %}
+      {% elif mine and mine.vehicle_id == car.id %}<span class="badge">已加入这辆车</span>
+        {% if event.is_open %}<form method="post" action="{{ url_for('release', event_id=event.id) }}" class="stack compact">
+          {{ csrf() }}<input type="hidden" name="name" value="{{ mine.name }}"><input type="hidden" name="revision" value="{{ mine.revision }}"><input type="hidden" name="vehicle_id" value="{{ car.id }}">
+          <button type="submit">退出车辆</button><small class="muted">退出后回到等车区，保留上车需求。</small>
+        </form>{% endif %}
+      {% elif car.remaining > 0 %}{{ mode_action(event, mine, 'ride', car.id) }}{% else %}<button type="button" disabled>这辆车已满</button>{% endif %}
+      {% if not admin and event.is_open and mine and mine.vehicle_id == car.id %}<a class="button danger" href="{{ url_for('remove', event_id=event.id) }}">不参加了</a>{% endif %}
+    </section>{% endfor %}
+    {% for mode, label in [('public', '公共交通'), ('other', '其他自行前往')] %}<section id="detail-{{ mode }}" data-detail="{{ mode }}" class="selection-detail stack"{% if focus != mode %} hidden{% endif %}>
+      <div><span class="badge">自行前往</span><h2>{{ label }}</h2><p class="muted">{{ '地铁、公交等公共交通。' if mode == 'public' else '步行、家人接送等其他方式。' }}</p></div>
+      <div class="stack compact"><h3>已选择的同事</h3>{% for person in records if person.mode == mode %}<div data-sync-key="person-{{ person.key }}"><span class="person-chip"{% if admin %} draggable="true" data-pickup-form="pickup-{{ person.revision }}"{% endif %}>{{ person.name }}{% if person.name == g.person %} · 我{% endif %}</span>{% if person.note %}<p class="muted prewrap">{{ person.note }}</p>{% endif %}{% if admin %}{{ admin_person_actions(event, person, cars) }}{% endif %}</div>{% else %}<p class="muted">暂时还没有人登记</p>{% endfor %}</div>
+      {% if admin %}<a class="button" href="{{ url_for('admin_travel', event_id=event.id, mode=mode, scene=1) }}">添加人员</a>{% else %}{{ mode_action(event, mine, mode) }}{% endif %}
+    </section>{% endfor %}
+  </aside>
+</div>
+<div class="row between scene-footer"><span class="muted">{{ records|length }} 人已登记 · 点击模型查看人员与安排</span>{% if event.is_open and not admin %}<a href="{{ url_for('travel', event_id=event.id, mode='pending') }}">请管理员协助安排</a>{% endif %}</div>
+<noscript><p class="notice">可以通过“登记出行”完成所有操作；场景中的模型切换需要浏览器启用 JavaScript。</p></noscript>
+</div>
+{% endblock %}

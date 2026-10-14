@@ -1,0 +1,28 @@
+{% extends 'base.html' %}{% from 'macros.html' import csrf with context %}
+{% block content %}
+<form method="post" class="panel stack form-page" data-travel-form>
+  <input type="hidden" name="scene" value="{{ request.values.get('scene', '') }}">
+  <a class="text-link" href="{{ back_url }}">← 返回活动</a>
+  <div><span class="eyebrow">{{ event.title }}</span><h1>{{ '调整出行安排' if admin else '我的出行安排' }}</h1></div>
+  {{ csrf() }}<input type="hidden" name="revision" value="{{ values.get('revision', '') }}">
+  {% if admin %}<label>姓名<input name="name" required maxlength="40" value="{{ values.get('name', person) }}"{% if old %} readonly{% endif %}></label>{% else %}<p>填写人：{{ person }}</p>{% endif %}
+  <label>出行方式<select name="mode" id="travel-mode" required>{% for mode, label in [('drive','我来开车'), ('ride','我要搭车'), ('wait','先去等车区'), ('public','公共交通'), ('other','其他自行前往'), ('pending','请管理员协助安排')] %}<option value="{{ mode }}"{% if values.get('mode', 'ride') == mode %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+  <fieldset class="stack" data-mode-fields="drive"><legend>车辆信息</legend>
+    <label>出发点（选填）<input name="departure" maxlength="100" value="{{ values.get('departure', '') }}" placeholder="例如：公司南门"></label>
+    <label>车牌（选填）<input name="plate" maxlength="20" value="{{ values.get('plate', '') }}" placeholder="例如：粤B·12345"></label>
+    <div class="two-columns"><label>可搭载人数（不含司机）<input type="number" name="capacity" min="0" max="99" step="1" value="{{ values.get('capacity', 3) }}" data-mode-required></label><label>出发时间（选填）<input type="time" name="departure_time" value="{{ values.get('departure_time', '') }}"></label></div>
+  </fieldset>
+  <fieldset data-mode-fields="ride"><legend>选择车辆</legend><label>要搭乘的车<select name="vehicle_id" data-mode-required><option value="">请选择车辆</option>{% for car in cars if car.driver != person %}<option value="{{ car.id }}"{% if values.get('vehicle_id', '')|string == car.id|string %} selected{% endif %}{% if car.remaining == 0 and (not old or old.vehicle_id != car.id) %} disabled{% endif %}>{{ car.driver }} · {{ car.departure or '出发点待定' }} · {{ car.departure_time or '时间待定' }} · 剩余 {{ car.remaining }} 座</option>{% endfor %}</select></label>{% if not cars %}<p class="muted">还没有车辆，可以选择“先去等车区”留下搭车需求。</p>{% endif %}</fieldset>
+  <fieldset class="stack" data-mode-fields="wait ride"><legend>上车需求</legend>
+    <label>上车地点（选填）<input name="pickup" maxlength="100" value="{{ values.get('pickup', '') }}" placeholder="例如：公司南门、地铁站 B 口"></label>
+    <div class="two-columns"><label>时间 / 开始时间（选填）<input type="time" name="earliest" value="{{ values.get('earliest', '') }}"></label><label>结束时间（选填）<input type="time" name="latest" value="{{ values.get('latest', '') }}"></label></div>
+    <p class="muted">填写活动当天的时间。只填一项表示一个时间点，两项都填表示时间段，都留空表示时间灵活。地点也可留空。等车需求对所有成员可见，司机可以直接接你上车。</p>
+  </fieldset>
+  <label data-note>备注（选填）<textarea name="note" maxlength="500" rows="3" placeholder="补充你的出行安排">{{ values.get('note', '') }}</textarea></label>
+  <p class="muted" data-mode-fields="pending">姓名将提交到管理员后台，方便跟进。提交后仍可以自行选择其他出行方式。</p>
+  {% if old and old.mode == 'drive' %}<label class="check" data-driver-confirm><input type="checkbox" name="confirm_driver" value="yes"{% if values.get('confirm_driver') == 'yes' %} checked{% endif %}><span>确认更改方式时取消原车辆。原乘客会返回等车区，保留上车需求。</span></label>{% endif %}
+  {% if error %}<p class="error" role="alert">{{ error }} <a href="{{ url_for('admin_travel', event_id=event.id, name=person, scene=request.values.get('scene')) if admin else url_for('travel', event_id=event.id) }}">重新加载最新安排</a></p>{% endif %}
+  <button type="submit" class="primary">保存出行安排</button>
+  {% if old %}<a class="text-link danger" href="{{ url_for('admin_remove', event_id=event.id, name=person, scene=request.values.get('scene')) if admin else url_for('remove', event_id=event.id) }}">{{ ('取消车辆' if old.mode == 'drive' else '撤销登记') if admin else '不参加了' }}</a>{% endif %}
+</form>
+{% endblock %}

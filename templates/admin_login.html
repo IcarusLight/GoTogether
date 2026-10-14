@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% from 'macros.html' import csrf with context %}
+{% block content %}
+<form method="post" class="panel stack form-page">
+  <h1>管理员登录</h1><p class="muted">管理活动、调整人员安排和处理待确认提醒。</p>{{ csrf() }}<input type="hidden" name="next" value="{{ target }}">
+  <label>管理员账号<input name="username" required maxlength="80" autocomplete="username" value="{{ request.form.get('username', '') }}"></label>
+  <label>密码<input name="password" type="password" required autocomplete="current-password"></label>
+  {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+  <button class="primary" type="submit">进入管理后台</button>
+</form>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% macro csrf() %}<input type="hidden" name="csrf" value="{{ csrf_token() }}">{% endmacro %}
+
+{% macro car_model(blue=false) %}
+<span class="model-stage" aria-hidden="true"><span class="parking-ground"></span><span class="car-model{% if blue %} blue{% endif %}"><span class="car-shadow"></span><span class="car-side"></span><span class="car-front"></span><span class="car-top"></span><span class="car-cabin"></span><span class="car-window"></span><span class="car-windshield"></span><span class="car-wheel one"></span><span class="car-wheel two"></span><span class="car-lamp"></span></span><span class="boarder">↗</span></span>
+{% endmacro %}
+
+{% macro pickup_info(person) %}
+<p class="muted prewrap">上车地点：{{ person.pickup or '待补充' }}<br>可选时间：{% if person.earliest and person.latest %}{{ person.earliest }}–{{ person.latest }}{% else %}{{ person.earliest or person.latest or '时间灵活 / 待确认' }}{% endif %}</p>
+{% endmacro %}
+
+{% macro admin_person_actions(event, person, cars) %}
+  <div class="row"><a class="button" href="{{ url_for('admin_travel', event_id=event.id, name=person.name, scene=1) }}">调整安排</a><a class="button danger" href="{{ url_for('admin_remove', event_id=event.id, name=person.name, scene=1) }}">撤销登记</a></div>
+  {% set available = cars|selectattr('remaining', 'gt', 0)|rejectattr('id', 'equalto', person.vehicle_id)|list %}
+  <form id="pickup-{{ person.revision }}" method="post" action="{{ url_for('admin_assign', event_id=event.id) }}" class="stack compact">
+    {{ csrf() }}<input type="hidden" name="name" value="{{ person.name }}"><input type="hidden" name="revision" value="{{ person.revision }}">
+    <label>安排到车辆<select name="vehicle_id" required><option value="">请选择车辆</option>{% for car in available %}<option value="{{ car.id }}">{{ car.driver }} · 余 {{ car.remaining }} 座</option>{% endfor %}</select></label>
+    <button type="submit"{% if not available %} disabled{% endif %}>{{ '确认换车' if person.mode == 'ride' else '安排上车' }}</button>
+    {% if not available %}<small class="muted">暂无其他可用车辆，可以先调整安排或创建车辆。</small>{% endif %}
+  </form>
+{% endmacro %}
+
+{% macro train_model() %}
+<span class="train-stage" aria-hidden="true"><span class="rails"></span><span class="train"><span class="train-windows"><span></span><span></span><span></span><span></span></span><span class="train-door"></span></span></span>
+{% endmacro %}
+
+{% macro mode_action(event, mine, mode, vehicle_id=none) %}
+  {% set same = mine and mine.mode == mode and (mode != 'ride' or mine.vehicle_id == vehicle_id) %}
+  {% if not event.is_open %}<p class="muted">登记已关闭，如需调整请联系管理员。</p>
+  {% elif same %}<span class="badge">这是我的安排</span><a class="button" href="{{ url_for('travel', event_id=event.id) }}">修改安排</a>
+    {% if mode in ['public', 'other'] %}<form method="post" action="{{ url_for('leave_mode', event_id=event.id) }}" class="stack compact">
+      {{ csrf() }}<input type="hidden" name="revision" value="{{ mine.revision }}"><input type="hidden" name="mode" value="{{ mode }}">
+      <button type="submit">{{ '退出公共交通' if mode == 'public' else '退出自由出行' }}</button><small class="muted">退出后回到等车区，保留上车需求。</small>
+    </form>{% endif %}
+    <a class="button danger" href="{{ url_for('remove', event_id=event.id) }}">不参加了</a>
+  {% elif mine and mine.mode == 'drive' %}<a class="button primary" href="{{ url_for('travel', event_id=event.id, mode=mode, vehicle_id=vehicle_id) }}">更改出行方式</a>
+  {% else %}<form method="post" action="{{ url_for('travel', event_id=event.id) }}" class="stack compact">
+    {{ csrf() }}<input type="hidden" name="revision" value="{{ mine.revision if mine else '' }}"><input type="hidden" name="mode" value="{{ mode }}">
+    {% if vehicle_id %}<input type="hidden" name="vehicle_id" value="{{ vehicle_id }}">{% endif %}
+    <button class="primary" type="submit">{{ '加入这辆车' if mode == 'ride' else '我也这样去' }}</button>
+    {% if mode != 'ride' %}<a class="text-link" href="{{ url_for('travel', event_id=event.id, mode=mode) }}">填写备注后登记</a>{% endif %}
+  </form>{% endif %}
+{% endmacro %}

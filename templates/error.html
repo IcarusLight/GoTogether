@@ -1,0 +1,2 @@
+{% extends 'base.html' %}
+{% block content %}<section class="panel stack form-page"><h1>暂时无法完成操作</h1><p role="alert">{{ message }}</p><div class="row"><button type="button" data-back>返回上一页</button><a class="button" href="{{ url_for('admin_index' if g.admin else 'events') }}">返回活动列表</a></div></section>{% endblock %}

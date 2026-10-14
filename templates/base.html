@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>{% block title %}一起出发 · GoTogether{% endblock %}</title>
+  <link rel="icon" href="{{ url_for('static', filename='mark.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header">
+  <a class="brand" href="{{ url_for('events') }}"><span class="brand-mark" aria-hidden="true">↗</span>一起出发 <small>GoTogether</small></a>
+  <nav aria-label="主导航">
+    {% if g.person %}<a href="{{ url_for('events') }}">活动</a><a href="{{ url_for('identity', next=request.path) }}">{{ g.person }} · 切换</a>{% endif %}
+    {% if g.admin %}<a href="{{ url_for('admin_index') }}">管理后台</a><form method="post" action="{{ url_for('admin_logout') }}"><input type="hidden" name="csrf" value="{{ csrf_token() }}"><button class="quiet" type="submit">退出管理</button></form>
+    {% else %}<a class="muted" href="{{ url_for('admin_login') }}">管理员</a>{% endif %}
+  </nav>
+</header>
+<main id="main" class="main">
+  {% for category, message in get_flashed_messages(with_categories=true) %}<div class="notice" role="status">{{ message }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="site-footer">部门出行 · 只统计去程</footer>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% from 'macros.html' import csrf with context %}
+{% block content %}
+<form method="post" class="panel stack form-page">
+  <input type="hidden" name="scene" value="{{ request.values.get('scene', '') }}">
+  <a class="text-link" href="{{ back_url if event else url_for('events') }}">← 返回</a>
+  <h1>{{ '编辑活动' if event else '创建一场活动' }}</h1>{{ csrf() }}
+  {% if event %}<input type="hidden" name="version" value="{{ values.get('version', event.version) }}">{% endif %}
+  <label>活动名称<input name="title" maxlength="80" required value="{{ values.get('title', '') }}" placeholder="例如：秋日出游 · 一起去山野"></label>
+  <label>活动日期<input name="event_date" type="date" required value="{{ values.get('event_date', '') }}"></label>
+  <label>活动说明（选填）<textarea name="description" maxlength="1000" rows="4" placeholder="活动安排、集合说明等">{{ values.get('description', '') }}</textarea></label>
+  {% if error %}<div class="error" role="alert">{{ error }} <a href="{{ request.path ~ ('?scene=1' if request.values.get('scene') == '1' else '') }}">重新加载</a></div>{% endif %}
+  <button class="primary" type="submit">{{ '保存修改' if event else '创建并进入活动' }}</button>
+</form>
+{% endblock %}

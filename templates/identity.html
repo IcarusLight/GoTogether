@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% from 'macros.html' import csrf with context %}
+{% block content %}
+<div class="identity-layout">
+  <section class="identity-intro"><span class="eyebrow">出发之前，安排妥当</span><h1>这次活动，<br>我们一起出发。</h1><p class="muted">开车、搭车，或自己前往。<br>选好你的方式，大家都心里有数。</p><div class="journey-steps"><span>填写姓名</span><span>选择活动</span><span>安排出行</span></div></section>
+  <form method="post" class="panel stack identity-form">
+    {{ csrf() }}<input type="hidden" name="next" value="{{ target }}">
+    <h2>先认识一下</h2>
+    <label>你的姓名<input name="name" maxlength="40" required autocomplete="name" value="{{ request.form.get('name', g.person) }}" placeholder="请输入自己的姓名" autofocus></label>
+    <p class="muted">使用同一个姓名，即可找回和修改你的安排。同名同事可以加上部门简称。</p>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <button class="primary" type="submit">{{ '进入这场活动' if target.startswith('/events/') and target != '/events/new' else '继续' }} →</button>
+  </form>
+</div>
+{% endblock %}

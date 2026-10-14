@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row between page-heading"><div><span class="eyebrow">{{ '管理后台' if admin else '部门活动' }}</span><h1>{{ '全部活动' if admin else '接下来，一起去哪？' }}</h1></div><a class="button primary" href="{{ url_for('event_new') }}">＋ 创建活动</a></div>
+<div class="event-grid">
+{% for event in events %}
+  <article class="panel event-card"><div class="row between"><time datetime="{{ event.event_date }}" class="muted">{{ event.event_date }}</time><span class="badge">{{ '登记开放' if event.is_open else '登记已关闭' }}</span></div><h2>{{ event.title }}</h2><p class="muted prewrap">{{ event.description or '一起安排这次出行。' }}</p><div class="row between"><span class="muted">{{ event.people_count }} 人已登记 · {{ event.vehicle_count }} 辆车</span><a class="button" href="{{ url_for('event_detail', event_id=event.id) }}">{{ '可视化调度' if admin else '进入广场' }} →</a>{% if admin %}<a href="{{ url_for('admin_event', event_id=event.id) }}">后台名单</a>{% endif %}</div></article>
+{% else %}<section class="empty"><h2>还没有活动</h2><p class="muted">创建第一场活动，把链接分享给同事吧。</p></section>{% endfor %}
+</div>
+{% endblock %}

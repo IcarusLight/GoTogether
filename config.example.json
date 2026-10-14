@@ -1,0 +1,7 @@
+{
+  "HOST": "0.0.0.0",
+  "PORT": 8080,
+  "ADMIN_USERNAME": "admin",
+  "ADMIN_PASSWORD_HASH": "由 manage.py setup 生成，请勿直接使用这个示例",
+  "SECRET_KEY": "由 manage.py setup 生成，请勿直接使用这个示例"
+}

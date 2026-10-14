@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% from 'macros.html' import csrf with context %}
+{% block content %}
+<form method="post" class="panel stack form-page">
+  <input type="hidden" name="scene" value="{{ request.values.get('scene', '') }}">
+  <h1>{{ ('确认取消车辆？' if old.mode == 'drive' else '确认撤销登记？') if admin else '确定不参加本次出行了吗？' }}</h1>
+  <p>{{ event.title }} · {{ person }}</p>
+  <p class="muted">确认后将删除{{ '该人员' if admin else '你' }}在这场活动中的出行登记，人员记录会从活动页面消失，不会转入等车区。之后仍可重新报名。</p>
+  {% if old.mode == 'drive' %}<p class="muted">车辆也会取消。以下乘客会返回公开的等车区，保留已有的上车地点、可选时间和备注，也可以自行更换出行方式。</p><div class="row">{% for passenger in car.passengers %}<span class="person-chip">{{ passenger.name }}</span>{% else %}<span class="muted">目前没有乘客</span>{% endfor %}</div>{% elif old.mode == 'ride' %}<p class="muted">原来占用的座位会释放。</p>{% endif %}
+  {{ csrf() }}<input type="hidden" name="revision" value="{{ old.revision }}">{% if admin %}<input type="hidden" name="name" value="{{ person }}">{% endif %}
+  <div class="row"><a class="button" href="{{ back_url }}">{{ '先保留' if admin else '保留我的安排' }}</a><button type="submit" class="danger">{{ '确认撤销' if admin else '确认不参加' }}</button></div>
+</form>
+{% endblock %}

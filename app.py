@@ -86,6 +86,10 @@ def create_app(test_config=None):
     @app.context_processor
     def template_helpers():
         return {'csrf_token': lambda: session['csrf'],
+                'vehicle_appearances': store.VEHICLE_APPEARANCES,
+                'vehicle_colors': store.VEHICLE_COLORS,
+                'vehicle_image': store.vehicle_image,
+                'default_vehicle_appearance': store.DEFAULT_VEHICLE_APPEARANCE,
                 'mode_labels': {'drive': '自己开车', 'ride': '拼车', 'public': '公共交通', 'other': '其他自行前往', 'wait': '等车中'}}
 
     def member_required(view):
@@ -275,7 +279,8 @@ def create_app(test_config=None):
                 values.update({key: old[key] for key in ('pickup', 'earliest', 'latest')})
             if request.args.get('vehicle_id'):
                 values['vehicle_id'] = request.args['vehicle_id']
-        return render_template('travel.html', **data, person=person, old=old, values=values, error=error, admin=admin, back_url=editor_destination(event_id, admin)), status
+        return render_template('travel.html', **data, person=person, old=old, values=values, error=error, admin=admin,
+                               back_url=editor_destination(event_id, admin)), status
 
     @app.route('/events/<event_id>/travel', methods=['GET', 'POST'])
     @member_required

@@ -1,6 +1,7 @@
-{% extends 'base.html' %}{% from 'macros.html' import csrf with context %}
+{% extends 'base.html' %}{% from 'macros.html' import csrf, vehicle_disclaimer with context %}
 {% block content %}
-<form method="post" class="panel stack form-page" data-travel-form>
+<form id="travel-form" method="post" class="panel stack form-page" data-travel-form data-default-appearance="{{ default_vehicle_appearance }}">
+  <input type="hidden" name="confirm_v800" value="yes" data-vehicle-consent disabled>
   <input type="hidden" name="scene" value="{{ request.values.get('scene', '') }}">
   <a class="text-link" href="{{ back_url }}">← 返回活动</a>
   <div><span class="eyebrow">{{ event.title }}</span><h1>{{ '调整出行安排' if admin else '我的出行安排' }}</h1></div>
@@ -8,6 +9,38 @@
   {% if admin %}<label>姓名<input name="name" required maxlength="40" value="{{ values.get('name', person) }}"{% if old %} readonly{% endif %}></label>{% else %}<p>填写人：{{ person }}</p>{% endif %}
   <label>出行方式<select name="mode" id="travel-mode" required>{% for mode, label in [('drive','我来开车'), ('ride','我要搭车'), ('wait','先去等车区'), ('public','公共交通'), ('other','其他自行前往'), ('pending','请管理员协助安排')] %}<option value="{{ mode }}"{% if values.get('mode', 'ride') == mode %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
   <fieldset class="stack" data-mode-fields="drive"><legend>车辆信息</legend>
+    <fieldset class="vehicle-picker"><legend>选择车辆外观</legend>
+      <div class="vehicle-options">
+        {% for appearance, label in vehicle_appearances.items() %}<label class="vehicle-choice">
+          <input type="radio" name="appearance" value="{{ appearance }}"{% if values.get('appearance', default_vehicle_appearance) == appearance %} checked{% endif %} data-mode-required aria-describedby="appearance-hint">
+          {% set preview_color = values.get('skin', values.get('color', 'default')) if appearance == 'yadea' else values.get('color', 'default') %}
+          <img src="{{ url_for('static', filename=vehicle_image(appearance, preview_color if values.get('appearance', default_vehicle_appearance) == appearance else 'default')) }}"{% if appearance in vehicle_colors %} data-vehicle-preview="{{ appearance }}"{% endif %} alt="" width="640" height="440" draggable="false">
+          <span>{{ label }}</span>
+        </label>{% endfor %}
+      </div>
+      <p class="muted" id="appearance-hint">选一个喜欢的造型，实际可搭载人数请在下方填写。</p>
+    </fieldset>
+    <noscript><div class="stack compact">
+      <p>选择尊界 V800 时，请确认以下声明；其他车型无需确认。</p>
+      {{ vehicle_disclaimer() }}
+      <label class="check"><input type="checkbox" name="confirm_v800" value="yes"><span>同意上述声明，坚持选择该车辆</span></label>
+    </div></noscript>
+    {% for appearance, colors in vehicle_colors.items() %}
+    {% set is_skin = appearance == 'yadea' %}
+    {% set option_field = 'skin' if is_skin else 'color' %}
+    {% set selected_color = values.get(option_field, values.get('color', 'default')) if values.get('appearance', default_vehicle_appearance) == appearance else 'default' %}
+    <fieldset class="color-picker" data-color-picker="{{ appearance }}"><legend>{{ vehicle_appearances[appearance] }} {{ '皮肤选配' if is_skin else '车身颜色' }}</legend>
+      <img class="color-preview" data-vehicle-preview="{{ appearance }}" src="{{ url_for('static', filename=vehicle_image(appearance, selected_color)) }}" alt="{{ vehicle_appearances[appearance] }} {{ '皮肤预览' if is_skin else '车身预览' }}" width="640" height="440" draggable="false">
+      <div class="color-options">
+        {% for color, label in colors.items() %}<label class="color-choice{% if is_skin %} skin-choice{% endif %}">
+          <input type="radio" name="{{ option_field }}" value="{{ color }}" data-color-image="{{ url_for('static', filename=vehicle_image(appearance, color)) }}"{% if selected_color == color %} checked{% endif %}>
+          {% if is_skin %}<img src="{{ url_for('static', filename=vehicle_image(appearance, color)) }}" alt="" width="640" height="440" draggable="false">{% else %}<img src="{{ url_for('static', filename='vehicles/' ~ appearance ~ '/swatch-' ~ color ~ '.png') }}" alt="" width="28" height="28">{% endif %}
+          <span>{{ label }}{% if color == 'default' %}（默认）{% endif %}</span>
+        </label>{% endfor %}
+      </div>
+      {% if is_skin %}<p class="muted skin-hint">保留奶油白与浅绿车身，选配亮黄色外卖箱，搭配袋鼠图案和“美团外卖”标识。</p>{% endif %}
+    </fieldset>
+    {% endfor %}
     <label>出发点（选填）<input name="departure" maxlength="100" value="{{ values.get('departure', '') }}" placeholder="例如：公司南门"></label>
     <label>车牌（选填）<input name="plate" maxlength="20" value="{{ values.get('plate', '') }}" placeholder="例如：粤B·12345"></label>
     <div class="two-columns"><label>可搭载人数（不含司机）<input type="number" name="capacity" min="0" max="99" step="1" value="{{ values.get('capacity', 3) }}" data-mode-required></label><label>出发时间（选填）<input type="time" name="departure_time" value="{{ values.get('departure_time', '') }}"></label></div>
@@ -25,4 +58,15 @@
   <button type="submit" class="primary">保存出行安排</button>
   {% if old %}<a class="text-link danger" href="{{ url_for('admin_remove', event_id=event.id, name=person, scene=request.values.get('scene')) if admin else url_for('remove', event_id=event.id) }}">{{ ('取消车辆' if old.mode == 'drive' else '撤销登记') if admin else '不参加了' }}</a>{% endif %}
 </form>
+<dialog class="vehicle-confirm" data-vehicle-confirm aria-labelledby="vehicle-confirm-title" aria-describedby="vehicle-confirm-description">
+  <div class="stack">
+    <h2 id="vehicle-confirm-title">车辆选择确认</h2>
+    <div id="vehicle-confirm-description">{{ vehicle_disclaimer() }}</div>
+    <p>是否同意上述声明并选择该车辆？</p>
+    <div class="row vehicle-confirm-actions">
+      <button type="button" data-vehicle-cancel autofocus>取消</button>
+      <button type="button" class="primary" data-vehicle-agree>坚持选择</button>
+    </div>
+  </div>
+</dialog>
 {% endblock %}

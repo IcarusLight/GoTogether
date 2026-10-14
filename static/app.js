@@ -226,6 +226,57 @@ if (liveScene) {
 
 document.querySelectorAll('[data-travel-form]').forEach(form => {
   const mode = form.querySelector('[name=mode]');
+  const vehicleConfirm = document.querySelector('[data-vehicle-confirm]');
+  const vehicleAgree = vehicleConfirm.querySelector('[data-vehicle-agree]');
+  const vehicleConsent = form.querySelector('[data-vehicle-consent]');
+  let vehicleAccepted = false;
+  let previousAppearance = form.querySelector('[name=appearance]:checked')?.value;
+  if (!previousAppearance || previousAppearance === 'v800') previousAppearance = form.dataset.defaultAppearance;
+  function confirmVehicleSelection() {
+    const appearance = form.querySelector('[name=appearance]:checked')?.value;
+    if (appearance && appearance !== 'v800') previousAppearance = appearance;
+    if (mode.value === 'drive' && appearance === 'v800' && !vehicleAccepted && !vehicleConfirm.open) {
+      vehicleConfirm.returnValue = '';
+      vehicleConfirm.showModal();
+    }
+  }
+  vehicleConfirm.querySelector('[data-vehicle-cancel]').addEventListener('click', () => vehicleConfirm.close('cancel'));
+  vehicleAgree.addEventListener('click', () => {
+    vehicleAccepted = true;
+    vehicleConsent.disabled = false;
+    vehicleConfirm.close('agree');
+  });
+  vehicleConfirm.addEventListener('close', () => {
+    if (vehicleConfirm.returnValue !== 'agree') {
+      form.querySelector(`[name=appearance][value="${previousAppearance}"]`).checked = true;
+      updateColors();
+    }
+  });
+  // Back/forward cache restores the page's JS state; a new visit must ask again.
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) {
+      vehicleAccepted = false;
+      vehicleConsent.disabled = true;
+      confirmVehicleSelection();
+    }
+  });
+  function updateColors() {
+    const appearance = form.querySelector('[name=appearance]:checked')?.value;
+    form.querySelectorAll('[data-color-picker]').forEach(group => {
+      const enabled = mode.value === 'drive' && appearance === group.dataset.colorPicker;
+      group.hidden = !enabled;
+      group.querySelectorAll('input').forEach(input => {
+        input.disabled = !enabled;
+        input.required = enabled;
+      });
+      const selected = group.querySelector('input:checked');
+      if (selected) {
+        form.querySelectorAll(`[data-vehicle-preview="${group.dataset.colorPicker}"]`).forEach(preview => {
+          preview.src = selected.dataset.colorImage;
+        });
+      }
+    });
+  }
   function updateFields() {
     form.querySelectorAll('[data-mode-fields]').forEach(group => {
       const enabled = group.dataset.modeFields.split(' ').includes(mode.value);
@@ -235,6 +286,7 @@ document.querySelectorAll('[data-travel-form]').forEach(form => {
         if (input.hasAttribute('data-mode-required')) input.required = enabled;
       });
     });
+    updateColors();
     const note = form.querySelector('[data-note]');
     note.hidden = mode.value === 'pending';
     note.querySelector('textarea').disabled = note.hidden;
@@ -245,8 +297,15 @@ document.querySelectorAll('[data-travel-form]').forEach(form => {
       checkbox.disabled = confirm.hidden;
       checkbox.required = !confirm.hidden;
     }
+    confirmVehicleSelection();
   }
   mode.addEventListener('change', updateFields);
+  form.querySelectorAll('[name=appearance], [data-color-image]').forEach(input => {
+    input.addEventListener('change', () => {
+      updateColors();
+      confirmVehicleSelection();
+    });
+  });
   updateFields();
 });
 

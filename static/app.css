@@ -50,6 +50,28 @@ fieldset { border: 1px solid var(--line); border-radius: 10px; padding: 16px; ma
 legend { padding: 0 6px; }
 .check { display: flex; align-items: flex-start; gap: 10px; }
 .check input { flex: 0 0 20px; width: 20px; height: 20px; margin: 4px 0; accent-color: var(--green); }
+.vehicle-picker { padding: 12px; }
+.vehicle-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.vehicle-choice { position: relative; align-content: start; gap: 5px; padding: 25px 6px 10px; border: 2px solid var(--line); border-radius: 12px; background: var(--paper); cursor: pointer; text-align: center; font-size: 13px; }
+.vehicle-choice input { position: absolute; top: 8px; left: 8px; width: 17px; height: 17px; margin: 0; padding: 0; accent-color: var(--green); }
+.vehicle-choice img { width: 100%; height: auto; aspect-ratio: 16 / 11; object-fit: contain; pointer-events: none; }
+.vehicle-choice:has(input:checked) { border-color: var(--green); background: var(--grass); }
+.vehicle-choice:focus-within { outline: 3px solid var(--blue); outline-offset: 3px; }
+.vehicle-picker > p { margin-top: 12px; font-size: 12px; }
+.color-options { display: flex; flex-wrap: wrap; gap: 10px; }
+.color-preview { display: block; width: min(100%, 340px); height: auto; margin: 0 auto 12px; }
+.color-choice { display: flex; align-items: center; gap: 7px; padding: 9px 12px; border: 2px solid var(--line); border-radius: 10px; cursor: pointer; font-size: 13px; }
+.color-choice input { width: 17px; height: 17px; margin: 0; padding: 0; accent-color: var(--green); }
+.color-choice img { width: 28px; height: 28px; border-radius: 50%; }
+.color-choice:has(input:checked) { border-color: var(--green); background: var(--grass); }
+.skin-choice { position: relative; flex: 1 1 180px; flex-direction: column; padding: 24px 12px 12px; text-align: center; }
+.skin-choice input { position: absolute; top: 9px; left: 9px; }
+.skin-choice img { width: 100%; max-width: 200px; height: auto; aspect-ratio: 16 / 11; object-fit: contain; border-radius: 0; }
+.skin-choice:focus-within { outline: 3px solid var(--blue); outline-offset: 3px; }
+.skin-hint { margin-top: 12px; font-size: 12px; }
+.vehicle-confirm { width: min(480px, calc(100% - 32px)); max-height: calc(100% - 32px); overflow: auto; padding: 24px; border: 1px solid var(--line); border-radius: 16px; color: var(--ink); background: var(--paper); box-shadow: 0 16px 48px var(--shadow); }
+.vehicle-confirm::backdrop { background: #17251e66; }
+.vehicle-confirm-actions { justify-content: flex-end; }
 :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
 .skip-link { position: absolute; top: 0; left: 16px; transform: translateY(-120%); padding: 10px; background: var(--paper); z-index: 10; }
 .skip-link:focus { transform: translateY(0); }
@@ -102,23 +124,8 @@ nav a:hover { text-decoration: underline; }
 .parking { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 185px), 1fr)); gap: 14px; padding-bottom: 16px; }
 .spot { border: 0; padding: 0 8px 14px; background: transparent; display: grid; justify-items: center; gap: 3px; border-radius: 16px; min-width: 0; }
 .spot:hover:not(:disabled), .spot[aria-pressed=true] { background: light-dark(#f9fff688, #b8cba022); }
-.spot[aria-pressed=true] .parking-ground { border-color: var(--green); }
-.model-stage { width: 180px; max-width: 100%; height: 139px; position: relative; perspective: 650px; }
-.parking-ground { position: absolute; left: 12%; right: 7%; top: 50px; height: 65px; border: 2px solid var(--lane); border-top: 0; transform: skewY(-12deg); border-radius: 0 0 8px 8px; }
-.car-model { --roof: light-dark(#c8d8b0, #9dbb87); --body: light-dark(#739265, #6b895c); --side: light-dark(#526c4d, #516a48); position: absolute; left: 18px; top: 43px; width: 140px; height: 62px; transform-style: preserve-3d; transform: rotateX(52deg) rotateZ(-27deg); }
-.car-model.blue { --roof: light-dark(#b8d5df, #91b5c4); --body: light-dark(#699bac, #658f9d); --side: light-dark(#507887, #486875); }
-.car-shadow { position: absolute; left: -4px; top: 4px; width: 151px; height: 72px; background: var(--shadow); filter: blur(5px); border-radius: 24px; transform: translateZ(-9px); }
-.car-top { position: absolute; inset: 0; background: var(--body); border-radius: 11px; transform: translateZ(24px); }
-.car-side { position: absolute; left: 0; top: 62px; width: 140px; height: 24px; background: var(--side); transform-origin: top; transform: rotateX(90deg); border-radius: 0 0 5px 5px; }
-.car-front { position: absolute; left: 140px; top: 0; width: 24px; height: 62px; background: var(--body); transform-origin: left; transform: rotateY(-90deg); border-radius: 0 9px 9px 0; }
-.car-cabin { position: absolute; left: 35px; top: 5px; width: 72px; height: 52px; background: var(--roof); border-radius: 8px; transform: translateZ(49px); }
-.car-window { position: absolute; left: 35px; top: 57px; width: 72px; height: 25px; background: var(--glass); border: 4px solid var(--roof); transform-origin: top; transform: translateZ(24px) rotateX(90deg); }
-.car-window:after { content: ''; position: absolute; height: 100%; width: 4px; left: 42%; background: var(--roof); }
-.car-windshield { position: absolute; left: 107px; top: 5px; width: 25px; height: 52px; border: 4px solid var(--roof); background: var(--glass); transform-origin: left; transform: translateZ(24px) rotateY(-90deg); }
-.car-wheel { position: absolute; width: 24px; height: 24px; border: 6px solid var(--wheel); background: var(--line); border-radius: 50%; top: 52px; transform: rotateX(90deg); }
-.car-wheel.one { left: 16px; }
-.car-wheel.two { left: 105px; }
-.car-lamp { position: absolute; top: 7px; right: 4px; height: 11px; width: 8px; border-radius: 3px; background: light-dark(#f3e7b2, #e5daaa); transform: translateZ(25px); box-shadow: 0 35px 0 light-dark(#f3e7b2, #e5daaa); }
+.model-stage { width: 180px; max-width: 100%; height: 139px; position: relative; }
+.car-model { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform-origin: center 80%; pointer-events: none; user-select: none; }
 .model-label { font-weight: 500; overflow-wrap: anywhere; }
 .model-caption { font-size: 12px; font-weight: 400; overflow-wrap: anywhere; }
 .new-vehicle { border: 2px dashed var(--lane); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; min-height: 180px; text-decoration: none; margin: 12px; color: var(--ink); }
@@ -177,13 +184,14 @@ th, td { border-bottom: 1px solid var(--line); padding: 13px 10px; vertical-alig
 th { color: var(--muted); font-weight: 500; }
 tbody tr:last-child td { border-bottom: 0; }
 @keyframes board { 0% { opacity: 1; transform: translate(-15px, 8px) scale(1); } 70% { opacity: 1; transform: translate(66px, -37px) scale(.75); } 100% { opacity: 0; transform: translate(74px, -42px) scale(.25); } }
-@keyframes spring { 0%, 50%, 100% { transform: rotateX(52deg) rotateZ(-27deg); } 75% { transform: translateY(3px) rotateX(49deg) rotateZ(-27deg); } }
-@keyframes park { from { transform: translateX(-100px) rotateX(52deg) rotateZ(-27deg); } to { transform: translateX(0) rotateX(52deg) rotateZ(-27deg); } }
+@keyframes spring { 0%, 50%, 100% { transform: translateY(0) scaleY(1); } 75% { transform: translateY(3px) scaleY(.96); } }
+@keyframes park { from { transform: translateX(-100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 @keyframes train-arrive { from { transform: translateX(-35px) rotateY(-15deg) rotateX(8deg); } to { transform: translateX(0) rotateY(-15deg) rotateX(8deg); } }
 @keyframes door-open { 0%, 100% { transform: scaleX(1); } 45%, 70% { transform: scaleX(.35); } }
 @media (min-width: 1300px) { .parking { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 900px) { .identity-layout { gap: 32px; margin: 35px auto; } .identity-intro h1 { font-size: 34px; } .plaza-layout { grid-template-columns: 1fr; } .parking { grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); } .selection-panel { padding: 20px; } .seat-map { max-width: 380px; } }
 @media (max-width: 600px) { .site-header { padding: 15px 16px; gap: 12px; } nav { gap: 14px; font-size: 14px; } .main { padding: 22px 14px 14px; } h1 { font-size: 26px; } .identity-layout, .two-columns { grid-template-columns: 1fr; } .identity-layout { gap: 26px; margin: 12px auto; } .identity-intro { gap: 14px; } .identity-intro h1 { font-size: 32px; } .journey-steps { display: none; } .panel { padding: 20px; } .my-arrangement { padding: 16px; } .world { padding: 16px 10px 0; } .road { margin: 0 -10px; } .transit-zone { margin: 0 -10px; padding: 16px 10px; } .station { grid-template-columns: minmax(0, 1fr) 90px; gap: 4px; } .parking { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; } .new-vehicle { margin: 10px 3px; min-height: 175px; } .scene-footer { gap: 14px; } .zone-heading h2, .transit-zone h2 { font-size: 18px; } }
-@media (max-width: 390px) { .model-stage { height: 122px; } .car-model { left: 0; transform: scale(.8) rotateX(52deg) rotateZ(-27deg); transform-origin: left center; } .boarding .car-model, .vehicle-arriving .car-model { animation: none; } .model-label { font-size: 13px; } .model-caption { font-size: 12px; } .spot { padding: 0 2px 12px; } .brand small { display: none; } }
+@media (max-width: 480px) { .vehicle-options { grid-template-columns: 1fr; } .vehicle-choice { grid-template-columns: 110px 1fr; align-items: center; align-content: center; padding: 8px 10px 8px 34px; text-align: left; } .vehicle-choice input { top: calc(50% - 8px); } }
+@media (max-width: 390px) { .model-stage { height: 122px; } .boarding .car-model, .vehicle-arriving .car-model { animation: none; } .model-label { font-size: 13px; } .model-caption { font-size: 12px; } .spot { padding: 0 2px 12px; } .brand small { display: none; } }
 @media (pointer: coarse) { button, .button, nav a { min-height: 44px; } nav a { display: inline-flex; align-items: center; } }
 @media (prefers-reduced-motion: reduce) { *, *:before, *:after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

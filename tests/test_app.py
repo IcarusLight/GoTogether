@@ -6,6 +6,7 @@ Uses temporary databases only; never starts a network service.
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import re
+import sqlite3
 import tempfile
 from threading import Barrier
 import unittest
@@ -408,10 +409,11 @@ class TravelTests(unittest.TestCase):
         store.remind(legacy, 'old', '后台提醒', '已有提醒')
         store.initialize(path)
         store.initialize(path)
-        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 3)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 9)
         self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
         before = store.snapshot(legacy, 'old', private=True)
         self.assertEqual(before['cars'][0]['remaining'], 1)
+        self.assertEqual(before['cars'][0]['appearance'], 'su7')
         self.assertEqual(before['reminders'][0]['name'], '后台提醒')
         rider = store.registration(legacy, 'old', '乘客')
         self.assertEqual((rider['note'], rider['revision'], rider['pickup']), ('原备注', 'rider-revision', ''))
@@ -432,9 +434,229 @@ class TravelTests(unittest.TestCase):
         store.initialize(path)
         store.initialize(path)
         state = store.snapshot(legacy, event)
-        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 3)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 9)
         self.assertEqual((state['cars'][0]['departure'], state['cars'][0]['plate']), ('南门', ''))
+        self.assertEqual(state['cars'][0]['appearance'], 'su7')
         self.assertEqual((state['waiting'][0]['pickup'], state['waiting'][0]['earliest']), ('北门', '08:30'))
+
+    def test_version_three_migration_preserves_car_and_passengers(self):
+        path = str(Path(self.temp.name) / 'version-three.sqlite3')
+        legacy = store.connect(path)
+        self.addCleanup(legacy.close)
+        root = Path(__file__).resolve().parent.parent
+        for script in ('tests/fixtures/schema_v1.sql', 'migration_2.sql', 'migration_3.sql'):
+            legacy.executescript((root / script).read_text(encoding='utf-8'))
+        event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
+        vehicle = legacy.execute('INSERT INTO vehicles(event_id, driver, capacity, departure, plate) VALUES (?, ?, 2, ?, ?)',
+                                 (event, '司机', '南门', '粤B12345')).lastrowid
+        legacy.executemany('INSERT INTO registrations(event_id, name, mode, vehicle_id, revision) VALUES (?, ?, ?, ?, ?)',
+                           [(event, '司机', 'drive', vehicle, 'driver'), (event, '乘客', 'ride', vehicle, 'rider')])
+        store.initialize(path)
+        store.initialize(path)
+        car = store.snapshot(legacy, event)['cars'][0]
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 9)
+        self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
+        self.assertEqual((car['id'], car['plate'], car['appearance'], car['remaining']), (vehicle, '粤B12345', 'su7', 1))
+        self.assertEqual(car['passengers'][0]['name'], '乘客')
+        self.assertEqual(store.registration(legacy, event, '司机')['revision'], 'driver')
+
+    def test_version_four_migration_preserves_vehicles_and_accepts_new_appearances(self):
+        path = str(Path(self.temp.name) / 'version-four.sqlite3')
+        legacy = store.connect(path)
+        self.addCleanup(legacy.close)
+        root = Path(__file__).resolve().parent.parent
+        for script in ('tests/fixtures/schema_v1.sql', 'migration_2.sql', 'migration_3.sql', 'migration_4.sql'):
+            legacy.executescript((root / script).read_text(encoding='utf-8'))
+        event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
+        for appearance in ('phantom', 'tricycle', 'su7'):
+            vehicle = legacy.execute('''INSERT INTO vehicles(event_id, driver, capacity, departure, plate, appearance)
+                VALUES (?, ?, 2, '南门', '粤B12345', ?)''', (event, appearance, appearance)).lastrowid
+            legacy.execute("INSERT INTO registrations(event_id, name, mode, vehicle_id, revision) VALUES (?, ?, 'drive', ?, ?)",
+                           (event, appearance, vehicle, appearance))
+            store.save_travel(legacy, event, appearance + '乘客',
+                              {'mode': 'ride', 'revision': '', 'vehicle_id': str(vehicle), 'note': '原备注'})
+        before = store.snapshot(legacy, event)
+        with patch('store.sqlite3.sqlite_version_info', (3, 34, 0)):
+            with self.assertRaisesRegex(RuntimeError, 'SQLite 3.35'):
+                store.initialize(path)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 4)
+        self.assertEqual(store.snapshot(legacy, event), before)
+        store.initialize(path)
+        store.initialize(path)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 9)
+        for car in before['cars']:
+            car['color'] = 'default'
+        self.assertEqual(store.snapshot(legacy, event), before)
+        self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
+        for appearance in ('v800', 'kart', 'yadea', 'horse-carriage', 'wuling', 'dayun', 'mega'):
+            with self.subTest(appearance=appearance):
+                vehicle = store.save_travel(legacy, event, appearance,
+                                           {'mode': 'drive', 'revision': '', 'capacity': '1', 'appearance': appearance,
+                                            'confirm_v800': 'yes' if appearance == 'v800' else ''})
+                self.assertGreater(vehicle, before['cars'][-1]['id'])
+                self.assertEqual(legacy.execute('SELECT appearance FROM vehicles WHERE id = ?', (vehicle,)).fetchone()[0], appearance)
+        legacy.execute("INSERT INTO vehicles(event_id, driver, capacity, departure) VALUES (?, '默认车型', 1, '')", (event,))
+        self.assertEqual(legacy.execute("SELECT appearance FROM vehicles WHERE driver = '默认车型'").fetchone()[0], 'su7')
+        with self.assertRaises(sqlite3.IntegrityError):
+            legacy.execute("UPDATE vehicles SET appearance = 'invalid'")
+        self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
+
+    def test_vehicle_appearance_create_edit_admin_and_sync(self):
+        client = self.app.test_client()
+        self.login(client, '司机')
+        route = f'/events/{self.event}/travel'
+        form = client.get(route + '?mode=drive').get_data(as_text=True)
+        for appearance in store.VEHICLE_APPEARANCES:
+            self.assertIn(f'value="{appearance}"', form)
+            self.assertIn('/static/' + store.vehicle_image(appearance), form)
+        self.assertIn('value="su7" checked', form)
+        response = self.post(client, route, mode='drive', revision='', capacity='2', appearance='phantom')
+        self.assertEqual(response.status_code, 303)
+        vehicle = store.registration(self.db, self.event, '司机')['vehicle_id']
+        self.save('乘客', 'ride', vehicle_id=str(vehicle))
+        for appearance in ('tricycle', 'v800', 'kart', 'yadea', 'horse-carriage', 'wuling', 'dayun', 'mega', 'su7'):
+            params = self.sync_params(client)
+            revision = store.registration(self.db, self.event, '司机')['revision']
+            response = self.post(client, route, mode='drive', revision=revision, capacity='2', appearance=appearance,
+                                 confirm_v800='yes' if appearance == 'v800' else '')
+            self.assertEqual(response.status_code, 303)
+            car = store.snapshot(self.db, self.event)['cars'][0]
+            self.assertEqual((car['id'], car['appearance'], car['remaining']), (vehicle, appearance, 1))
+            self.assertEqual(car['passengers'][0]['name'], '乘客')
+            self.assertIn(f'value="{appearance}" checked', client.get(route).get_data(as_text=True))
+            update = client.get(f'/events/{self.event}/sync', query_string=params).get_json()
+            self.assertIn('/static/' + store.vehicle_image(appearance), update['html'])
+        revision = store.registration(self.db, self.event, '司机')['revision']
+        response = self.post(client, route, mode='drive', revision=revision, capacity='2', appearance='../invalid')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['appearance'], 'su7')
+        self.assertEqual(store.registration(self.db, self.event, '司机')['revision'], revision)
+        self.admin(client)
+        response = self.post(client, f'/admin/events/{self.event}/travel', name='司机', mode='drive',
+                             revision=revision, capacity='2', appearance='mega')
+        self.assertEqual(response.status_code, 303)
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['appearance'], 'mega')
+        # An old form without the new field must retain the selected appearance.
+        self.save('司机', 'drive', capacity='2')
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['appearance'], 'mega')
+
+    def test_su7_colors_preserve_passengers_and_sync_for_members_and_admin(self):
+        vehicle = self.car()
+        self.save('乘客', 'ride', vehicle_id=str(vehicle))
+        client = self.app.test_client()
+        self.login(client, '司机')
+        route = f'/events/{self.event}/travel'
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['color'], 'default')
+        for color, label in store.VEHICLE_COLORS['su7'].items():
+            params = self.sync_params(client)
+            revision = store.registration(self.db, self.event, '司机')['revision']
+            response = self.post(client, route, mode='drive', revision=revision, capacity='2', appearance='su7', color=color)
+            self.assertEqual(response.status_code, 303)
+            car = store.snapshot(self.db, self.event)['cars'][0]
+            self.assertEqual((car['id'], car['color'], car['remaining']), (vehicle, color, 1))
+            self.assertEqual(car['passengers'][0]['name'], '乘客')
+            self.assertIn(f'value="{color}" data-color-image="/static/vehicles/su7/{color}.webp" checked',
+                          client.get(route).get_data(as_text=True))
+            html = client.get(f'/events/{self.event}/sync', query_string=params).get_json()['html']
+            self.assertIn(f'/static/vehicles/su7/{color}.webp', html)
+            self.assertIn(label, html)
+        before = store.snapshot(self.db, self.event)
+        with self.assertRaisesRegex(store.UserError, '颜色'):
+            self.save('司机', 'drive', capacity='2', color='../invalid')
+        self.assertEqual(store.snapshot(self.db, self.event), before)
+        self.save('司机', 'drive', capacity='2')  # An old form retains the selected color.
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['color'], 'obsidian-black')
+        self.admin(client)
+        revision = store.registration(self.db, self.event, '司机')['revision']
+        response = self.post(client, f'/admin/events/{self.event}/travel', name='司机', mode='drive',
+                             revision=revision, capacity='2', appearance='su7', color='sunset-purple')
+        self.assertEqual(response.status_code, 303)
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['color'], 'sunset-purple')
+        self.save('司机', 'drive', capacity='2', appearance='kart')
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['color'], 'default')
+        self.save('司机', 'drive', capacity='2', appearance='su7')
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['color'], 'default')
+
+    def test_v800_requires_confirmation_for_member_and_admin(self):
+        for admin in (False, True):
+            with self.subTest(admin=admin):
+                person = '管理员登记司机' if admin else '普通司机'
+                client = self.app.test_client()
+                if admin:
+                    self.admin(client)
+                else:
+                    self.login(client, person)
+                route = f'/admin/events/{self.event}/travel' if admin else f'/events/{self.event}/travel'
+                fields = {'name': person, 'mode': 'drive', 'revision': '', 'capacity': '2', 'appearance': 'v800'}
+                before = store.snapshot(self.db, self.event)
+                for consent in ('', 'no'):
+                    response = self.post(client, route, **fields, confirm_v800=consent)
+                    self.assertEqual(response.status_code, 400)
+                    self.assertEqual(store.snapshot(self.db, self.event), before)
+                response = self.post(client, route, **fields, confirm_v800='yes')
+                self.assertEqual(response.status_code, 303)
+                vehicle = store.registration(self.db, self.event, person)['vehicle_id']
+                self.save(person + '乘客', 'ride', vehicle_id=str(vehicle))
+                before = store.snapshot(self.db, self.event)
+                with self.assertRaisesRegex(store.UserError, '车辆选择声明'):
+                    self.save(person, 'drive', capacity='2')
+                self.assertEqual(store.snapshot(self.db, self.event), before)
+                self.assertEqual(self.save(person, 'drive', capacity='2', confirm_v800='yes'), vehicle)
+                self.save(person, 'drive', capacity='2', appearance='su7')
+                before = store.snapshot(self.db, self.event)
+                with self.assertRaisesRegex(store.UserError, '车辆选择声明'):
+                    self.save(person, 'drive', capacity='2', appearance='v800')
+                self.assertEqual(store.snapshot(self.db, self.event), before)
+                self.assertEqual(self.save(person, 'drive', capacity='2', appearance='v800', confirm_v800='yes'), vehicle)
+                self.assertEqual(store.registration(self.db, self.event, person + '乘客')['vehicle_id'], vehicle)
+
+    def test_version_five_color_migration_preserves_existing_arrangements(self):
+        path = str(Path(self.temp.name) / 'version-five.sqlite3')
+        legacy = store.connect(path)
+        self.addCleanup(legacy.close)
+        root = Path(__file__).resolve().parent.parent
+        for script in ('tests/fixtures/schema_v1.sql', 'migration_2.sql', 'migration_3.sql', 'migration_4.sql', 'migration_5.sql'):
+            legacy.executescript((root / script).read_text(encoding='utf-8'))
+        event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
+        for appearance in ('phantom', 'tricycle', 'su7', 'v800', 'kart', 'yadea', 'horse-carriage'):
+            vehicle = legacy.execute('''INSERT INTO vehicles(event_id, driver, capacity, departure, appearance)
+                VALUES (?, ?, 2, '南门', ?)''', (event, appearance, appearance)).lastrowid
+            legacy.execute("INSERT INTO registrations(event_id, name, mode, vehicle_id, revision) VALUES (?, ?, 'drive', ?, ?)",
+                           (event, appearance, vehicle, appearance))
+            legacy.execute("INSERT INTO registrations(event_id, name, mode, vehicle_id, revision) VALUES (?, ?, 'ride', ?, ?)",
+                           (event, appearance + '乘客', vehicle, appearance + '-rider'))
+        before = store.snapshot(legacy, event)
+        store.initialize(path)
+        store.initialize(path)
+        for car in before['cars']:
+            car['color'] = 'default'
+        self.assertEqual(store.snapshot(legacy, event), before)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 9)
+        self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
+
+    def test_version_eight_migration_preserves_color_and_passengers_and_accepts_mega(self):
+        path = str(Path(self.temp.name) / 'version-eight.sqlite3')
+        legacy = store.connect(path)
+        self.addCleanup(legacy.close)
+        root = Path(__file__).resolve().parent.parent
+        for script in ('tests/fixtures/schema_v1.sql', 'migration_2.sql', 'migration_3.sql',
+                       'migration_4.sql', 'migration_5.sql', 'migration_6.sql', 'migration_7.sql', 'migration_8.sql'):
+            legacy.executescript((root / script).read_text(encoding='utf-8'))
+        event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
+        vehicle = store.save_travel(legacy, event, '司机', {'mode': 'drive', 'revision': '', 'capacity': '2',
+                                                        'appearance': 'su7', 'color': 'sunset-purple'})
+        store.save_travel(legacy, event, '乘客', {'mode': 'ride', 'revision': '', 'vehicle_id': str(vehicle)})
+        before = store.snapshot(legacy, event)
+        store.initialize(path)
+        store.initialize(path)
+        self.assertEqual(store.snapshot(legacy, event), before)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 9)
+        self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
+        revision = store.registration(legacy, event, '司机')['revision']
+        self.assertEqual(store.save_travel(legacy, event, '司机', {'mode': 'drive', 'revision': revision,
+                         'capacity': '2', 'appearance': 'mega'}), vehicle)
+        self.assertEqual(store.snapshot(legacy, event)['cars'][0]['appearance'], 'mega')
+        self.assertEqual(store.registration(legacy, event, '乘客')['vehicle_id'], vehicle)
 
     def test_optional_plate_round_trip_and_escaping(self):
         self.car()

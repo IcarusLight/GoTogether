@@ -8,6 +8,28 @@ import sqlite3
 import unicodedata
 
 
+VEHICLE_APPEARANCES = {
+    'phantom': '劳斯莱斯幻影', 'tricycle': '农用三蹦子', 'su7': '小米 SU7',
+    'v800': '尊界 V800', 'kart': '卡丁车', 'yadea': '雅迪电动车', 'horse-carriage': '宝马马车',
+    'wuling': '五菱宏光', 'dayun': '大运卡车', 'mega': '理想 MEGA',
+}
+DEFAULT_VEHICLE_APPEARANCE = 'su7'
+VEHICLE_COLORS = {
+    'su7': {'default': '卡布里蓝', 'sunset-purple': '霞光紫', 'elegant-gray': '雅灰',
+            'pearl-white': '珍珠白', 'obsidian-black': '曜石黑'},
+    'yadea': {'default': '原版', 'meituan': '美团外卖 · 黄色外卖箱'},
+}
+
+
+def vehicle_image(appearance, color='default'):
+    if appearance in VEHICLE_COLORS:
+        color = color if color in VEHICLE_COLORS[appearance] else 'default'
+        if appearance == 'yadea':
+            return 'vehicles/yadea.webp' if color == 'default' else 'vehicles/yadea/meituan.png'
+        return f'vehicles/{appearance}/{color}.webp'
+    return f'vehicles/{appearance}.webp'
+
+
 class UserError(Exception):
     def __init__(self, message, status=400):
         super().__init__(message)
@@ -29,14 +51,13 @@ def initialize(path):
         if version == 0:
             sql = Path(__file__).with_name('schema.sql').read_text(encoding='utf-8')
             db.executescript('BEGIN IMMEDIATE;\n' + sql + '\nCOMMIT;')
-        elif version == 1:
-            sql = Path(__file__).with_name('migration_2.sql').read_text(encoding='utf-8')
-            sql += '\n' + Path(__file__).with_name('migration_3.sql').read_text(encoding='utf-8')
+        elif version in (1, 2, 3, 4, 5, 6, 7, 8):
+            if sqlite3.sqlite_version_info < (3, 35, 0):
+                raise RuntimeError('升级旧数据库需要 SQLite 3.35 或更新版本，请更新 Python 使用的 SQLite 后重试。')
+            sql = '\n'.join(Path(__file__).with_name(f'migration_{target}.sql').read_text(encoding='utf-8')
+                            for target in range(version + 1, 10))
             db.executescript('BEGIN IMMEDIATE;\n' + sql + '\nCOMMIT;')
-        elif version == 2:
-            sql = Path(__file__).with_name('migration_3.sql').read_text(encoding='utf-8')
-            db.executescript('BEGIN IMMEDIATE;\n' + sql + '\nCOMMIT;')
-        elif version != 3:
+        elif version != 9:
             raise RuntimeError('数据库版本不匹配，请使用与数据版本对应的程序。')
     finally:
         db.close()
@@ -188,6 +209,9 @@ def save_travel(db, event_id, person, values, admin=False):
     note = text(values.get('note'), '备注', 500)
     vehicle_id = None
     if mode == 'drive':
+        appearance = values.get('appearance')
+        if appearance is not None and appearance not in VEHICLE_APPEARANCES:
+            raise UserError('请选择有效的车辆外观。')
         departure = text(values.get('departure'), '出发点', 100)
         plate = text(values.get('plate'), '车牌', 20)
         try:
@@ -224,6 +248,20 @@ def save_travel(db, event_id, person, values, admin=False):
             raise UserError('结束时间不能早于开始时间；只填一项表示一个时间点，两项都留空表示时间灵活。')
         if old and old['mode'] == 'drive' and mode != 'drive' and values.get('confirm_driver') != 'yes':
             raise UserError('更改出行方式会取消你管理的车辆，请勾选确认后再保存。')
+        if mode == 'drive':
+            previous = (db.execute('SELECT appearance, color FROM vehicles WHERE id = ?',
+                                   (old['vehicle_id'],)).fetchone()
+                        if old and old['mode'] == 'drive' else None)
+            appearance = appearance or (previous['appearance'] if previous else DEFAULT_VEHICLE_APPEARANCE)
+            if appearance == 'v800' and values.get('confirm_v800') != 'yes':
+                raise UserError('请确认车辆选择声明后，再保存尊界 V800。')
+            color = 'default'
+            if appearance in VEHICLE_COLORS:
+                # Skins share color storage; separate form names keep radio groups independent.
+                option_field = 'skin' if appearance == 'yadea' else 'color'
+                color = values.get(option_field, previous['color'] if previous and previous['appearance'] == appearance else 'default')
+                if color not in VEHICLE_COLORS[appearance]:
+                    raise UserError('请选择有效的车辆皮肤。' if appearance == 'yadea' else '请选择有效的车辆颜色。')
         if mode == 'ride':
             car = db.execute('SELECT * FROM vehicles WHERE id = ? AND event_id = ?', (vehicle_id, event_id)).fetchone()
             if car is None:
@@ -239,14 +277,15 @@ def save_travel(db, event_id, person, values, admin=False):
             occupied = db.execute("SELECT COUNT(*) FROM registrations WHERE vehicle_id = ? AND mode = 'ride'", (vehicle_id,)).fetchone()[0]
             if capacity < occupied:
                 raise UserError(f'已有 {occupied} 名乘客，请先协调换车后再减少座位。', 409)
-            db.execute('UPDATE vehicles SET capacity = ?, departure = ?, departure_time = ?, plate = ?, note = ? WHERE id = ?',
-                       (capacity, departure, departure_time, plate, note, vehicle_id))
+            db.execute('UPDATE vehicles SET capacity = ?, departure = ?, departure_time = ?, plate = ?, note = ?, appearance = ?, color = ? WHERE id = ?',
+                       (capacity, departure, departure_time, plate, note, appearance, color, vehicle_id))
             db.execute('DELETE FROM registrations WHERE event_id = ? AND name = ?', (event_id, person))
         else:
             detach(db, event_id, person, old)
             if mode == 'drive':
-                vehicle_id = db.execute('INSERT INTO vehicles(event_id, driver, capacity, departure, departure_time, plate, note) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                                        (event_id, person, capacity, departure, departure_time, plate, note)).lastrowid
+                vehicle_id = db.execute('INSERT INTO vehicles(event_id, driver, capacity, departure, departure_time, plate, note, appearance, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                                        (event_id, person, capacity, departure, departure_time, plate, note,
+                                         appearance, color)).lastrowid
         if mode == 'pending':
             remind(db, event_id, person, '本人申请协助安排出行')
         else:

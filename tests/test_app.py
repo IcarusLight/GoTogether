@@ -427,7 +427,7 @@ class TravelTests(unittest.TestCase):
         self.addCleanup(legacy.close)
         root = Path(__file__).resolve().parent.parent
         legacy.executescript((root / 'tests/fixtures/schema_v1.sql').read_text(encoding='utf-8'))
-        legacy.executescript((root / 'migration_2.sql').read_text(encoding='utf-8'))
+        legacy.executescript((root / 'migrations/migration_2.sql').read_text(encoding='utf-8'))
         event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
         legacy.execute('INSERT INTO vehicles(event_id, driver, capacity, departure) VALUES (?, ?, 2, ?)', (event, '司机', '南门'))
         legacy.execute("INSERT INTO registrations(event_id, name, mode, revision, pickup, earliest) VALUES (?, '等车人', 'wait', 'old', '北门', '08:30')", (event,))
@@ -444,7 +444,7 @@ class TravelTests(unittest.TestCase):
         legacy = store.connect(path)
         self.addCleanup(legacy.close)
         root = Path(__file__).resolve().parent.parent
-        for script in ('tests/fixtures/schema_v1.sql', 'migration_2.sql', 'migration_3.sql'):
+        for script in ('tests/fixtures/schema_v1.sql', 'migrations/migration_2.sql', 'migrations/migration_3.sql'):
             legacy.executescript((root / script).read_text(encoding='utf-8'))
         event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
         vehicle = legacy.execute('INSERT INTO vehicles(event_id, driver, capacity, departure, plate) VALUES (?, ?, 2, ?, ?)',
@@ -465,7 +465,8 @@ class TravelTests(unittest.TestCase):
         legacy = store.connect(path)
         self.addCleanup(legacy.close)
         root = Path(__file__).resolve().parent.parent
-        for script in ('tests/fixtures/schema_v1.sql', 'migration_2.sql', 'migration_3.sql', 'migration_4.sql'):
+        for script in ('tests/fixtures/schema_v1.sql', 'migrations/migration_2.sql',
+                       'migrations/migration_3.sql', 'migrations/migration_4.sql'):
             legacy.executescript((root / script).read_text(encoding='utf-8'))
         event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
         for appearance in ('phantom', 'tricycle', 'su7'):
@@ -615,7 +616,8 @@ class TravelTests(unittest.TestCase):
         legacy = store.connect(path)
         self.addCleanup(legacy.close)
         root = Path(__file__).resolve().parent.parent
-        for script in ('tests/fixtures/schema_v1.sql', 'migration_2.sql', 'migration_3.sql', 'migration_4.sql', 'migration_5.sql'):
+        for script in ('tests/fixtures/schema_v1.sql', 'migrations/migration_2.sql', 'migrations/migration_3.sql',
+                       'migrations/migration_4.sql', 'migrations/migration_5.sql'):
             legacy.executescript((root / script).read_text(encoding='utf-8'))
         event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
         for appearance in ('phantom', 'tricycle', 'su7', 'v800', 'kart', 'yadea', 'horse-carriage'):
@@ -639,8 +641,9 @@ class TravelTests(unittest.TestCase):
         legacy = store.connect(path)
         self.addCleanup(legacy.close)
         root = Path(__file__).resolve().parent.parent
-        for script in ('tests/fixtures/schema_v1.sql', 'migration_2.sql', 'migration_3.sql',
-                       'migration_4.sql', 'migration_5.sql', 'migration_6.sql', 'migration_7.sql', 'migration_8.sql'):
+        for script in ('tests/fixtures/schema_v1.sql', 'migrations/migration_2.sql', 'migrations/migration_3.sql',
+                       'migrations/migration_4.sql', 'migrations/migration_5.sql', 'migrations/migration_6.sql',
+                       'migrations/migration_7.sql', 'migrations/migration_8.sql'):
             legacy.executescript((root / script).read_text(encoding='utf-8'))
         event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
         vehicle = store.save_travel(legacy, event, '司机', {'mode': 'drive', 'revision': '', 'capacity': '2',

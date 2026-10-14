@@ -54,7 +54,7 @@ def initialize(path):
         elif version in (1, 2, 3, 4, 5, 6, 7, 8):
             if sqlite3.sqlite_version_info < (3, 35, 0):
                 raise RuntimeError('升级旧数据库需要 SQLite 3.35 或更新版本，请更新 Python 使用的 SQLite 后重试。')
-            sql = '\n'.join(Path(__file__).with_name(f'migration_{target}.sql').read_text(encoding='utf-8')
+            sql = '\n'.join((Path(__file__).parent / 'migrations' / f'migration_{target}.sql').read_text(encoding='utf-8')
                             for target in range(version + 1, 10))
             db.executescript('BEGIN IMMEDIATE;\n' + sql + '\nCOMMIT;')
         elif version != 9:

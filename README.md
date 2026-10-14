@@ -74,12 +74,13 @@ HTTP 内网地址下的剪贴板自动复制可能不可用，分享按钮会显
 
 备份工具通过 SQLite Backup API 获取一致的数据副本，可在网站运行时使用。生成的 ZIP 位于 `instance/backups/`，包含数据库和管理员配置；请妥善保存配置及备份。
 
-恢复时先停止网站，保留现有 `instance` 目录的副本，再将备份中的 `gotogether.sqlite3` 和 `config.json` 放回该目录，随后启动。更新程序时保留整个 `instance` 目录，替换应用代码后重新运行 `setup.cmd` 更新依赖。当前数据库版本为 9，旧版数据库会在启动时按需通过 `migration_2.sql` 至 `migration_9.sql` 自动升级，活动、车辆、登记及原有后台提醒保留；尚无车牌字段的旧车辆默认为空车牌，尚无外观字段的旧车辆默认为小米 SU7，已有外观保持不变，尚无颜色字段的 SU7 默认使用卡布里蓝。升级在同一个事务中完成，从版本 1–8 升级要求 Python 所用的 SQLite 版本不低于 3.35。升级前建议运行 `backup.cmd` 保存一份备份，升级后请使用新版程序。
+恢复时先停止网站，保留现有 `instance` 目录的副本，再将备份中的 `gotogether.sqlite3` 和 `config.json` 放回该目录，随后启动。更新程序时保留整个 `instance` 目录，替换应用代码后重新运行 `setup.cmd` 更新依赖。当前数据库版本为 9，旧版数据库会在启动时按需通过 `migrations/` 目录中的 `migration_2.sql` 至 `migration_9.sql` 自动升级，活动、车辆、登记及原有后台提醒保留；尚无车牌字段的旧车辆默认为空车牌，尚无外观字段的旧车辆默认为小米 SU7，已有外观保持不变，尚无颜色字段的 SU7 默认使用卡布里蓝。升级在同一个事务中完成，从版本 1–8 升级要求 Python 所用的 SQLite 版本不低于 3.35。升级前建议运行 `backup.cmd` 保存一份备份，升级后请使用新版程序。
 
 ## 项目结构
 
 - `app.py`：页面路由、会话、CSRF、管理员权限。
 - `store.py` / `schema.sql`：数据库和共用业务规则。座位检查和写入位于同一个 `BEGIN IMMEDIATE` 事务。
+- `migrations/`：旧版数据库的增量升级脚本，按版本顺序执行。
 - `templates/`：活动、登记、后台页面。
 - `static/`：场景模型、响应式布局与操作动画。
 - `static/vehicles/`：七种车辆的透明 WebP 图片；前三款的原始素材及来源记录位于 `design/vehicle-study-20261014/sources.json`，新增四款的素材对应关系和提示词记录见 `design/vehicle-study-20261014-batch2/web-assets.json`。

@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "prompt": "Use case: product-mockup. Asset type: transparent vehicle sprite for a friendly Chinese carpool website. Primary request: one classic silver-gray Wuling Hongguang gasoline compact MPV, the familiar practical Chinese people's van (五菱宏光), NOT Hongguang MINI EV, NOT a tall delivery cargo van. Recognizable red five-diamond Wuling emblem centered in a modest black and chrome grille, two simple swept rectangular headlamps, short sloping hood, compact narrow seven-seat MPV body, three rows of side windows, normal modest silver wheels, black tires, practical door handles and mirrors. The vehicle is whole and believable, clean but everyday and lightly used, restrained realistic product/scale-model rendering rather than cartoon, no luxury modifications. Camera at slightly elevated front-left three-quarter view, nose toward the LEFT of image, left side extending rightward, all of body and wheels in frame. Full vehicle fills most of a wide landscape canvas with comfortable transparent margin. Soft studio illumination, silver metallic paint with neutral reflections, dark windows, subtle natural soft contact shadow beneath the tires. True transparent background with alpha, no ground plane or environment. No people, no labels or text, blank license plate, no border. Consistent moderate perspective and natural realistic proportions suitable for a 640x440 website card.",
+  "source": "wuling.png",
+  "export": {
+    "path": "../../static/vehicles/wuling.webp",
+    "width": 640,
+    "height": 440,
+    "quality": 88,
+    "trimThreshold": 10
+  },
+  "note": "AI-generated classic silver Wuling Hongguang reference-style vehicle illustration; not an official product image."
+}

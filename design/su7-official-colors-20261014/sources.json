@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-14",
+  "status": "imported_into_website",
+  "generationMode": "built-in imagegen",
+  "assetNature": "Transparent vehicle sprites generated with official Xiaomi paint images as references; not unmodified official images or colorimetric reproduction.",
+  "userChoices": [
+    "Use 曜石黑 instead of first-generation 钻石黑.",
+    "Use a consistent vehicle angle with official paint finishes as references.",
+    "卡布里蓝 is the default."
+  ],
+  "officialPage": "https://www.xiaomiev.com/su7",
+  "officialSwatches": {
+    "nature": "Original official goodsImg PNG files used by the UI",
+    "api": "https://api.retail.xiaomiev.com/mtop/guidemarketing/3d/car/detail",
+    "request": [
+      {
+        "carItemId": "510098501485",
+        "carSsuId": "610099105589"
+      }
+    ],
+    "pathPattern": "static/vehicles/su7/swatch-<color>.png"
+  },
+  "export": {
+    "format": "webp",
+    "lossless": true,
+    "width": 640,
+    "height": 440,
+    "background": "transparent",
+    "extract": {
+      "left": 24,
+      "top": 184,
+      "width": 1600,
+      "height": 680
+    },
+    "resize": {
+      "width": 608,
+      "height": 258
+    },
+    "padding": {
+      "left": 16,
+      "right": 16,
+      "top": 91,
+      "bottom": 91
+    },
+    "notes": "Identical extraction, scale and padding for all five variants. Final export performed by parent agent."
+  },
+  "preview": {
+    "file": "preview.png",
+    "width": 1260,
+    "height": 500,
+    "layout": "Five columns, two rows on light and dark backgrounds"
+  },
+  "assets": [
+    {
+      "id": "default",
+      "name": "卡布里蓝",
+      "officialReference": "https://s1.xiaomiev.com/activity-outer-assets/0328/images/su7_20260319/pc/6-1.png",
+      "referenceFile": "capri-blue.png",
+      "generatedFile": "generated-capri-blue.png",
+      "productionFile": "static/vehicles/su7/default.webp",
+      "bytes": 139342,
+      "promptKey": "capri-blue"
+    },
+    {
+      "id": "sunset-purple",
+      "name": "霞光紫",
+      "officialReference": "https://s1.xiaomiev.com/activity-outer-assets/0328/images/su7_20260319/pc/6-4.png",
+      "referenceFile": "sunset-purple.png",
+      "generatedFile": "generated-sunset-purple.png",
+      "productionFile": "static/vehicles/su7/sunset-purple.webp",
+      "bytes": 126382,
+      "promptKey": "sunset-purple"
+    },
+    {
+      "id": "elegant-gray",
+      "name": "雅灰",
+      "officialReference": "https://s1.xiaomiev.com/activity-outer-assets/0328/images/su7_20260319/pc/6-6.png",
+      "referenceFile": "elegant-gray.png",
+      "generatedFile": "generated-elegant-gray.png",
+      "productionFile": "static/vehicles/su7/elegant-gray.webp",
+      "bytes": 116810,
+      "promptKey": "elegant-gray"
+    },
+    {
+      "id": "pearl-white",
+      "name": "珍珠白",
+      "officialReference": "https://s1.xiaomiev.com/activity-outer-assets/0328/images/su7_20260319/pc/6-7.png",
+      "referenceFile": "pearl-white.png",
+      "generatedFile": "generated-pearl-white.png",
+      "productionFile": "static/vehicles/su7/pearl-white.webp",
+      "bytes": 114952,
+      "promptKey": "pearl-white"
+    },
+    {
+      "id": "obsidian-black",
+      "name": "曜石黑",
+      "officialReference": "https://s1.xiaomiev.com/activity-outer-assets/0328/images/su7_20260319/pc/6-9.png",
+      "referenceFile": "obsidian-black.png",
+      "generatedFile": "generated-obsidian-black.png",
+      "productionFile": "static/vehicles/su7/obsidian-black.webp",
+      "bytes": 121776,
+      "promptKey": "obsidian-black"
+    }
+  ],
+  "qualityReview": "All five source PNGs and final transparent exports visually inspected. Front-left three-quarter direction, wheel style, interior and framing maintained. Generated interpretations can differ from official paint rendering in reflections and fine detail."
+}
+

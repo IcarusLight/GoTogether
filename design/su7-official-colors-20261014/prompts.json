@@ -1,0 +1,46 @@
+{
+  "generationMode": "built-in imagegen",
+  "transparent_background": true,
+  "prompts": [
+    {
+      "id": "capri-blue",
+      "references": [
+        "capri-blue.png"
+      ],
+      "prompt": "Use case: background-extraction. Asset type: transparent realistic vehicle sprite for a web car picker. Edit target: the supplied official Xiaomi SU7 Capri Blue (卡布里蓝) campaign photograph. Extract precisely the blue car from this photo, retaining its EXACT camera angle (front-left three-quarter, nose pointing left), body proportions, current 2026 SU7 design, five-spoke silver/black wheels, red brake calipers, black mirrors, dark panoramic roof, roof lidar, headlights, dark interior, XIAOMI SU7 license plate, and vibrant official Capri Blue paint with its real glossy highlights. Keep the entire car in frame. Remove ALL sea, sky, ground, floor, and scenery. Background must be true transparent alpha, not checkerboard or white. Retain only a subtle tight semitransparent contact shadow directly beneath the tires/body, no extended cast shadow. Place the car centered on a landscape canvas, around 85% of the canvas width. Preserve the car faithfully, do not redesign or stylize it, no cartoon rendering. This blue sprite is the invariant geometry reference for future color-only variants."
+    },
+    {
+      "id": "sunset-purple",
+      "references": [
+        "generated-capri-blue.png",
+        "sunset-purple.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: transparent vehicle sprite, color-only variant of an existing sprite. Image 1 is the EDIT TARGET and absolute geometry/composition master: a transparent Capri Blue Xiaomi SU7 car facing left at front-left three-quarter view. Image 2 is ONLY the official paint-material/color reference for 霞光紫 (Sunset Purple). Change ONLY the colored BODY PAINT of image 1 to a sophisticated muted metallic lavender-purple with cool violet shadows and restrained warm rosy/champagne sheen at strong highlights, closely matching the official second reference, not saturated candy purple. CRITICAL: preserve image 1's exact camera position, facing direction, silhouette, wheelbase, body shape, five-spoke silver/black wheels and tire placement, red brake calipers, black mirrors, roof lidar, dark panoramic roof, windows, dark interior, headlights, body trim, readable XIAOMI SU7 plate, and tight subtle contact shadow. Do not adopt image 2's camera view, wheel design, scenery, or framing. The hood, fenders, doors, pillars and painted bumper portions receive the new paint; black trim and glass remain unchanged. Keep identical placement and scale to image 1 on the same canvas. Use the official paint look as closely as possible under image 1's lighting, preserving realistic glossy highlights and fine paint quality. Transparent alpha background; no backdrop, sea, sky, ground, text overlay, white field or checkerboard. No restyling, no extra elements."
+    },
+    {
+      "id": "elegant-gray",
+      "references": [
+        "generated-capri-blue.png",
+        "elegant-gray.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: transparent vehicle sprite, color-only variant of an existing sprite. Image 1 is the EDIT TARGET and absolute geometry/composition master: a transparent Capri Blue Xiaomi SU7 car facing left at front-left three-quarter view. Image 2 is ONLY the official paint-material/color reference for 雅灰 (Elegant Gray). Change ONLY the colored BODY PAINT of image 1 to the subtle warm greige-gray glossy finish shown in the official second reference: understated medium light warm gray, subdued beige undertone, gray shadows and clean pale highlights; not bright silver, not brown. CRITICAL: preserve image 1's exact camera position, facing direction, silhouette, wheelbase, body shape, five-spoke silver/black wheels and tire placement, red brake calipers, black mirrors, roof lidar, dark panoramic roof, windows, dark interior, headlights, body trim, readable XIAOMI SU7 plate, and tight subtle contact shadow. Do not adopt image 2's camera view, wheel design, scenery, or framing. The hood, fenders, doors, pillars and painted bumper portions receive the new paint; black trim and glass remain unchanged. Keep identical placement and scale to image 1 on the same canvas. Use the official paint look as closely as possible under image 1's lighting, preserving realistic glossy highlights and fine paint quality. Transparent alpha background; no backdrop, sea, sky, ground, text overlay, white field or checkerboard. No restyling, no extra elements."
+    },
+    {
+      "id": "pearl-white",
+      "references": [
+        "generated-capri-blue.png",
+        "pearl-white.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: transparent vehicle sprite, color-only variant of an existing sprite. Image 1 is the EDIT TARGET and absolute geometry/composition master: a transparent Capri Blue Xiaomi SU7 car facing left at front-left three-quarter view. Image 2 is ONLY the official paint-material/color reference for 珍珠白 (Pearl White). Change ONLY the colored BODY PAINT of image 1 to the official second reference's clean pearl-white body paint, off-white pearl sheen in the lit areas and cool light-gray shaded areas, subtle warm reflected highlights, not flat paper white. CRITICAL: preserve image 1's exact camera position, facing direction, silhouette, wheelbase, body shape, five-spoke silver/black wheels and tire placement, red brake calipers, black mirrors, roof lidar, dark panoramic roof, windows, dark interior, headlights, body trim, readable XIAOMI SU7 plate, and tight subtle contact shadow. Do not adopt image 2's camera view, wheel design, scenery, or framing. The hood, fenders, doors, pillars and painted bumper portions receive the new paint; black trim and glass remain unchanged. Keep identical placement and scale to image 1 on the same canvas. Use the official paint look as closely as possible under image 1's lighting, preserving realistic glossy highlights and fine paint quality. Transparent alpha background; no backdrop, sea, sky, ground, text overlay, white field or checkerboard. No restyling, no extra elements."
+    },
+    {
+      "id": "obsidian-black",
+      "references": [
+        "generated-capri-blue.png",
+        "obsidian-black.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: transparent vehicle sprite, color-only variant of an existing sprite. Image 1 is the EDIT TARGET and absolute geometry/composition master: a transparent Capri Blue Xiaomi SU7 car facing left at front-left three-quarter view. Image 2 is ONLY the official paint-material/color reference for 曜石黑 (Obsidian Black). Change ONLY the colored BODY PAINT of image 1 to the official second reference's deep glossy obsidian-black body paint with fine metallic depth and cool charcoal-blue reflected highlights; rich nearly black body panels, crisp reflections, not matte or uniform gray. CRITICAL: preserve image 1's exact camera position, facing direction, silhouette, wheelbase, body shape, five-spoke silver/black wheels and tire placement, red brake calipers, black mirrors, roof lidar, dark panoramic roof, windows, dark interior, headlights, body trim, readable XIAOMI SU7 plate, and tight subtle contact shadow. Do not adopt image 2's camera view, wheel design, scenery, or framing. The hood, fenders, doors, pillars and painted bumper portions receive the new paint; black trim and glass remain unchanged. Keep identical placement and scale to image 1 on the same canvas. Use the official paint look as closely as possible under image 1's lighting, preserving realistic glossy highlights and fine paint quality. Transparent alpha background; no backdrop, sea, sky, ground, text overlay, white field or checkerboard. No restyling, no extra elements."
+    }
+  ]
+}
+

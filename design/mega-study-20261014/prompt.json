@@ -1,0 +1,15 @@
+{
+  "mode": "built-in image_gen",
+  "intent": "generate",
+  "use_case": "product-mockup",
+  "transparent_background": true,
+  "prompt": "Use case: product-mockup\nAsset type: isolated transparent vehicle sprite for a friendly carpool website, displayed at 640x440.\nPrimary request: A complete silver Li Auto MEGA (理想 MEGA) electric MPV, recognizable real production vehicle proportions. Its distinctive tall streamlined bullet-train nose and steep flowing windshield, slim continuous front LED light bar, smooth silver body, black panoramic roof and dark large side windows, long elegant passenger cabin, flush door handles and subtle multi-spoke aero wheels. Authentic Li Auto badge may be small and natural.\nStyle/medium: polished realistic automotive product rendering, attractive clean studio lighting, detailed but readable at small size; consistent with realistic cutout vehicle catalog.\nComposition/framing: front-left three-quarter view, front of vehicle pointing toward image left, see front and near driver side. Camera slightly above bonnet level. The ENTIRE vehicle including all wheels, mirrors, roof and bumpers must be fully visible. Center the vehicle on a landscape canvas; generous empty transparent margin on every side, particularly left and right.\nLighting/mood: soft studio illumination, silver paint with tasteful highlights, subtle contact shadow only under wheels.\nScene/backdrop: genuinely transparent alpha background, no scene and no ground plane.\nConstraints: single vehicle, no people, no passengers, no road, no parking marks, no text labels, no watermark, no frame, no extra vehicles; retain the actual characteristic MEGA shape rather than a generic minivan.",
+  "source": "C:/Users/李文韬/.codex/generated_images/01a138f3-0fc4-72f0-aba5-60e9341e0d09/exec-c0917be9-fa48-4c8d-8da2-fe5de55fade0.png",
+  "export": {
+    "file": "static/vehicles/mega.webp",
+    "width": 640,
+    "height": 440,
+    "content_fit": "576x396 contain; centered transparent canvas",
+    "preview_background": "#dfe8cb"
+  }
+}

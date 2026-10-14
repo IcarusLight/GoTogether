@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" role="img" aria-labelledby="title desc">
+<title id="title">小米 SU7 风格 · SVG 概念稿</title><desc id="desc">海湾蓝低趴轿跑，溜背、黑色玻璃车顶、水滴形灯组和运动轮毂。</desc>
+<defs>
+ <linearGradient id="body" x2=".3" y2="1"><stop stop-color="#b0e2dc"/><stop offset=".5" stop-color="#6dbbb8"/><stop offset="1" stop-color="#339292"/></linearGradient>
+ <linearGradient id="side" x2=".4" y2="1"><stop stop-color="#78c4c0"/><stop offset="1" stop-color="#317f87"/></linearGradient>
+ <linearGradient id="glass" x2=".3" y2="1"><stop stop-color="#537783"/><stop offset="1" stop-color="#183743"/></linearGradient>
+ <g id="wheel"><ellipse rx="23" ry="30" fill="#26333a" stroke="#173039" stroke-width="3"/><ellipse rx="17" ry="23" fill="#182d36" stroke="#809da2" stroke-width="2"/><path d="m10-13 3 19" stroke="#dcb969" stroke-width="5"/><g fill="none" stroke="#b1c9c8" stroke-width="3.5" stroke-linejoin="round"><path d="M0 0-3-21 4-20 0 0 16-8 16-1 0 0 11 17 6 20 0 0-12 17-16 11 0 0-16-10-12-16Z"/></g><ellipse rx="4" ry="5" fill="#e2e7dc"/></g>
+</defs>
+<ellipse cx="242" cy="250" rx="172" ry="22" fill="#244d43" opacity=".13" transform="rotate(-18 242 250)"/>
+<use href="#wheel" transform="translate(84 211) rotate(17) scale(.75)"/>
+<path d="m158 192 235-80q22 7 28 34l-4 36-12 5q-4-37-29-29t-28 54l-128 44q-2-42-29-37t-26 49l-14-13Z" fill="url(#side)" stroke="#337e86" stroke-width="2"/>
+<path d="M52 190q-3-26 24-42l76-31 147-32 94 27q21 8 23 22l-50 29-181 58-118-13Z" fill="url(#body)" stroke="#438e94" stroke-width="2"/>
+<!-- Low fastback cabin. -->
+<g transform="translate(0 30) scale(1 .8)">
+<path d="m154 126 65-59q18-12 44-7l73 23q29 12 60 46l-133 49Z" fill="#4d9ca3"/>
+<path d="M223 68q28-23 61-15l63 16q15 3 26 6l-56 20Z" fill="#243e49" stroke="#5d9298" stroke-width="2"/>
+<path d="m221 73 91 26-49 66-99-36Z" fill="url(#glass)" stroke="#8bd0ca" stroke-width="3"/>
+<path d="m232 79 26 8-48 57-29-11Z" fill="#a1c8cc" opacity=".24"/>
+<path d="m316 99 53-19q13 4 24 17l18 27-139 45Z" fill="url(#glass)" stroke="#91cfca" stroke-width="3"/>
+<path d="m350 88 17 50" stroke="#24434f" stroke-width="6"/>
+<path d="m365 89 14 35 22-7-13-19Z" fill="#6a939c" opacity=".3"/>
+<path d="m250 71 13-9 24 6 2 9-12 3Z" fill="#29414a" stroke="#497481" stroke-width="1.5"/>
+</g>
+<!-- Sculpted hood: no sedan grille. -->
+<path d="m78 153 76-23 106 37-80 31q-35-4-102-45Z" fill="#82cbc5"/>
+<path d="m107 148 47-10 79 30m-100-26-26 24m132 5-29 25" fill="none" stroke="#b9e5dc" stroke-width="2" stroke-linecap="round"/>
+<path d="M53 188q42 12 123 30l10-19 3 40q-4 16-20 20l-103-34q-13-5-13-19Z" fill="url(#body)" stroke="#39858c" stroke-width="2"/>
+<!-- Distinct teardrop light housings, far side compressed by perspective. -->
+<path d="M60 163q13-7 32 2l21 17q-31-1-49-9Z" fill="#254a55" stroke="#b5e4db" stroke-width="2"/>
+<path d="M123 186q18-11 51-5l6 21q-21 7-57-16Z" fill="#254a55" stroke="#b5e4db" stroke-width="2"/>
+<path d="m65 169 35 9m32 11 40 7" stroke="#f5f6db" stroke-width="3" stroke-linecap="round"/>
+<path d="m149 187 3 9m12-8 3 11" stroke="#c4e8df" stroke-width="2"/>
+<path d="m69 206 87 28 12-10 7 19-10 7-94-30Z" fill="#25434c"/>
+<path d="m72 214 91 30" stroke="#90d1c8" stroke-width="2"/>
+<path d="m60 189 7 5 1 13-7-6Zm105 18 10 1-3 18-8-4Z" fill="#2c5963"/>
+<path d="m106 200 31 9 1 13-31-10Z" fill="#2c505a"/><path d="m113 206 19 5" stroke="#d8e8df" stroke-width="2"/>
+<path d="m139 173 6 2-4 3-6-2Z" fill="#f3f4e7"/>
+<path d="m286 171 4 57m65-79 5 56" stroke="#39888e" stroke-width="1.5" fill="none"/>
+<path d="m301 178 15-5m58-15 13-4" stroke="#25626f" stroke-width="3" stroke-linecap="round"/>
+<path d="m254 156 13-5 17 4-2 10-20 6-10-6Z" fill="#7ac9c4" stroke="#377984" stroke-width="2"/>
+<path d="m224 245 119-41" stroke="#254b58" stroke-width="6" stroke-linecap="round"/>
+<use href="#wheel" transform="translate(193 246) rotate(17)"/>
+<use href="#wheel" transform="translate(380 184) rotate(17) scale(.92)"/>
+</svg>

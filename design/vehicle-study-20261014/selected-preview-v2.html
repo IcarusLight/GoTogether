@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GoTogether · 图片方案 v2</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f4ed;color:#263d35;font:15px/1.7 "Microsoft YaHei",system-ui,sans-serif}
+main{max-width:1250px;margin:auto;padding:48px 32px 64px}.eyebrow{letter-spacing:3px;font-size:12px;color:#748173}h1{font-size:38px;line-height:1.3;font-weight:600;margin:12px 0}header p{max-width:810px;color:#69776c}
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:20px 0}.toolbar label{cursor:pointer;border:1px solid #c5cdbc;border-radius:30px;padding:6px 16px}.toolbar input{accent-color:#516e48}
+section{margin-top:28px}h2{font-size:21px;font-weight:600;margin:0 0 16px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{border:1px solid #d7ddcd;border-radius:18px;overflow:hidden;background:#fffdf7}.stage{height:285px;background:#e4ebd8;display:flex;align-items:center;justify-content:center;padding:16px}.stage img{width:100%;height:100%;object-fit:contain}.card-copy{padding:16px 20px}.card h3{margin:0;font-size:18px}.card p{margin:4px 0 10px;font-size:12px;color:#798174}a{color:#426b53;text-underline-offset:4px;font-size:13px}
+.small-row{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;background:#e4ebd8;border-radius:16px;padding:26px;margin-top:16px}.mini{width:180px;text-align:center}.mini-stage{height:139px;display:flex;align-items:center;justify-content:center;border-bottom:2px solid #bdc9ad;border-radius:12px}.mini-stage img{width:180px;height:139px;object-fit:contain}.mini b{display:block;font-size:13px;margin-top:8px}
+body:has(#dark:checked) .stage,body:has(#dark:checked) .small-row{background:#283b32}body:has(#dark:checked) .small-row{color:#e7eadf}
+body:has(#grid:checked) .stage,body:has(#grid:checked) .small-row{background-color:#fff;background-image:conic-gradient(#e3e5df 25%,transparent 0 50%,#e3e5df 0 75%,transparent 0);background-size:20px 20px}
+.note{background:#edece1;padding:20px 24px;border-radius:16px;font-size:14px}.note p{margin:6px 0}details{margin-top:28px}summary{cursor:pointer}details p{color:#748173;font-size:13px}footer{margin-top:28px;padding-top:18px;border-top:1px solid #d7ddcd;color:#7b8779;font-size:12px}
+@media(max-width:750px){main{padding:28px 16px}.grid{grid-template-columns:1fr}h1{font-size:29px}}
+</style></head>
+<body><main>
+<header><div class="eyebrow">GOTOGETHER / VEHICLE STUDY 02 / 2026.10.14</div><h1>豪华，运动，还有老伙计。</h1><p>当前采用第一种透明图片方案。劳斯莱斯与 SU7 保留原稿，三蹦子改成开放式车头、加长大货斗的旧农用款。</p></header>
+<div class="toolbar"><b>素材背景</b><label><input id="light" type="radio" name="background" checked> 浅色草地</label><label><input id="dark" type="radio" name="background"> 深色草地</label><label><input id="grid" type="radio" name="background"> 透明棋盘</label></div>
+<section><div class="grid"><article class="card"><div class="stage"><img src="raster/phantom.png" alt="劳斯莱斯幻影"></div><div class="card-copy"><h3>劳斯莱斯幻影</h3><p>银白车身 · 深蓝车顶 · 直立格栅</p><a href="raster/phantom.png">打开透明 PNG ↗</a></div></article><article class="card"><div class="stage"><img src="raster/tricycle-rustic-v2.png" alt="老伙计 · 农用三蹦子"></div><div class="card-copy"><h3>老伙计 · 农用三蹦子</h3><p>大货斗 · 旧红漆 · 蓝色补板 · 补丁坐垫</p><a href="raster/tricycle-rustic-v2.png">打开透明 PNG ↗</a></div></article><article class="card"><div class="stage"><img src="raster/su7.png" alt="小米 SU7"></div><div class="card-copy"><h3>小米 SU7</h3><p>海湾蓝 · 流线车身 · 水滴形灯组</p><a href="raster/su7.png">打开透明 PNG ↗</a></div></article></div></section>
+<section><h2>停车位尺寸预览</h2><div class="small-row"><div class="mini"><div class="mini-stage"><img src="raster/phantom.png" alt="劳斯莱斯幻影，180 像素图框"></div><b>劳斯莱斯幻影</b></div><div class="mini"><div class="mini-stage"><img src="raster/tricycle-rustic-v2.png" alt="老伙计 · 农用三蹦子，180 像素图框"></div><b>老伙计 · 农用三蹦子</b></div><div class="mini"><div class="mini-stage"><img src="raster/su7.png" alt="小米 SU7，180 像素图框"></div><b>小米 SU7</b></div></div></section>
+<section class="note"><p>三蹦子的笑点来自比例和车况：小小的摩托车头，拖着一个大货斗；旁边是两辆精致的新车。旧漆、锈迹和补板强化反差，仍保留能正常干活的样子。</p><p>本轮三蹦子由内置 imagegen 按反馈重绘，已不对应早期参考商品的具体车型。完整提示词与来源记录见 <a href="sources.json">sources.json</a>。</p></section>
+<details><summary>历史稿与素材来源</summary><p><a href="preview-v1.html">第一轮图片 / SVG 对照</a> · <a href="raster/tricycle.png">旧版带棚三蹦子</a>。SVG 保留为历史稿。</p><p>劳斯莱斯与 SU7 沿用第一轮网络参考图加工素材，原图及衍生图的上线使用许可尚待确认。完整来源保存在素材记录中。</p></details>
+<footer>180 × 139 px 缩略图框 · 独立素材预览，车辆选择功能尚未接入业务页面</footer>
+</main></body></html>

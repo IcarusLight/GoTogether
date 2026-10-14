@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" role="img" aria-labelledby="title desc">
+<title id="title">劳斯莱斯幻影风格 · SVG 概念稿</title><desc id="desc">银白车身、深蓝车顶，长车头、直立镀铬格栅和多辐轮毂，斜俯视角。</desc>
+<defs>
+ <linearGradient id="body" x2="0.3" y2="1"><stop stop-color="#faf7ed"/><stop offset="1" stop-color="#aebcbf"/></linearGradient>
+ <linearGradient id="side" x2="0.1" y2="1"><stop stop-color="#dce3e0"/><stop offset="1" stop-color="#92a6ad"/></linearGradient>
+ <linearGradient id="glass" x2="0.8" y2="1"><stop stop-color="#74919a"/><stop offset="1" stop-color="#263d4b"/></linearGradient>
+ <linearGradient id="chrome"><stop stop-color="#f7f6e9"/><stop offset=".35" stop-color="#82959c"/><stop offset=".65" stop-color="#fffdf3"/><stop offset="1" stop-color="#83949b"/></linearGradient>
+ <g id="wheel"><ellipse rx="22" ry="30" fill="#273138" stroke="#15242b" stroke-width="3"/><ellipse rx="16" ry="23" fill="#a9b6b9"/><ellipse rx="12" ry="18" fill="#52636b"/><g stroke="#dce2dd" stroke-width="3"><path d="M0-20V20M-14 0H14M-10-14 10 14M-10 14 10-14M-5-19 5 19M-13-7 13 7M-13 7 13-7M-5 19 5-19"/></g><ellipse rx="5" ry="7" fill="#394b55" stroke="#e5e7dc" stroke-width="1.5"/></g>
+</defs>
+<ellipse cx="241" cy="252" rx="172" ry="23" fill="#243d35" opacity=".13" transform="rotate(-18 241 252)"/>
+<path d="m73 206 101 39 229-79-99-40Z" fill="#23323b"/>
+<use href="#wheel" transform="translate(87 209) rotate(17) scale(.78)"/>
+<use href="#wheel" transform="translate(329 139) rotate(17) scale(.78)"/>
+<!-- Lower body: distinct near flank, hood and upright front. -->
+<path d="m166 191 237-82q15 5 16 20l-2 56-13 6q-1-39-27-35t-26 55l-131 45q-1-44-29-37t-25 50l-12-7Z" fill="url(#side)" stroke="#748b93" stroke-width="2"/>
+<path d="m56 157 114 39 241-81-110-37Z" fill="url(#body)" stroke="#7f9299" stroke-width="2"/>
+<path d="m62 163 101 35 99-33-104-35Z" fill="#293e50"/>
+<path d="m75 161 84-26 89 30-84 28Z" fill="#3c5060"/>
+<path d="m56 157 114 39 1 64-109-39q-10-4-10-16v-33q0-10 4-15Z" fill="url(#body)" stroke="#748b93" stroke-width="2"/>
+<path d="m55 205 115 40v10L58 217Z" fill="#526771"/>
+<path d="m59 211 108 37" stroke="#f5f5e9" stroke-width="3"/>
+<!-- Formal cabin with a long, almost level roof. -->
+<path d="m153 130 53-64q12-12 27-8l97 30 67 36-135 46Z" fill="#253b4c" stroke="#5b737e" stroke-width="2"/>
+<path d="m211 64 110 31 63-22-107-30q-12-3-23 1Z" fill="#354a5b"/>
+<path d="m211 69 101 29-49 62-96-31Z" fill="url(#glass)" stroke="#d6ded9" stroke-width="3"/>
+<path d="m223 75 26 8-48 54-23-8Z" fill="#b6ced0" opacity=".35"/>
+<path d="m312 98 70-24 23 46-134 47Z" fill="url(#glass)" stroke="#c1cecc" stroke-width="3"/>
+<path d="m346 88 14 48m23-61 17 42" stroke="#263b49" stroke-width="7"/>
+<path d="m266 174 137-47" stroke="#f9f7ec" stroke-width="2"/>
+<path d="m295 165 2 66m58-86 4 62" stroke="#859ba2" stroke-width="1.5" fill="none"/>
+<path d="m304 177 19-6m18-6 12-4" stroke="#f7f6ed" stroke-width="4" stroke-linecap="round"/>
+<path d="m256 154 15-5 12 4v10l-17 6-12-5Z" fill="#d2dcd8" stroke="#7e959e" stroke-width="2"/>
+<!-- Large chrome grille, intentionally readable at thumbnail size. -->
+<path d="m78 175 61 21v43l-61-22Z" fill="#253740" stroke="url(#chrome)" stroke-width="5"/>
+<g stroke="#e3e7df" stroke-width="2"><path d="m84 180v34m7-32v35m7-32v35m7-32v35m7-32v35m7-32v35m7-32v35m7-32v35"/></g>
+<path d="m57 169 15 5v13l-15-5Zm89 31 18 6v13l-18-6Z" fill="#f9f5d8" stroke="#667d86" stroke-width="2"/>
+<path d="m60 175 9 3m80 29 11 4" stroke="#fffdf3" stroke-width="3"/>
+<path d="m101 168 2-13m-2 5-5-8 8 5 7-3-6 8" fill="none" stroke="#dce1d9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="m90 230 36 12v9l-36-12Z" fill="#243945"/><path d="m96 235 23 8" stroke="#dce4df" stroke-width="2"/>
+<use href="#wheel" transform="translate(192 250) rotate(17)"/>
+<use href="#wheel" transform="translate(379 185) rotate(17) scale(.9)"/>
+<path d="m225 244 117-40" stroke="#eef0e7" stroke-width="3" stroke-linecap="round"/>
+</svg>

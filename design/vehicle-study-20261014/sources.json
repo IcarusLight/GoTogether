@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-14",
+  "purpose": "已选定第一种透明图片方案并接入网页；三蹦子采用大货斗旧农用款。保留原始素材、历史稿与来源记录。",
+  "webAssets": "static/vehicles/phantom.webp、tricycle.webp、su7.webp；由已选定 PNG 裁去透明留白、等比缩放并转为 WebP，保留透明背景。",
+  "defaultRepresentation": "raster",
+  "activePreview": "selected-preview-v2.html",
+  "svgStatus": "历史探索稿，当前方案不再使用或继续绘制。",
+  "rasterMethod": "内置 image_gen 根据参考图制作透明背景 PNG，含局部重绘与三蹦子视角调整，并非原模型渲染。",
+  "svgMethod": "手工编写的可编辑 SVG 特征重绘；车型比例有简化，不是精确复刻。",
+  "items": [
+    {
+      "id": "phantom",
+      "name": "劳斯莱斯幻影",
+      "reference": "references/phantom.png",
+      "source": "https://superhivemarket.com/products/rolls-royce-phantom-3d-model",
+      "creator": "Munishkumar",
+      "licenseStatus": "商品页标注 Editorial；本次仅作参考与风格评估，尚未获得产品上线许可。",
+      "notes": "模型展示图参考；银白车身、深蓝车顶、直立竖格栅。",
+      "raster": "raster/phantom.png",
+      "svg": "svg/phantom.svg",
+      "prompt": "Use case: style-transfer. Asset: isolated vehicle sprite for a small fixed-view parking website. Use the provided image as shape and vehicle-identity reference, not as a background. Produce ONE Rolls-Royce Phantom, long formal sedan, silver-white lower body with navy hood and roof, tall upright chrome vertical-slat grille, rectangular headlights, hood ornament, large radial-spoke wheels. Faithful semi-realistic miniature/model-car appearance, very light simplification only, crisp detailed silhouette that reads at 180px. Front three-quarter view facing toward lower LEFT, camera elevated about 20 degrees so the hood and roof are visible; whole vehicle centered with generous margin, no cropping, all visible wheels grounded at consistent level. Preserve distinctive real vehicle geometry and proportions, clean softly lit product render. Transparent background with a restrained soft contact shadow only. No ground plane, scenery, frame, labels, captions, promotional logos outside the vehicle, or extra vehicles. This is a visual exploration derived from a reference; do not invent a 3D asset."
+    },
+    {
+      "id": "tricycle",
+      "name": "老伙计 · 农用三蹦子",
+      "reference": "references/tricycle.webp",
+      "source": "https://jinpenggroup.en.made-in-china.com/product/zOxaUgjGORpy/China-Jinpeng-Factory-Direct-Sale-Closed-Cabin-Three-Wheel-Electric-Tricycle-for-Passenger-and-Cargo-Use.html",
+      "creator": "Jiangsu Jinpeng Group / Made-in-China 商品展示",
+      "licenseStatus": "未见授予图片再使用的明确许可；本次仅作参考与风格评估。",
+      "notes": "v2 按用户反馈改为开放式摩托车头与加长大货斗，旧漆、锈迹、修补座椅。原商品图仅为早期参考，当前外形由内置 imagegen 重绘生成，不对应原商品车型。",
+      "raster": "raster/tricycle-rustic-v2.png",
+      "previousRaster": "raster/tricycle.png",
+      "currentPrompt": "Edit target: existing enclosed-cabin red-and-cream tricycle sprite. Replace its entire vehicle design with a delightfully shabby old Chinese rural CARGO motor tricycle (农用三蹦子), not a luxury enclosed electric microcar. The comic charm should come naturally from a tiny scruffy motorcycle-style front pulling an oversized long EMPTY drop-side cargo bed, about two thirds of the vehicle length. Exactly THREE wheels mechanically: one single narrow front wheel attached to exposed motorcycle forks and two rear wheels on one axle under the cargo bed, with physically sensible occlusion. Simple open handlebars, one weathered round headlamp, exposed old engine, worn brown saddle with a small repair patch, no enclosed cabin, no windshield, no roof, no sleek LED lamps. Dented faded brick-red painted steel bed with rusty seams, chipped paint, dusty tires, humble hand-welded repairs and one mismatched faded blue side panel. Old but functional and endearing, not destroyed, no smoke or trash. Keep a semi-realistic model-car/product render look consistent with the other vehicles, NOT a flat illustration or SVG. Front three-quarter view facing LOWER LEFT, elevated camera about 20 degrees, whole vehicle isolated centered with generous transparent margins, no crop. True transparent background with only a soft grounded contact shadow. No people, cargo, scenery, text, labels, watermarks, or brand emblems. The vehicle should be comically utilitarian next to a Rolls-Royce and a Xiaomi SU7, recognizable at 180px.",
+      "svg": "svg/tricycle.svg",
+      "prompt": "Use case: style-transfer. Asset: isolated vehicle sprite for a small fixed-view parking website. Use the provided image as shape and vehicle-identity reference, not as a background. Produce ONE Chinese enclosed-cabin three-wheel motor tricycle, red and cream body, high narrow boxy cabin, tiny short rear cargo bed, exactly ONE central front wheel and TWO rear wheels, black windows, roof lamps; preserve the Chinese utility vehicle character. Faithful semi-realistic miniature/model-car appearance, very light simplification only, crisp detailed silhouette that reads at 180px. Front three-quarter view facing toward lower LEFT, camera elevated about 20 degrees so the hood and roof are visible; whole vehicle centered with generous margin, no cropping, all visible wheels grounded at consistent level. Preserve distinctive real vehicle geometry and proportions, clean softly lit product render. Transparent background with a restrained soft contact shadow only. No ground plane, scenery, frame, labels, captions, promotional logos outside the vehicle, or extra vehicles. This is a visual exploration derived from a reference; do not invent a 3D asset."
+    },
+    {
+      "id": "su7",
+      "name": "小米 SU7",
+      "reference": "references/su7.jpg",
+      "source": "https://www.renderhub.com/mantangcg/2024-xiaomi-su7-with-interior",
+      "creator": "MantangCG",
+      "licenseStatus": "页面提供模型下载；尚未确认展示图片与衍生素材的产品上线许可。",
+      "notes": "模型商品展示图参考，页面含 AI 图像标识；用于造型探索，不作为精确车型证据。",
+      "raster": "raster/su7.png",
+      "svg": "svg/su7.svg",
+      "prompt": "Use case: style-transfer. Asset: isolated vehicle sprite for a small fixed-view parking website. Use the provided image as shape and vehicle-identity reference, not as a background. Produce ONE Xiaomi SU7, turquoise aqua body, low flowing fastback sedan, distinctive rounded triangular teardrop headlights with horizontal inner light bar, black glass roof, dark sporty alloy wheels, roof lidar. Faithful semi-realistic miniature/model-car appearance, very light simplification only, crisp detailed silhouette that reads at 180px. Front three-quarter view facing toward lower LEFT, camera elevated about 20 degrees so the hood and roof are visible; whole vehicle centered with generous margin, no cropping, all visible wheels grounded at consistent level. Preserve distinctive real vehicle geometry and proportions, clean softly lit product render. Transparent background with a restrained soft contact shadow only. No ground plane, scenery, frame, labels, captions, promotional logos outside the vehicle, or extra vehicles. This is a visual exploration derived from a reference; do not invent a 3D asset."
+    }
+  ]
+}

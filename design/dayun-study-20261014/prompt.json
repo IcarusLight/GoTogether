@@ -1,0 +1,21 @@
+{
+  "mode": "built-in image_gen",
+  "intent": "generate",
+  "prompt": "Use case: product-mockup\nAsset type: a single transparent vehicle sprite for a friendly carpool website, matching a realistic vehicle product render collection.\nPrimary request: Draw one recognizable Chinese DAYUN 大运 heavy truck, complete rigid-body dump truck with a bright red cab and matching red large high-sided cargo bed, black chassis, three axles and realistic large heavy-duty wheels. DAYUN styling with a tall squared cab, broad dark grille, silver emblem, clean readable small \"大运\" branding on the grille if possible. Compact but believable proportions.\nScene/backdrop: completely transparent background, actual alpha, no landscape or floor.\nStyle/medium: realistic detailed studio product visualization, crisp edges, gentle soft lighting, subtle contact shadow immediately beneath tires only. No toy/cartoon stylization.\nComposition/framing: front-left three-quarter view, nose faces left, show front grille and the visible long side of cargo body. Whole truck centered in landscape 3:2 composition. Include ALL mirrors, tires, cab roof and rear cargo bed; leave generous transparent margin of at least 6% on all four sides, no clipping.\nMaterials/textures: glossy fire-engine red painted steel cab and cargo bed, dark windows, black rubber wheels, brushed metal wheel hubs and silver accents.\nConstraints: exactly one complete truck; no people, no extra vehicle, no platform, no border, no watermark, no added caption, no scenery. Cargo bed level and closed; no dirt cargo or construction equipment. Keep clear truck silhouette readable at 640 x 440 pixels.",
+  "source": "dayun.png",
+  "output": "../../static/vehicles/dayun.webp",
+  "export": {
+    "width": 640,
+    "height": 440,
+    "fit": "contain",
+    "innerCanvas": [
+      608,
+      408
+    ],
+    "padding": 16,
+    "format": "webp",
+    "quality": 92,
+    "alphaQuality": 100
+  },
+  "previewBackground": "#dfe9cd"
+}

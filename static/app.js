@@ -16,6 +16,48 @@ if (liveScene) {
   let pending = null;
   let lastScroll = 0;
 
+  // Keep MEGA in the current row when moving one ordinary car makes room.
+  function arrangeParking(root) {
+    const parking = root.querySelector('.parking');
+    const columns = window.matchMedia('(min-width: 1300px)').matches ? 3 : 2;
+    const cars = [...parking.querySelectorAll('[data-parking-index]')]
+      .sort((a, b) => Number(a.dataset.parkingIndex) - Number(b.dataset.parkingIndex));
+    const width = car => car.classList.contains('spot-wide') ? 2 : 1;
+    const ordered = [];
+    let row = [];
+    let occupied = 0;
+    for (const car of cars) {
+      const spaces = width(car);
+      if (occupied + spaces > columns) {
+        if (spaces === 2 && occupied === columns - 1 && width(row[row.length - 1]) === 1) {
+          const displaced = row.pop();
+          ordered.push(...row, car);
+          row = [displaced];
+          occupied = 1;
+          continue;
+        }
+        ordered.push(...row);
+        row = [];
+        occupied = 0;
+      }
+      row.push(car);
+      occupied += spaces;
+      if (occupied === columns) {
+        ordered.push(...row);
+        row = [];
+        occupied = 0;
+      }
+    }
+    ordered.push(...row);
+    const active = document.activeElement;
+    ordered.forEach((car, index) => {
+      if (parking.children[index] !== car) parking.insertBefore(car, parking.children[index]);
+    });
+    if (parking.contains(active) && document.activeElement !== active) active.focus({ preventScroll: true });
+  }
+  arrangeParking(liveScene);
+  window.matchMedia('(min-width: 1300px)').addEventListener('change', () => arrangeParking(liveScene));
+
   function select(root, value) {
     root.querySelectorAll('[data-select]').forEach(item => item.setAttribute('aria-pressed', String(item.dataset.select === value)));
     root.querySelectorAll('[data-detail]').forEach(panel => { panel.hidden = panel.dataset.detail !== value; });
@@ -163,6 +205,7 @@ if (liveScene) {
       selected = incoming.querySelector('[data-plaza]').dataset.focus;
     }
     select(incoming, selected);
+    arrangeParking(incoming);
     const x = window.scrollX;
     const y = window.scrollY;
     patch(liveScene, incoming);

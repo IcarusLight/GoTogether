@@ -121,8 +121,10 @@ nav a:hover { text-decoration: underline; }
 .world { padding: 22px 20px 0; background: var(--grass); border-radius: 18px; overflow: clip; }
 .zone-heading { margin-bottom: 12px; }
 .zone-heading .muted { font-size: 13px; }
-.parking { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 185px), 1fr)); gap: 14px; padding-bottom: 16px; }
+.parking { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding-bottom: 16px; }
 .spot { border: 0; padding: 0 8px 14px; background: transparent; display: grid; justify-items: center; gap: 3px; border-radius: 16px; min-width: 0; }
+.spot-wide { grid-column: span 2; position: relative; }
+.spot-wide::before { content: ''; position: absolute; inset: 8px 4px auto; height: 126px; border: 1px dashed var(--lane); border-radius: 14px; background: linear-gradient(to right, transparent calc(50% - .5px), var(--lane) calc(50% - .5px), var(--lane) calc(50% + .5px), transparent calc(50% + .5px)); pointer-events: none; }
 .spot:hover:not(:disabled), .spot[aria-pressed=true] { background: light-dark(#f9fff688, #b8cba022); }
 .model-stage { width: 180px; max-width: 100%; height: 139px; position: relative; }
 .car-model { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform-origin: center 80%; pointer-events: none; user-select: none; }
@@ -189,9 +191,9 @@ tbody tr:last-child td { border-bottom: 0; }
 @keyframes train-arrive { from { transform: translateX(-35px) rotateY(-15deg) rotateX(8deg); } to { transform: translateX(0) rotateY(-15deg) rotateX(8deg); } }
 @keyframes door-open { 0%, 100% { transform: scaleX(1); } 45%, 70% { transform: scaleX(.35); } }
 @media (min-width: 1300px) { .parking { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 900px) { .identity-layout { gap: 32px; margin: 35px auto; } .identity-intro h1 { font-size: 34px; } .plaza-layout { grid-template-columns: 1fr; } .parking { grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); } .selection-panel { padding: 20px; } .seat-map { max-width: 380px; } }
+@media (max-width: 900px) { .identity-layout { gap: 32px; margin: 35px auto; } .identity-intro h1 { font-size: 34px; } .plaza-layout { grid-template-columns: 1fr; } .selection-panel { padding: 20px; } .seat-map { max-width: 380px; } }
 @media (max-width: 600px) { .site-header { padding: 15px 16px; gap: 12px; } nav { gap: 14px; font-size: 14px; } .main { padding: 22px 14px 14px; } h1 { font-size: 26px; } .identity-layout, .two-columns { grid-template-columns: 1fr; } .identity-layout { gap: 26px; margin: 12px auto; } .identity-intro { gap: 14px; } .identity-intro h1 { font-size: 32px; } .journey-steps { display: none; } .panel { padding: 20px; } .my-arrangement { padding: 16px; } .world { padding: 16px 10px 0; } .road { margin: 0 -10px; } .transit-zone { margin: 0 -10px; padding: 16px 10px; } .station { grid-template-columns: minmax(0, 1fr) 90px; gap: 4px; } .parking { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; } .new-vehicle { margin: 10px 3px; min-height: 175px; } .scene-footer { gap: 14px; } .zone-heading h2, .transit-zone h2 { font-size: 18px; } }
 @media (max-width: 480px) { .vehicle-options { grid-template-columns: 1fr; } .vehicle-choice { grid-template-columns: 110px 1fr; align-items: center; align-content: center; padding: 8px 10px 8px 34px; text-align: left; } .vehicle-choice input { top: calc(50% - 8px); } }
-@media (max-width: 390px) { .model-stage { height: 122px; } .boarding .car-model, .vehicle-arriving .car-model { animation: none; } .model-label { font-size: 13px; } .model-caption { font-size: 12px; } .spot { padding: 0 2px 12px; } .brand small { display: none; } }
+@media (max-width: 390px) { .model-stage { height: 122px; } .spot-wide::before { height: 109px; } .boarding .car-model, .vehicle-arriving .car-model { animation: none; } .model-label { font-size: 13px; } .model-caption { font-size: 12px; } .spot { padding: 0 2px 12px; } .brand small { display: none; } }
 @media (pointer: coarse) { button, .button, nav a { min-height: 44px; } nav a { display: inline-flex; align-items: center; } }
 @media (prefers-reduced-motion: reduce) { *, *:before, *:after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

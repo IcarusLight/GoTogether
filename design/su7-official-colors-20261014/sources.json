@@ -18,7 +18,7 @@
         "carSsuId": "610099105589"
       }
     ],
-    "pathPattern": "static/vehicles/su7/swatch-<color>.png"
+    "pathPattern": "static/vehicles/su7/swatches/<color>.png"
   },
   "export": {
     "format": "webp",

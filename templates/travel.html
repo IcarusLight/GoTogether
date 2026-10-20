@@ -34,7 +34,7 @@
       <div class="color-options">
         {% for color, label in colors.items() %}<label class="color-choice{% if is_skin %} skin-choice{% endif %}">
           <input type="radio" name="{{ option_field }}" value="{{ color }}" data-color-image="{{ url_for('static', filename=vehicle_image(appearance, color)) }}"{% if selected_color == color %} checked{% endif %}>
-          {% if is_skin %}<img src="{{ url_for('static', filename=vehicle_image(appearance, color)) }}" alt="" width="640" height="440" draggable="false">{% else %}<img src="{{ url_for('static', filename='vehicles/' ~ appearance ~ '/swatch-' ~ color ~ '.png') }}" alt="" width="28" height="28">{% endif %}
+          {% if is_skin %}<img src="{{ url_for('static', filename=vehicle_image(appearance, color)) }}" alt="" width="640" height="440" draggable="false">{% else %}<img src="{{ url_for('static', filename='vehicles/' ~ appearance ~ '/swatches/' ~ color ~ '.png') }}" alt="" width="28" height="28">{% endif %}
           <span>{{ label }}{% if color == 'default' %}（默认）{% endif %}</span>
         </label>{% endfor %}
       </div>

@@ -22,12 +22,8 @@ VEHICLE_COLORS = {
 
 
 def vehicle_image(appearance, color='default'):
-    if appearance in VEHICLE_COLORS:
-        color = color if color in VEHICLE_COLORS[appearance] else 'default'
-        if appearance == 'yadea':
-            return 'vehicles/yadea.webp' if color == 'default' else 'vehicles/yadea/meituan.png'
-        return f'vehicles/{appearance}/{color}.webp'
-    return f'vehicles/{appearance}.webp'
+    color = color if color in VEHICLE_COLORS.get(appearance, {}) else 'default'
+    return f'vehicles/{appearance}/{color}.webp'
 
 
 class UserError(Exception):

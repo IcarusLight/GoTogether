@@ -1,0 +1,116 @@
+{
+  "created": "2026-10-20",
+  "revision": 2,
+  "model": "han",
+  "skins": [
+    "default",
+    "didi"
+  ],
+  "size": [
+    640,
+    440
+  ],
+  "webp": "lossless RGBA",
+  "generationMode": "built-in image_gen",
+  "originalSourceSizes": {
+    "red": [
+      1513,
+      1040
+    ],
+    "didi": [
+      1512,
+      1040
+    ]
+  },
+  "redFilesUnchangedFromV1": true,
+  "repoEdited": false,
+  "appIntegrationPerformed": false,
+  "qaReport": "docs/export-qa.json",
+  "files": [
+    {
+      "path": "README-接入说明.md",
+      "bytes": 8675,
+      "sha256": "2976591042aa6b0c1f858ec6f137fd3d12dc36fb580ebc0a4d2709ccba17b323"
+    },
+    {
+      "path": "docs/didi-prompt.txt",
+      "bytes": 1778,
+      "sha256": "a030fc890f66572ca76edcfca5a6ead23413cf8470324561650d77d4cbc543f3"
+    },
+    {
+      "path": "docs/didi-revision-notes.md",
+      "bytes": 3012,
+      "sha256": "ed64bbb53f6bc5c774a418e0228bd203a13fae2b638598106c5399e749945c83"
+    },
+    {
+      "path": "docs/didi-v2-prompt.txt",
+      "bytes": 2683,
+      "sha256": "3d9acf67acfcc3d9a1bb4955159203253b901e6dd5f110b80e4e0b0440335ecc"
+    },
+    {
+      "path": "docs/export-qa.json",
+      "bytes": 996,
+      "sha256": "557c5dd8a08aa5d59a093c4789e5cef9aa04be5b947d86dc68d668972e7f3849"
+    },
+    {
+      "path": "docs/red-prompt.txt",
+      "bytes": 2251,
+      "sha256": "eb6af8ca7d92dfa4582febd456d22973716c03a20ed3b65968c39f1d4d236d22"
+    },
+    {
+      "path": "export_assets.py",
+      "bytes": 4212,
+      "sha256": "630578ae019494c0282b470f405f66628c885b6f6525364cfd70feb4ef2df412"
+    },
+    {
+      "path": "png/han-default.png",
+      "bytes": 278521,
+      "sha256": "86807abddbd5df4116e13c4d301dfd0334727f93e2225f7b6d44fc0a76bc2fd2"
+    },
+    {
+      "path": "png/han-didi.png",
+      "bytes": 246817,
+      "sha256": "edcb5bb4779126237d82aba211187b0d33669daaba5e0c08de322f1833d08df9"
+    },
+    {
+      "path": "preview/han-contact-sheet.jpg",
+      "bytes": 469600,
+      "sha256": "201fb1b6a4e91ad3841a7d78736ae557349305d88107a3a6146dce15d88fba5b"
+    },
+    {
+      "path": "preview/han-didi-before-after.jpg",
+      "bytes": 129854,
+      "sha256": "5d91fd104a703d38a5a5221a87ea1757da403f223f516117b6636fbaa0f313b7"
+    },
+    {
+      "path": "preview/han-two-variants.jpg",
+      "bytes": 135530,
+      "sha256": "b4b7031fd7522aac667a54b968cca290bc87b5e5b4167ba07a8238eaad33dd40"
+    },
+    {
+      "path": "sources/han-didi-source.png",
+      "bytes": 1264914,
+      "sha256": "d77246175329abb12d4168d768c97240e10ee54c410eaf1eae3b88fec23756c8"
+    },
+    {
+      "path": "sources/han-red-source.png",
+      "bytes": 1439972,
+      "sha256": "0a9c6b4b74779db0e948c108b28d015596a46a2e16c7049727a4e49dd78210d0"
+    },
+    {
+      "path": "sources.json",
+      "bytes": 1911,
+      "sha256": "b6e2c4224070ca0a7d3ddffd71deb34cffc95a7792a7b804710dcf3beec8c454"
+    },
+    {
+      "path": "static/vehicles/han/default.webp",
+      "bytes": 194222,
+      "sha256": "91c2d1803190445305cc70897dabab12c38101dac2719f3fd2c7317e43f5040b"
+    },
+    {
+      "path": "static/vehicles/han/didi.webp",
+      "bytes": 151988,
+      "sha256": "44dd2c2945d0150b73073b663d3d290df247ac93a336753efdc47b1e3fad6ac3"
+    }
+  ]
+}

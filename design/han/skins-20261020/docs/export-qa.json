@@ -1,0 +1,62 @@
+{
+  "canvas": [
+    640,
+    440
+  ],
+  "source_normalized_canvas": [
+    1513,
+    1040
+  ],
+  "common_crop": [
+    28,
+    145,
+    1494,
+    918
+  ],
+  "common_scaled_size": [
+    620,
+    327
+  ],
+  "common_offset": [
+    10,
+    56
+  ],
+  "webp": "lossless, method=6, exact=True",
+  "assets": {
+    "default": {
+      "bytes": 194222,
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "transparentPixels": 132676,
+      "partialAlphaPixels": 148013,
+      "opaquePixels": 911,
+      "alphaAbove10BBox": [
+        12,
+        58,
+        628,
+        381
+      ],
+      "pngMatchesWebpExactly": true
+    },
+    "didi": {
+      "bytes": 151988,
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "transparentPixels": 145684,
+      "partialAlphaPixels": 134737,
+      "opaquePixels": 1179,
+      "alphaAbove10BBox": [
+        12,
+        57,
+        629,
+        375
+      ],
+      "pngMatchesWebpExactly": true
+    }
+  },
+  "highAlphaSilhouetteIoU": 0.9926513261529881
+}

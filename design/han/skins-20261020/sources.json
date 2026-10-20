@@ -1,0 +1,37 @@
+{
+  "pathBase": "project-root",
+  "vehicleId": "han",
+  "importedFrom": "han-two-skins-assets (1).zip",
+  "revision": 2,
+  "originalSources": "design/han/skins-20261020/sources-original.json",
+  "originalManifest": "design/han/skins-20261020/manifest.json",
+  "exportReport": "design/han/skins-20261020/docs/export-qa.json",
+  "assets": [
+    {
+      "variantId": "default",
+      "sourceFile": "design/han/skins-20261020/sources/han-red-source.png",
+      "productionFile": "static/vehicles/han/default.webp",
+      "promptFile": "design/han/skins-20261020/docs/red-prompt.txt",
+      "sha256": "91c2d1803190445305cc70897dabab12c38101dac2719f3fd2c7317e43f5040b"
+    },
+    {
+      "variantId": "didi",
+      "sourceFile": "design/han/skins-20261020/sources/han-didi-source.png",
+      "productionFile": "static/vehicles/han/didi.webp",
+      "promptFile": "design/han/skins-20261020/docs/didi-v2-prompt.txt",
+      "sha256": "44dd2c2945d0150b73073b663d3d290df247ac93a336753efdc47b1e3fad6ac3"
+    }
+  ],
+  "export": {
+    "width": 640,
+    "height": 440,
+    "format": "webp",
+    "lossless": true,
+    "alpha": true,
+    "sourceNormalizedCanvas": [1513, 1040],
+    "commonCrop": [28, 145, 1494, 918],
+    "commonScaledSize": [620, 327],
+    "commonOffset": [10, 56],
+    "import": "Original exported files copied unchanged; archive manifest hashes verified."
+  }
+}

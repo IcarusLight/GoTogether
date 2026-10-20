@@ -12,13 +12,16 @@ VEHICLE_APPEARANCES = {
     'phantom': '劳斯莱斯幻影', 'tricycle': '农用三蹦子', 'su7': '小米 SU7',
     'v800': '尊界 V800', 'kart': '卡丁车', 'yadea': '雅迪电动车', 'horse-carriage': '宝马马车',
     'wuling': '五菱宏光', 'dayun': '大运卡车', 'mega': '理想 MEGA', 'ct5': '凯迪拉克 CT5 · 黑色',
+    'han': '比亚迪汉',
 }
 DEFAULT_VEHICLE_APPEARANCE = 'su7'
 VEHICLE_COLORS = {
     'su7': {'default': '卡布里蓝', 'sunset-purple': '霞光紫', 'elegant-gray': '雅灰',
             'pearl-white': '珍珠白', 'obsidian-black': '曜石黑'},
     'yadea': {'default': '原版', 'meituan': '美团外卖 · 黄色外卖箱'},
+    'han': {'default': '红色原版', 'didi': '滴滴出行'},
 }
+VEHICLE_SKIN_FIELDS = {'yadea': 'skin', 'han': 'skin_han'}
 
 
 def vehicle_image(appearance, color='default'):
@@ -47,13 +50,13 @@ def initialize(path):
         if version == 0:
             sql = Path(__file__).with_name('schema.sql').read_text(encoding='utf-8')
             db.executescript('BEGIN IMMEDIATE;\n' + sql + '\nCOMMIT;')
-        elif version in (1, 2, 3, 4, 5, 6, 7, 8, 9):
+        elif version in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10):
             if sqlite3.sqlite_version_info < (3, 35, 0):
                 raise RuntimeError('升级旧数据库需要 SQLite 3.35 或更新版本，请更新 Python 使用的 SQLite 后重试。')
             sql = '\n'.join((Path(__file__).parent / 'migrations' / f'migration_{target}.sql').read_text(encoding='utf-8')
-                            for target in range(version + 1, 11))
+                            for target in range(version + 1, 12))
             db.executescript('BEGIN IMMEDIATE;\n' + sql + '\nCOMMIT;')
-        elif version != 10:
+        elif version != 11:
             raise RuntimeError('数据库版本不匹配，请使用与数据版本对应的程序。')
     finally:
         db.close()
@@ -254,10 +257,10 @@ def save_travel(db, event_id, person, values, admin=False):
             color = 'default'
             if appearance in VEHICLE_COLORS:
                 # Skins share color storage; separate form names keep radio groups independent.
-                option_field = 'skin' if appearance == 'yadea' else 'color'
+                option_field = VEHICLE_SKIN_FIELDS.get(appearance, 'color')
                 color = values.get(option_field, previous['color'] if previous and previous['appearance'] == appearance else 'default')
                 if color not in VEHICLE_COLORS[appearance]:
-                    raise UserError('请选择有效的车辆皮肤。' if appearance == 'yadea' else '请选择有效的车辆颜色。')
+                    raise UserError('请选择有效的车辆皮肤。' if appearance in VEHICLE_SKIN_FIELDS else '请选择有效的车辆颜色。')
         if mode == 'ride':
             car = db.execute('SELECT * FROM vehicles WHERE id = ? AND event_id = ?', (vehicle_id, event_id)).fetchone()
             if car is None:

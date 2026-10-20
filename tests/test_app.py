@@ -409,7 +409,7 @@ class TravelTests(unittest.TestCase):
         store.remind(legacy, 'old', '后台提醒', '已有提醒')
         store.initialize(path)
         store.initialize(path)
-        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 10)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 11)
         self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
         before = store.snapshot(legacy, 'old', private=True)
         self.assertEqual(before['cars'][0]['remaining'], 1)
@@ -434,7 +434,7 @@ class TravelTests(unittest.TestCase):
         store.initialize(path)
         store.initialize(path)
         state = store.snapshot(legacy, event)
-        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 10)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 11)
         self.assertEqual((state['cars'][0]['departure'], state['cars'][0]['plate']), ('南门', ''))
         self.assertEqual(state['cars'][0]['appearance'], 'su7')
         self.assertEqual((state['waiting'][0]['pickup'], state['waiting'][0]['earliest']), ('北门', '08:30'))
@@ -454,7 +454,7 @@ class TravelTests(unittest.TestCase):
         store.initialize(path)
         store.initialize(path)
         car = store.snapshot(legacy, event)['cars'][0]
-        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 10)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 11)
         self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
         self.assertEqual((car['id'], car['plate'], car['appearance'], car['remaining']), (vehicle, '粤B12345', 'su7', 1))
         self.assertEqual(car['passengers'][0]['name'], '乘客')
@@ -484,12 +484,12 @@ class TravelTests(unittest.TestCase):
         self.assertEqual(store.snapshot(legacy, event), before)
         store.initialize(path)
         store.initialize(path)
-        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 10)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 11)
         for car in before['cars']:
             car['color'] = 'default'
         self.assertEqual(store.snapshot(legacy, event), before)
         self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
-        for appearance in ('v800', 'kart', 'yadea', 'horse-carriage', 'wuling', 'dayun', 'mega', 'ct5'):
+        for appearance in ('v800', 'kart', 'yadea', 'horse-carriage', 'wuling', 'dayun', 'mega', 'ct5', 'han'):
             with self.subTest(appearance=appearance):
                 vehicle = store.save_travel(legacy, event, appearance,
                                            {'mode': 'drive', 'revision': '', 'capacity': '1', 'appearance': appearance,
@@ -516,7 +516,7 @@ class TravelTests(unittest.TestCase):
         self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['appearance'], 'ct5')
         vehicle = store.registration(self.db, self.event, '司机')['vehicle_id']
         self.save('乘客', 'ride', vehicle_id=str(vehicle))
-        for appearance in ('phantom', 'tricycle', 'v800', 'kart', 'yadea', 'horse-carriage', 'wuling', 'dayun', 'mega', 'ct5', 'su7'):
+        for appearance in ('phantom', 'tricycle', 'v800', 'kart', 'yadea', 'horse-carriage', 'wuling', 'dayun', 'mega', 'ct5', 'han', 'su7'):
             params = self.sync_params(client)
             revision = store.registration(self.db, self.event, '司机')['revision']
             response = self.post(client, route, mode='drive', revision=revision, capacity='2', appearance=appearance,
@@ -579,6 +579,43 @@ class TravelTests(unittest.TestCase):
         self.save('司机', 'drive', capacity='2', appearance='su7')
         self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['color'], 'default')
 
+    def test_han_skin_round_trip_validation_and_independent_fields(self):
+        vehicle = self.save('司机', 'drive', capacity='2', appearance='han', skin_han='didi')
+        self.save('乘客', 'ride', vehicle_id=str(vehicle))
+        client = self.app.test_client()
+        self.login(client, '司机')
+        route = f'/events/{self.event}/travel'
+        for appearance, field, skin in (('han', 'skin_han', 'didi'), ('yadea', 'skin', 'meituan'),
+                                        ('su7', 'color', 'sunset-purple'), ('han', 'skin_han', 'default')):
+            params = self.sync_params(client)
+            fields = {'skin_han': 'didi', 'skin': 'meituan', 'color': 'sunset-purple', field: skin}
+            revision = store.registration(self.db, self.event, '司机')['revision']
+            response = self.post(client, route, mode='drive', revision=revision, capacity='2',
+                                 appearance=appearance, **fields)
+            self.assertEqual(response.status_code, 303)
+            car = store.snapshot(self.db, self.event)['cars'][0]
+            self.assertEqual((car['id'], car['color'], car['remaining']), (vehicle, skin, 1))
+            self.assertEqual(car['passengers'][0]['name'], '乘客')
+            form = client.get(route).get_data(as_text=True)
+            self.assertIn(f'name="{field}" value="{skin}" data-color-image="/static/vehicles/{appearance}/{skin}.webp" checked', form)
+            self.assertNotIn('vehicles/han/swatches/', form)
+            update = client.get(f'/events/{self.event}/sync', query_string=params).get_json()
+            self.assertIn(f'/static/vehicles/{appearance}/{skin}.webp', update['html'])
+        before = store.snapshot(self.db, self.event)
+        with self.assertRaisesRegex(store.UserError, '皮肤'):
+            self.save('司机', 'drive', capacity='2', skin_han='../invalid')
+        self.assertEqual(store.snapshot(self.db, self.event), before)
+        self.admin(client)
+        revision = store.registration(self.db, self.event, '司机')['revision']
+        response = self.post(client, f'/admin/events/{self.event}/travel', name='司机', mode='drive',
+                             revision=revision, capacity='2', appearance='han', skin_han='didi')
+        self.assertEqual(response.status_code, 303)
+        self.save('司机', 'drive', capacity='2')
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['color'], 'didi')
+        self.save('司机', 'drive', capacity='2', appearance='yadea')
+        self.save('司机', 'drive', capacity='2', appearance='han')
+        self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['color'], 'default')
+
     def test_v800_requires_confirmation_for_member_and_admin(self):
         for admin in (False, True):
             with self.subTest(admin=admin):
@@ -634,7 +671,7 @@ class TravelTests(unittest.TestCase):
         for car in before['cars']:
             car['color'] = 'default'
         self.assertEqual(store.snapshot(legacy, event), before)
-        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 10)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 11)
         self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
 
     def test_version_eight_migration_preserves_color_and_passengers_and_accepts_mega(self):
@@ -654,7 +691,7 @@ class TravelTests(unittest.TestCase):
         store.initialize(path)
         store.initialize(path)
         self.assertEqual(store.snapshot(legacy, event), before)
-        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 10)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 11)
         self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
         revision = store.registration(legacy, event, '司机')['revision']
         self.assertEqual(store.save_travel(legacy, event, '司机', {'mode': 'drive', 'revision': revision,
@@ -678,7 +715,7 @@ class TravelTests(unittest.TestCase):
         store.initialize(path)
         store.initialize(path)
         self.assertEqual(store.snapshot(legacy, event, private=True), before)
-        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 10)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 11)
         self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
         new_vehicle = store.save_travel(legacy, event, 'CT5 司机', {'mode': 'drive', 'revision': '',
                                        'capacity': '2', 'appearance': 'ct5'})
@@ -691,6 +728,31 @@ class TravelTests(unittest.TestCase):
         self.assertEqual(store.registration(legacy, event, '乘客')['vehicle_id'], vehicle)
         with self.assertRaises(sqlite3.IntegrityError):
             legacy.execute("UPDATE vehicles SET appearance = 'invalid'")
+        self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
+
+    def test_version_ten_migration_preserves_ct5_and_accepts_han_skin(self):
+        path = str(Path(self.temp.name) / 'version-ten.sqlite3')
+        legacy = store.connect(path)
+        self.addCleanup(legacy.close)
+        root = Path(__file__).resolve().parent.parent
+        legacy.executescript((root / 'tests/fixtures/schema_v1.sql').read_text(encoding='utf-8'))
+        for version in range(2, 11):
+            legacy.executescript((root / 'migrations' / f'migration_{version}.sql').read_text(encoding='utf-8'))
+        event = store.create_event(legacy, '司机', {'title': '旧活动', 'event_date': '2026-10-24'})
+        vehicle = store.save_travel(legacy, event, '司机', {'mode': 'drive', 'revision': '',
+                                   'capacity': '2', 'appearance': 'ct5'})
+        store.save_travel(legacy, event, '乘客', {'mode': 'ride', 'revision': '', 'vehicle_id': str(vehicle)})
+        before = store.snapshot(legacy, event, private=True)
+        store.initialize(path)
+        store.initialize(path)
+        self.assertEqual(store.snapshot(legacy, event, private=True), before)
+        self.assertEqual(legacy.execute('PRAGMA user_version').fetchone()[0], 11)
+        revision = store.registration(legacy, event, '司机')['revision']
+        self.assertEqual(store.save_travel(legacy, event, '司机', {'mode': 'drive', 'revision': revision,
+                         'capacity': '2', 'appearance': 'han', 'skin_han': 'didi'}), vehicle)
+        self.assertEqual(legacy.execute('SELECT appearance, color FROM vehicles WHERE id = ?',
+                                       (vehicle,)).fetchone()[:], ('han', 'didi'))
+        self.assertEqual(store.registration(legacy, event, '乘客')['vehicle_id'], vehicle)
         self.assertEqual(legacy.execute('PRAGMA foreign_key_check').fetchall(), [])
 
     def test_optional_plate_round_trip_and_escaping(self):

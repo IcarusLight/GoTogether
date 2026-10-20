@@ -13,7 +13,7 @@
       <div class="vehicle-options">
         {% for appearance, label in vehicle_appearances.items() %}<label class="vehicle-choice">
           <input type="radio" name="appearance" value="{{ appearance }}"{% if values.get('appearance', default_vehicle_appearance) == appearance %} checked{% endif %} data-mode-required aria-describedby="appearance-hint">
-          {% set preview_color = values.get('skin', values.get('color', 'default')) if appearance == 'yadea' else values.get('color', 'default') %}
+          {% set preview_color = values.get(vehicle_skin_fields.get(appearance, 'color'), values.get('color', 'default')) %}
           <img src="{{ url_for('static', filename=vehicle_image(appearance, preview_color if values.get('appearance', default_vehicle_appearance) == appearance else 'default')) }}"{% if appearance in vehicle_colors %} data-vehicle-preview="{{ appearance }}"{% endif %} alt="" width="640" height="440" draggable="false">
           <span>{{ label }}</span>
         </label>{% endfor %}
@@ -26,8 +26,8 @@
       <label class="check"><input type="checkbox" name="confirm_v800" value="yes"><span>同意上述声明，坚持选择该车辆</span></label>
     </div></noscript>
     {% for appearance, colors in vehicle_colors.items() %}
-    {% set is_skin = appearance == 'yadea' %}
-    {% set option_field = 'skin' if is_skin else 'color' %}
+    {% set is_skin = appearance in vehicle_skin_fields %}
+    {% set option_field = vehicle_skin_fields.get(appearance, 'color') %}
     {% set selected_color = values.get(option_field, values.get('color', 'default')) if values.get('appearance', default_vehicle_appearance) == appearance else 'default' %}
     <fieldset class="color-picker" data-color-picker="{{ appearance }}"><legend>{{ vehicle_appearances[appearance] }} {{ '皮肤选配' if is_skin else '车身颜色' }}</legend>
       <img class="color-preview" data-vehicle-preview="{{ appearance }}" src="{{ url_for('static', filename=vehicle_image(appearance, selected_color)) }}" alt="{{ vehicle_appearances[appearance] }} {{ '皮肤预览' if is_skin else '车身预览' }}" width="640" height="440" draggable="false">
@@ -38,7 +38,7 @@
           <span>{{ label }}{% if color == 'default' %}（默认）{% endif %}</span>
         </label>{% endfor %}
       </div>
-      {% if is_skin %}<p class="muted skin-hint">保留奶油白与浅绿车身，选配亮黄色外卖箱，搭配袋鼠图案和“美团外卖”标识。</p>{% endif %}
+      {% if appearance == 'yadea' %}<p class="muted skin-hint">保留奶油白与浅绿车身，选配亮黄色外卖箱，搭配袋鼠图案和“美团外卖”标识。</p>{% elif appearance == 'han' %}<p class="muted skin-hint">可选红色原版或白色车身搭配“滴滴出行”门贴的涂装。</p>{% endif %}
     </fieldset>
     {% endfor %}
     <label>出发点（选填）<input name="departure" maxlength="100" value="{{ values.get('departure', '') }}" placeholder="例如：公司南门"></label>

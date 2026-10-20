@@ -18,7 +18,7 @@
 
 设计资源先按车型分类，再按主题和日期分批。每款车的原图、参考图、SVG 历史稿、提示词和导出记录放在同一车型目录下；文件名保留版本信息。`comparisons/` 只保存跨车型的对比页、拼图、渲染脚本和汇总索引，通过相对路径引用各车型素材。
 
-当前目录包括 `phantom/`、`tricycle/`、`su7/`、`v800/`、`kart/`、`yadea/`、`horse-carriage/`、`wuling/`、`dayun/`、`mega/`、`ct5/`。SU7 的早期研究与官方配色分别位于 `su7/study-20261014/` 和 `su7/official-colors-20261014/`；雅迪原版与外卖皮肤分别位于 `yadea/study-20261014/` 和 `yadea/meituan-20261015/`；黑色 CT5 位于 `ct5/black-20261020/`。
+当前目录包括 `phantom/`、`tricycle/`、`su7/`、`v800/`、`kart/`、`yadea/`、`horse-carriage/`、`wuling/`、`dayun/`、`mega/`、`ct5/`、`han/`。SU7 的早期研究与官方配色分别位于 `su7/study-20261014/` 和 `su7/official-colors-20261014/`；雅迪原版与外卖皮肤分别位于 `yadea/study-20261014/` 和 `yadea/meituan-20261015/`；黑色 CT5 位于 `ct5/black-20261020/`；比亚迪汉及滴滴涂装位于 `han/skins-20261020/`。
 
 历史对比入口：[首批车型](comparisons/20261014/selected-preview-v2.html)、[首批图片与 SVG 对照](comparisons/20261014/preview-v1.html)、[第二批车型](comparisons/20261014-batch2/preview.html)。
 
@@ -40,7 +40,7 @@
 
 ## 当前主图对应表
 
-共 11 种车辆、16 张在用主图。成品列相对于 `static/vehicles/`，原图与记录列相对于 `design/`。原图指实际用于导出成品的生成图；照片、官网配色图等参考材料见对应记录。
+共 12 种车辆、18 张在用主图。成品列相对于 `static/vehicles/`，原图与记录列相对于 `design/`。原图指实际用于导出成品的生成图；照片、官网配色图等参考材料见对应记录。
 
 | 车辆／外观 | 成品 | 原图 | 提示词、来源与导出记录 |
 | --- | --- | --- | --- |
@@ -60,6 +60,8 @@
 | 大运卡车 | `dayun/default.webp` | `dayun/study-20261014/dayun.png` | 同批次 `prompt.json` |
 | 理想 MEGA | `mega/default.webp` | `mega/study-20261014/mega.png` | 同批次 `prompt.json`；本地归档与原生成文件 SHA-256 一致 |
 | 凯迪拉克 CT5／黑色 | `ct5/default.webp` | `ct5/black-20261020/generated.png` | 同批次 `sources.json`、`prompt.txt`；交付说明原文保存在 `README-original.md` |
+| 比亚迪汉／红色原版 | `han/default.webp` | `han/skins-20261020/sources/han-red-source.png` | 同批次 `sources.json`、`docs/red-prompt.txt`、`docs/export-qa.json` |
+| 比亚迪汉／滴滴出行 | `han/didi.webp` | `han/skins-20261020/sources/han-didi-source.png` | 同批次 `sources.json`、`docs/didi-v2-prompt.txt`、`docs/export-qa.json`；原包来源记录保存在 `sources-original.json` |
 
 SU7 的 `capri-blue.png`、`sunset-purple.png` 等不带 `generated-` 前缀的图片是配色参考图，导出车辆主图使用表中的生成图。
 
@@ -107,6 +109,6 @@ SU7 色卡是直接使用的官方 `goodsImg` PNG，当前成品自身就是留�
 1. 确定车辆及外观 ID，将原图、参考材料和制作记录放入 `design/<车辆ID>/<主题>-<YYYYMMDD>/`，按规格导出到 `static/vehicles/`。多车型对比资料单独放入 `design/comparisons/`，引用各车型目录中的素材。
 2. 新增车辆时更新 `store.py` 的 `VEHICLE_APPEARANCES`、`schema.sql` 中的车辆枚举约束，并为已有数据库新增迁移；同步数据库版本及升级说明。不要修改已执行迁移来替代新迁移。
 3. 新增颜色或皮肤时更新 `VEHICLE_COLORS`，保留 `default` 项。已有车辆新增外观通常无需数据库迁移；颜色和皮肤 ID 共用 `vehicles.color` 字段。
-4. 检查选择器行为。当前模板和保存逻辑按 `appearance == 'yadea'` 区分皮肤与颜色；新车型增加皮肤时需同步调整 `templates/travel.html` 和 `store.py`。颜色选项需要对应色卡，皮肤选项使用车辆缩略图。多个选择组还需核对单选按钮名称，保证切换车型时选择状态正确。
+4. 检查选择器行为。模板和保存逻辑共用 `store.py` 的 `VEHICLE_SKIN_FIELDS` 映射，雅迪使用 `skin`，比亚迪汉使用 `skin_han`；新车型增加皮肤时登记独立的表单字段。颜色选项需要对应色卡，皮肤选项使用车辆缩略图。新增车型专属提示时同步调整 `templates/travel.html`。
 5. 主图 URL 统一通过 `vehicle_image()` 生成，前端预览读取模板输出的 URL。保持规定路径时无需增加文件路径特判。
 6. 更新本文对应表及批次来源记录，检查本地路径、图片规格、缩略图效果与代码差异。测试和应用启动遵守项目 `AGENTS.md` 的授权规则。

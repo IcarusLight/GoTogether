@@ -88,6 +88,7 @@ def create_app(test_config=None):
         return {'csrf_token': lambda: session['csrf'],
                 'vehicle_appearances': store.VEHICLE_APPEARANCES,
                 'vehicle_colors': store.VEHICLE_COLORS,
+                'vehicle_skin_fields': store.VEHICLE_SKIN_FIELDS,
                 'vehicle_image': store.vehicle_image,
                 'default_vehicle_appearance': store.DEFAULT_VEHICLE_APPEARANCE,
                 'mode_labels': {'drive': '自己开车', 'ride': '拼车', 'public': '公共交通', 'other': '其他自行前往', 'wait': '等车中'}}

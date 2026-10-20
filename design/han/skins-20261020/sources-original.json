@@ -1,0 +1,45 @@
+{
+  "pathBase": "project-root",
+  "assetModel": "han",
+  "assetSkins": [
+    "default",
+    "didi"
+  ],
+  "assets": [
+    {
+      "path": "static/vehicles/han/default.webp",
+      "label": "比亚迪汉 EV · 红色原版"
+    },
+    {
+      "path": "static/vehicles/han/didi.webp",
+      "label": "比亚迪汉 EV · 滴滴出行概念皮肤"
+    }
+  ],
+  "generationMode": "built-in image_gen: red master, white Didi edit, then real-car-reference livery refinement",
+  "vehicleReference": [
+    "https://www.byd.com/us/car/han-ev",
+    "https://www.byd.com/material/byd-site/us/product/han-ev/img/s9-car-1.png"
+  ],
+  "originalRequestedReference": "https://www.byd.com/cn/dynasty-home/models/han/han-ev-rongyao",
+  "originalReferenceStatus": "Direct access returned HTTP 404 on 2026-10-20; supplemented with official Han EV international reference, not Han L.",
+  "styleReferences": [
+    "GoTogether existing SU7 sprite",
+    "previously delivered blackCT5 sprite"
+  ],
+  "repositorySnapshot": "4b6762b1f91f13a5260935cdd10fd0ff762b4a03",
+  "referencePhotosRedistributed": false,
+  "branding": "Decorative concept skin requested by user. No official affiliation, partnership, fleet specification or license asserted.",
+  "revision": 2,
+  "revisionSummary": "Remove orange lower-door block; smaller orange emblem + dark-gray Chinese front-door wordmark, factory-style dark sill. Red files unchanged.",
+  "liveryReferences": [
+    {
+      "page": "https://www.dealstreetasia.com/stories/didi-byd-ride-hailing-ev-207946/",
+      "credit": "Reuters / Thomas Peter, photograph 2018-10-18",
+      "observed": "White body, orange emblem, dark-gray Chinese wordmark; real photo visually inspected."
+    },
+    {
+      "page": "https://english.visitbeijing.com.cn/article/4JPQMuM1DP4",
+      "observed": "Plain white car with localized door decal; reference image visually inspected, page fetch timed out."
+    }
+  ]
+}

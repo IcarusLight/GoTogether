@@ -1,4 +1,4 @@
-{% extends 'fragment.html' if fragment else 'base.html' %}{% from 'macros.html' import csrf, car_model, train_model, mode_action, pickup_info, admin_person_actions with context %}
+{% extends 'fragment.html' if fragment else 'base.html' %}{% from 'macros.html' import csrf, car_model, train_model, mode_action, pickup_info, admin_person_actions, didi_boarding_dialog with context %}
 {% block title %}{{ event.title }} · 一起出发{% endblock %}
 {% block content %}
 {% if not fragment %}<div class="row sync-bar"><small class="muted" data-sync-status role="status">自动同步已开启</small><button type="button" data-sync-now hidden>放弃当前选择并同步</button><a href="{{ url_for('event_detail', event_id=event.id) }}" data-sync-reload hidden>重新加载页面</a></div>{% endif %}
@@ -49,9 +49,9 @@
       </form>{% elif event.is_open and person.name == g.person %}
         <a class="button" href="{{ url_for('travel', event_id=event.id) }}">修改我的需求</a>
         {% set available = cars|selectattr('remaining', 'gt', 0)|list %}
-        {% if available %}<form id="pickup-{{ person.revision }}" method="post" action="{{ url_for('travel', event_id=event.id) }}" class="stack compact">
+        {% if available %}<form id="pickup-{{ person.revision }}" method="post" action="{{ url_for('travel', event_id=event.id) }}" class="stack compact" data-didi-boarding>
           {{ csrf() }}<input type="hidden" name="revision" value="{{ person.revision }}"><input type="hidden" name="mode" value="ride">
-          <label>我要搭乘的车辆<select name="vehicle_id" required><option value="">请选择车辆</option>{% for car in available %}<option value="{{ car.id }}">{{ car.driver }}{% if car.plate %} · {{ car.plate }}{% endif %} · 余 {{ car.remaining }} 座</option>{% endfor %}</select></label>
+          <label>我要搭乘的车辆<select name="vehicle_id" required><option value="">请选择车辆</option>{% for car in available %}<option value="{{ car.id }}"{% if car.appearance == 'han' and car.color == 'didi' %} data-didi{% endif %}>{{ car.driver }}{% if car.plate %} · {{ car.plate }}{% endif %} · 余 {{ car.remaining }} 座</option>{% endfor %}</select></label>
           <button type="submit" class="primary">上这辆车</button>
         </form>{% else %}<p class="muted">暂时没有空位，可以留在等车区等待。</p>{% endif %}
         <a class="button danger" href="{{ url_for('remove', event_id=event.id) }}">不参加了</a>
@@ -80,7 +80,7 @@
           {{ csrf() }}<input type="hidden" name="name" value="{{ mine.name }}"><input type="hidden" name="revision" value="{{ mine.revision }}"><input type="hidden" name="vehicle_id" value="{{ car.id }}">
           <button type="submit">退出车辆</button><small class="muted">退出后回到等车区，保留上车需求。</small>
         </form>{% endif %}
-      {% elif car.remaining > 0 %}{{ mode_action(event, mine, 'ride', car.id) }}{% else %}<button type="button" disabled>这辆车已满</button>{% endif %}
+      {% elif car.remaining > 0 %}{{ mode_action(event, mine, 'ride', car.id, car.appearance == 'han' and car.color == 'didi') }}{% else %}<button type="button" disabled>这辆车已满</button>{% endif %}
       {% if not admin and event.is_open and mine and mine.vehicle_id == car.id %}<a class="button danger" href="{{ url_for('remove', event_id=event.id) }}">不参加了</a>{% endif %}
     </section>{% endfor %}
     {% for mode, label in [('public', '公共交通'), ('other', '其他自行前往')] %}<section id="detail-{{ mode }}" data-detail="{{ mode }}" class="selection-detail stack"{% if focus != mode %} hidden{% endif %}>
@@ -94,3 +94,4 @@
 <noscript><p class="notice">可以通过“登记出行”完成所有操作；场景中的模型切换需要浏览器启用 JavaScript。</p></noscript>
 </div>
 {% endblock %}
+{% block dialogs %}{% if not admin %}{{ didi_boarding_dialog() }}{% endif %}{% endblock %}

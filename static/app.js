@@ -1,5 +1,79 @@
 'use strict';
 
+const didiDialog = document.querySelector('[data-didi-dialog]');
+if (didiDialog) {
+  const confirmForm = didiDialog.querySelector('[data-didi-confirm]');
+  const digits = didiDialog.querySelector('#didi-tail');
+  const confirmButton = didiDialog.querySelector('[data-didi-submit]');
+  const progress = didiDialog.querySelector('[data-didi-progress]');
+  let pending = null;
+  let approved = null;
+
+  function updateDigits() {
+    const valid = /^[0-9]{4}$/.test(digits.value);
+    confirmButton.disabled = !valid;
+    progress.textContent = valid ? '准备好了，点击确认上车' : digits.value && /[^0-9]/.test(digits.value)
+      ? '请输入四位数字（0–9）' : '输入四位数字后即可上车';
+  }
+  digits.addEventListener('input', updateDigits);
+  // Capture before the live scene marks a form as submitting, including drag-and-drop.
+  document.addEventListener('submit', event => {
+    const form = event.target;
+    if (!form.matches('[data-didi-boarding]') || form.elements.namedItem('mode')?.value !== 'ride') return;
+    const vehicle = form.elements.namedItem('vehicle_id');
+    const choice = vehicle.tagName === 'SELECT' ? vehicle.selectedOptions[0] : vehicle;
+    if (!choice?.hasAttribute('data-didi') || form.dataset.currentVehicle === vehicle.value) return;
+    if (approved?.form === form && approved.vehicleId === vehicle.value) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    pending = { form, submitter: event.submitter, vehicleId: vehicle.value };
+    confirmForm.reset();
+    updateDigits();
+    didiDialog.showModal();
+  }, true);
+
+  didiDialog.querySelector('[data-didi-cancel]').addEventListener('click', () => didiDialog.close());
+  didiDialog.addEventListener('close', () => {
+    pending = null;
+    confirmForm.reset();
+    updateDigits();
+  });
+  confirmForm.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!pending || !/^[0-9]{4}$/.test(digits.value)) return;
+    const { form, submitter, vehicleId } = pending;
+    if (!form.isConnected || form.elements.namedItem('vehicle_id').value !== vehicleId) {
+      didiDialog.close();
+      return;
+    }
+    const tail = document.createElement('input');
+    tail.type = 'hidden';
+    tail.name = 'didi_tail';
+    tail.value = digits.value;
+    form.append(tail);
+    approved = pending;
+    pending = null;
+    confirmButton.disabled = true;
+    didiDialog.close();
+    try {
+      if (submitter) form.requestSubmit(submitter);
+      else form.requestSubmit();
+    } finally {
+      approved = null;
+      tail.remove();
+      digits.value = '';
+    }
+  });
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) {
+      didiDialog.close();
+      pending = null;
+      confirmForm.reset();
+      updateDigits();
+    }
+  });
+}
+
 // Writes use POST forms; background reads update only changed DOM nodes.
 const liveScene = document.querySelector('[data-live-scene]');
 if (liveScene) {
@@ -144,7 +218,7 @@ if (liveScene) {
   }
   function busy() {
     const active = document.activeElement;
-    return submitting || pointerDown || draggedForm || hasDraft() || performance.now() - lastScroll < 250
+    return submitting || didiDialog?.open || pointerDown || draggedForm || hasDraft() || performance.now() - lastScroll < 250
       || (liveScene.contains(active) && active.matches('input, select, textarea, [contenteditable=true]'))
       || window.getSelection()?.isCollapsed === false;
   }

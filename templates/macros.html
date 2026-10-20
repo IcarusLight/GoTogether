@@ -27,7 +27,7 @@
 <span class="train-stage" aria-hidden="true"><span class="rails"></span><span class="train"><span class="train-windows"><span></span><span></span><span></span><span></span></span><span class="train-door"></span></span></span>
 {% endmacro %}
 
-{% macro mode_action(event, mine, mode, vehicle_id=none) %}
+{% macro mode_action(event, mine, mode, vehicle_id=none, didi=false) %}
   {% set same = mine and mine.mode == mode and (mode != 'ride' or mine.vehicle_id == vehicle_id) %}
   {% if not event.is_open %}<p class="muted">登记已关闭，如需调整请联系管理员。</p>
   {% elif same %}<span class="badge">这是我的安排</span><a class="button" href="{{ url_for('travel', event_id=event.id) }}">修改安排</a>
@@ -37,10 +37,33 @@
     </form>{% endif %}
     <a class="button danger" href="{{ url_for('remove', event_id=event.id) }}">不参加了</a>
   {% elif mine and mine.mode == 'drive' %}<a class="button primary" href="{{ url_for('travel', event_id=event.id, mode=mode, vehicle_id=vehicle_id) }}">更改出行方式</a>
-  {% else %}<form method="post" action="{{ url_for('travel', event_id=event.id) }}" class="stack compact">
+  {% else %}<form method="post" action="{{ url_for('travel', event_id=event.id) }}" class="stack compact"{% if mode == 'ride' %} data-didi-boarding{% endif %}>
     {{ csrf() }}<input type="hidden" name="revision" value="{{ mine.revision if mine else '' }}"><input type="hidden" name="mode" value="{{ mode }}">
-    {% if vehicle_id %}<input type="hidden" name="vehicle_id" value="{{ vehicle_id }}">{% endif %}
+    {% if vehicle_id %}<input type="hidden" name="vehicle_id" value="{{ vehicle_id }}"{% if didi %} data-didi{% endif %}>{% endif %}
     <button class="primary" type="submit">{{ '加入这辆车' if mode == 'ride' else '我也这样去' }}</button>
     {% if mode != 'ride' %}<a class="text-link" href="{{ url_for('travel', event_id=event.id, mode=mode) }}">填写备注后登记</a>{% endif %}
   </form>{% endif %}
+{% endmacro %}
+
+{% macro didi_boarding_dialog() %}
+<dialog class="vehicle-confirm didi-dialog" data-didi-dialog aria-labelledby="didi-title" aria-describedby="didi-welcome">
+  <form class="stack" data-didi-confirm>
+    <div class="didi-intro">
+      <span class="didi-badge">滴滴专车 · 比亚迪汉</span>
+      <img class="didi-car" src="{{ url_for('static', filename=vehicle_image('han', 'didi')) }}" alt="" width="640" height="440" draggable="false">
+      <h2 id="didi-title">欢迎乘坐滴滴专车</h2>
+      <p id="didi-welcome">请系好安全带，祝您旅途愉快！</p>
+    </div>
+    <div class="stack compact">
+      <label for="didi-tail">请输入手机尾号</label>
+      <input id="didi-tail" class="didi-digits" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" spellcheck="false" placeholder="四位数字" required autofocus aria-describedby="didi-hint didi-progress">
+      <small class="muted" id="didi-hint">趣味互动，任意四位数字即可，不保存。</small>
+      <small class="muted didi-progress" id="didi-progress" data-didi-progress role="status">输入四位数字后即可上车</small>
+    </div>
+    <div class="didi-actions">
+      <button type="button" data-didi-cancel>暂不上车</button>
+      <button type="submit" class="didi-submit" data-didi-submit disabled>确认上车</button>
+    </div>
+  </form>
+</dialog>
 {% endmacro %}

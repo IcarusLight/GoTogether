@@ -72,6 +72,20 @@ legend { padding: 0 6px; }
 .vehicle-confirm { width: min(480px, calc(100% - 32px)); max-height: calc(100% - 32px); overflow: auto; padding: 24px; border: 1px solid var(--line); border-radius: 16px; color: var(--ink); background: var(--paper); box-shadow: 0 16px 48px var(--shadow); }
 .vehicle-confirm::backdrop { background: #17251e66; }
 .vehicle-confirm-actions { justify-content: flex-end; }
+.didi-dialog { width: min(440px, calc(100% - 32px)); border-top: 5px solid #ff8b32; border-radius: 22px; padding: 24px; }
+.didi-dialog::backdrop { background: #17251e99; backdrop-filter: blur(4px); }
+.didi-intro { text-align: center; }
+.didi-badge { display: inline-block; padding: 4px 12px; border-radius: 999px; background: light-dark(#fff0e2, #51341e); color: light-dark(#994408, #ffc18e); font-size: 12px; }
+.didi-car { display: block; width: min(100%, 260px); height: auto; margin: -4px auto -10px; }
+.didi-intro h2 { font-size: 24px; font-weight: 600; margin-bottom: 6px; }
+.didi-intro p { font-size: 14px; color: var(--muted); }
+.didi-digits { text-align: center; font-size: 30px; font-variant-numeric: tabular-nums; letter-spacing: .45em; padding: 12px 8px 12px 22px; border-width: 2px; }
+.didi-digits::placeholder { font-size: 18px; letter-spacing: .15em; }
+.didi-digits:focus-visible { border-color: #e87a22; outline: 3px solid light-dark(#ffba7c66, #ffba7c55); outline-offset: 2px; }
+.didi-progress { min-height: 20px; }
+.didi-actions { display: grid; grid-template-columns: 1fr 1.5fr; gap: 10px; }
+.didi-submit { background: #ff963f; border-color: #ff963f; color: #34200c; font-weight: 600; }
+.didi-submit:hover:not(:disabled) { background: #ffa65c; }
 :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
 .skip-link { position: absolute; top: 0; left: 16px; transform: translateY(-120%); padding: 10px; background: var(--paper); z-index: 10; }
 .skip-link:focus { transform: translateY(0); }

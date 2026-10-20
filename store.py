@@ -271,6 +271,12 @@ def save_travel(db, event_id, person, values, admin=False):
                                   (vehicle_id, person)).fetchone()[0]
             if occupied >= car['capacity']:
                 raise UserError('这辆车已经满员，原安排已保留，请选择其他车辆。', 409)
+            already_aboard = old and old['mode'] == 'ride' and old['vehicle_id'] == vehicle_id
+            if not admin and not already_aboard and car['appearance'] == 'han' and car['color'] == 'didi':
+                # A playful boarding confirmation only; never persist these digits.
+                tail = str(values.get('didi_tail', ''))
+                if len(tail) != 4 or not tail.isascii() or not tail.isdigit():
+                    raise UserError('请输入任意四位数字，完成滴滴专车上车确认。')
         if mode == 'drive' and old and old['mode'] == 'drive':
             vehicle_id = old['vehicle_id']
             occupied = db.execute("SELECT COUNT(*) FROM registrations WHERE vehicle_id = ? AND mode = 'ride'", (vehicle_id,)).fetchone()[0]

@@ -23,6 +23,7 @@
   {% for category, message in get_flashed_messages(with_categories=true) %}<div class="notice" role="status">{{ message }}</div>{% endfor %}
   {% block content %}{% endblock %}
 </main>
+{% block dialogs %}{% endblock %}
 <footer class="site-footer">部门出行 · 只统计去程</footer>
 </body>
 </html>

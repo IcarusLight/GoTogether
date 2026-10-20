@@ -581,7 +581,7 @@ class TravelTests(unittest.TestCase):
 
     def test_han_skin_round_trip_validation_and_independent_fields(self):
         vehicle = self.save('司机', 'drive', capacity='2', appearance='han', skin_han='didi')
-        self.save('乘客', 'ride', vehicle_id=str(vehicle))
+        self.save('乘客', 'ride', vehicle_id=str(vehicle), didi_tail='0000')
         client = self.app.test_client()
         self.login(client, '司机')
         route = f'/events/{self.event}/travel'
@@ -615,6 +615,54 @@ class TravelTests(unittest.TestCase):
         self.save('司机', 'drive', capacity='2', appearance='yadea')
         self.save('司机', 'drive', capacity='2', appearance='han')
         self.assertEqual(store.snapshot(self.db, self.event)['cars'][0]['color'], 'default')
+
+    def test_didi_boarding_requires_four_digits_without_changing_arrangements_on_failure(self):
+        vehicle = self.save('专车司机', 'drive', capacity='4', appearance='han', skin_han='didi')
+        self.save('乘客', 'wait', pickup='南门', note='带背包')
+        client = self.app.test_client()
+        self.login(client, '乘客')
+        route = f'/events/{self.event}/travel'
+        scene = client.get(f'/events/{self.event}').get_data(as_text=True)
+        self.assertIn('欢迎乘坐滴滴专车', scene)
+        self.assertIn(f'name="vehicle_id" value="{vehicle}" data-didi', scene)
+        self.assertIn(f'<option value="{vehicle}" data-didi', client.get(route).get_data(as_text=True))
+        revision = store.registration(self.db, self.event, '乘客')['revision']
+        before = store.snapshot(self.db, self.event)
+        for tail in ('', '123', '12345', '12a4', '１２３４', ' 123', '123\n'):
+            with self.subTest(tail=tail):
+                response = self.post(client, route, mode='ride', revision=revision,
+                                     vehicle_id=str(vehicle), didi_tail=tail)
+                self.assertEqual(response.status_code, 400)
+                self.assertIn('请输入任意四位数字', response.get_data(as_text=True))
+                self.assertEqual(store.snapshot(self.db, self.event), before)
+        response = self.post(client, route, mode='ride', revision=revision,
+                             vehicle_id=str(vehicle), didi_tail='0000')
+        self.assertEqual(response.status_code, 303)
+        rider = store.registration(self.db, self.event, '乘客')
+        self.assertEqual((rider['vehicle_id'], rider['pickup'], rider['note']), (vehicle, '南门', '带背包'))
+        self.assertNotIn('didi_tail', rider)
+        self.save('乘客', 'ride', vehicle_id=str(vehicle), note='更新备注')
+        other = self.save('另一位司机', 'drive', capacity='1', appearance='han', skin_han='didi')
+        before = store.snapshot(self.db, self.event)
+        with self.assertRaisesRegex(store.UserError, '四位数字'):
+            self.save('乘客', 'ride', vehicle_id=str(other))
+        self.assertEqual(store.snapshot(self.db, self.event), before)
+        self.save('乘客', 'ride', vehicle_id=str(other), didi_tail='0123')
+        with self.assertRaisesRegex(store.UserError, '满员'):
+            self.save('新乘客', 'ride', vehicle_id=str(other), didi_tail='4567')
+        # Driver pickup and administrator dispatch do not ask for a passenger's input.
+        self.save('等车者', 'wait')
+        waiter = store.registration(self.db, self.event, '等车者')
+        store.collect_waiter(self.db, self.event, '专车司机',
+                             {'name': '等车者', 'revision': waiter['revision'], 'vehicle_id': str(vehicle)})
+        self.assertEqual(store.registration(self.db, self.event, '等车者')['vehicle_id'], vehicle)
+        store.save_travel(self.db, self.event, '后台安排',
+                          {'mode': 'ride', 'revision': '', 'vehicle_id': str(vehicle)}, admin=True)
+        self.assertEqual(store.registration(self.db, self.event, '后台安排')['vehicle_id'], vehicle)
+        self.save('普通司机', 'drive', capacity='1', appearance='han')
+        ordinary = store.registration(self.db, self.event, '普通司机')['vehicle_id']
+        self.save('普通乘客', 'ride', vehicle_id=str(ordinary))
+        self.assertEqual(store.registration(self.db, self.event, '普通乘客')['vehicle_id'], ordinary)
 
     def test_v800_requires_confirmation_for_member_and_admin(self):
         for admin in (False, True):

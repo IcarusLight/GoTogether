@@ -1,0 +1,57 @@
+{
+  "package": "Mazda 929 HC black vehicle sprite",
+  "createdAt": "2026-10-20",
+  "applicationIntegrationPerformed": false,
+  "files": [
+    {
+      "path": "README-接入说明.md",
+      "bytes": 7722,
+      "sha256": "205eb26b92ff98441404d046aa0f1a91862e79f6c03019bbe449a7cd5c87cab6"
+    },
+    {
+      "path": "design/mazda929-black-20261020/default.png",
+      "bytes": 223895,
+      "sha256": "5a02dd4f492717a904693a5f09eade0a1a18ffd5ab53a56b6e96c59bbb8428d8"
+    },
+    {
+      "path": "design/mazda929-black-20261020/export-qa.json",
+      "bytes": 1826,
+      "sha256": "fae37e77e575f4810b1c6f7498131cd3161effee0fbca05e8d39f0974021bf25"
+    },
+    {
+      "path": "design/mazda929-black-20261020/generated.png",
+      "bytes": 1672455,
+      "sha256": "fc2aa31c7182a82e3f82c5b58951b543d0e619d0af8a897bfac6e22fe0ca5005"
+    },
+    {
+      "path": "design/mazda929-black-20261020/prompt.txt",
+      "bytes": 3010,
+      "sha256": "0a6dd3b9e146cfe04bd1b4ae568e9a986bea736ade4bc24b49af7b095adefbc3"
+    },
+    {
+      "path": "design/mazda929-black-20261020/sources.json",
+      "bytes": 3288,
+      "sha256": "d1c357928d5768a1cfbb03964d5d95f37985d9272cfc95679cd6f21e795ef8f7"
+    },
+    {
+      "path": "export_assets.py",
+      "bytes": 5791,
+      "sha256": "1f28171274a7792c0a28cb6d2112a6f71a42b75ba0f29f5dfa0bf0f509c744da"
+    },
+    {
+      "path": "preview/mazda929-contact-sheet.jpg",
+      "bytes": 231778,
+      "sha256": "9cb5f49911f0114c73e27f2489d2785c87ddd39ede9c13037b3c4e1b426c9d2b"
+    },
+    {
+      "path": "preview/mazda929-preview.jpg",
+      "bytes": 173293,
+      "sha256": "68b60c68abfc6f0af289411553719e0e855363f9becec650d89f3a05ebfd8046"
+    },
+    {
+      "path": "static/vehicles/mazda929/default.webp",
+      "bytes": 146722,
+      "sha256": "6ef99fa97e802009ad764ae6f6098db7257dc9b8e46f384201751766f6bca313"
+    }
+  ]
+}

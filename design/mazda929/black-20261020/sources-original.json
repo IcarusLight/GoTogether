@@ -1,0 +1,61 @@
+{
+  "pathBase": "project-root",
+  "createdAt": "2026-10-20",
+  "vehicleId": "mazda929",
+  "appearanceId": "default",
+  "displayName": "马自达 929",
+  "generation": "Mazda 929 HC, late-1980s pillared four-door sedan",
+  "paint": "glossy black",
+  "assetPath": "static/vehicles/mazda929/default.webp",
+  "pngPath": "design/mazda929-black-20261020/default.png",
+  "sourcePath": "design/mazda929-black-20261020/generated.png",
+  "promptPath": "design/mazda929-black-20261020/prompt.txt",
+  "qaPath": "design/mazda929-black-20261020/export-qa.json",
+  "generationMode": "built-in image_gen, transparency requested",
+  "representation": "AI-generated realistic 2.5D-style 2D raster sprite; not a 3D model or exact engineering reproduction",
+  "composition": "front three-quarter, slightly elevated, front towards lower left",
+  "canvas": [640, 440],
+  "originalCanvas": [1536, 1024],
+  "encoding": "PNG and lossless WebP, with retained alpha and contact shadow",
+  "references": [
+    {
+      "role": "primary manufacturer history and period geometry reference",
+      "title": "Mazda official history: 1986 September, fifth-generation Luce (929)",
+      "url": "https://www.mazda.com/en/about/history/1980-1989/",
+      "imageUrl": "https://www.mazda.com/content/dam/mazda/corporate/mazda-com/ja/images/about/history/1980-1989/luce_1986_09_ex_0211.jpg",
+      "redistributed": false
+    },
+    {
+      "role": "HC sedan body, headlamps, grille, side details and period wheels",
+      "title": "1988 Mazda 929 (HC) sedan, photographed 28 April 2011",
+      "photographer": "OSX",
+      "url": "https://commons.wikimedia.org/wiki/File:1987-1989_Mazda_929_(HC)_sedan_(2011-04-28)_01.jpg",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7f/1987-1989_Mazda_929_%28HC%29_sedan_%282011-04-28%29_01.jpg",
+      "licenseAsListed": "Public domain, released by author",
+      "redistributed": false
+    },
+    {
+      "role": "camera, transparent sprite composition, black paint and product-render style only",
+      "title": "Previously created GoTogether black Cadillac CT5 sprite",
+      "projectAssetPath": "static/vehicles/ct5/default.webp",
+      "note": "Design reference from previously supplied asset package; not asserted present on inspected master. Not a Mazda body reference.",
+      "redistributed": false
+    }
+  ],
+  "visualCrosscheck": "Previously created Han EV sprite inspected for consistency; not passed as a vehicle identity reference.",
+  "filmReference": {
+    "work": "黑金",
+    "purpose": "nostalgic atmosphere associated with the Mazda traffic-jam meme",
+    "exactMovieVehicleVerified": false,
+    "claim": "No exact movie-car or official film-asset claim; no movie frame, people or meme text embedded"
+  },
+  "repositoryBaseline": {
+    "repository": "https://github.com/IcarusLight/GoTogether",
+    "branch": "master",
+    "commit": "4b6762b1f91f13a5260935cdd10fd0ff762b4a03",
+    "verifiedAt": "2026-10-20T02:40:00Z",
+    "databaseVersion": 9,
+    "note": "Read-only inspection. Recheck current target branch and next migration number before integration; retain concurrently added models."
+  },
+  "usageNote": "Brand/model marks belong to their owners; no official authorization or partnership implied. Reference photographs are not included."
+}

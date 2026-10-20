@@ -1,0 +1,29 @@
+{
+  "pathBase": "project-root",
+  "vehicleId": "mazda929",
+  "variantId": "default",
+  "displayName": "马自达 929 · 黑色",
+  "generation": "Mazda 929 HC",
+  "importedFrom": "Mazda929-HC-black-assets.zip",
+  "sourceFile": "design/mazda929/black-20261020/generated.png",
+  "productionFile": "static/vehicles/mazda929/default.webp",
+  "pngFile": "design/mazda929/black-20261020/default.png",
+  "promptFile": "design/mazda929/black-20261020/prompt.txt",
+  "originalSources": "design/mazda929/black-20261020/sources-original.json",
+  "originalManifest": "design/mazda929/black-20261020/manifest.json",
+  "exportReport": "design/mazda929/black-20261020/export-qa.json",
+  "archiveNote": "Original instructions and export script retain the supplied package layout; current project paths are recorded here.",
+  "export": {
+    "width": 640,
+    "height": 440,
+    "format": "webp",
+    "lossless": true,
+    "alpha": true,
+    "cropBox": [0, 195, 1536, 936],
+    "scaledSize": [620, 299],
+    "offset": [10, 70],
+    "resampling": "Pillow LANCZOS",
+    "sha256": "6ef99fa97e802009ad764ae6f6098db7257dc9b8e46f384201751766f6bca313",
+    "import": "Original exported file copied unchanged; archive manifest hashes verified."
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "source": {
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "bytes": 1672455,
+    "alphaRange": [
+      0,
+      254
+    ],
+    "transparentPixels": 763728,
+    "partialAlphaPixels": 809136,
+    "opaquePixels": 0,
+    "alphaAbove10BBox": [
+      7,
+      219,
+      1530,
+      912
+    ],
+    "sha256": "fc2aa31c7182a82e3f82c5b58951b543d0e619d0af8a897bfac6e22fe0ca5005"
+  },
+  "png": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "bytes": 223895,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "transparentPixels": 150607,
+    "partialAlphaPixels": 130139,
+    "opaquePixels": 854,
+    "alphaAbove10BBox": [
+      12,
+      80,
+      628,
+      359
+    ],
+    "sha256": "5a02dd4f492717a904693a5f09eade0a1a18ffd5ab53a56b6e96c59bbb8428d8"
+  },
+  "webp": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "bytes": 146722,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "transparentPixels": 150607,
+    "partialAlphaPixels": 130139,
+    "opaquePixels": 854,
+    "alphaAbove10BBox": [
+      12,
+      80,
+      628,
+      359
+    ],
+    "sha256": "6ef99fa97e802009ad764ae6f6098db7257dc9b8e46f384201751766f6bca313"
+  },
+  "cropBox": [
+    0,
+    195,
+    1536,
+    936
+  ],
+  "scaledSize": [
+    620,
+    299
+  ],
+  "offset": [
+    10,
+    70
+  ],
+  "resampling": "Pillow LANCZOS",
+  "alphaPreserved": true,
+  "webpEncoding": "lossless, method=6, exact=True",
+  "pngWebpPixelIdentical": true,
+  "allCanvasCornersTransparent": true,
+  "visualChecks": [
+    "light background",
+    "dark background",
+    "checkerboard background",
+    "180px width",
+    "whole car not clipped",
+    "boxy HC sedan body, not rounded HD",
+    "period headlamps and wheels"
+  ],
+  "verificationScope": "Image export and visual review only; application integration not performed."
+}

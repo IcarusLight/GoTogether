@@ -1,0 +1,112 @@
+{
+  "pathBase": "project-root",
+  "vehicleId": "ct5",
+  "variantId": "default",
+  "displayName": "凯迪拉克 CT5 · 黑色",
+  "createdDate": "2026-10-20",
+  "packageRevision": 2,
+  "repositoryBaselineCommit": "4b6762b1f91f13a5260935cdd10fd0ff762b4a03",
+  "archiveNote": "按现有车型目录规范接入；README-original.md 保留交付时的说明和旧路径，当前仓库路径以本文件为准。",
+  "sourceFile": "design/ct5/black-20261020/generated.png",
+  "productionFile": "static/vehicles/ct5/default.webp",
+  "pngExport": "design/ct5/black-20261020/default.png",
+  "promptFile": "design/ct5/black-20261020/prompt.txt",
+  "generationMode": "built-in image_gen",
+  "representation": "AI-generated 2D raster sprite, semi-realistic 2.5D style; not a 3D model",
+  "references": [
+    {
+      "role": "style and camera reference",
+      "projectFile": "design/su7/study-20261014/su7-legacy.webp",
+      "url": "https://github.com/IcarusLight/GoTogether/blob/4b6762b1f91f13a5260935cdd10fd0ff762b4a03/design/vehicle-study-20261014/su7-legacy.webp",
+      "gitBlobSha": "b5db8607407f74b42cd2aa54a0a41849cbe55efa",
+      "note": "The same reference bytes were formerly at static/vehicles/su7.webp. This is the legacy image, not the current default SU7.",
+      "licenseStatus": "Project reference, no additional license determination"
+    },
+    {
+      "role": "CT5 side geometry",
+      "url": "https://www.cadillac.com/content/dam/cadillac/na/us/english/index/vehicles/2026/sedans/ct5/overview/model-walk/my26-ct5-mov-model-walk-sport.png?imwidth=1920",
+      "page": "https://www.cadillac.com/sedans/ct5",
+      "localCopy": null,
+      "licenseStatus": "Official public promotional reference only; no reuse license confirmed; photo not redistributed"
+    },
+    {
+      "role": "CT5 front geometry",
+      "url": "https://www.montplaisircadillac.com/en/new-catalog/cadillac/2025-cadillac-ct5-sport-id28121",
+      "localCopy": null,
+      "licenseStatus": "Dealer reference only; no reuse license confirmed; photo not redistributed"
+    }
+  ],
+  "export": {
+    "width": 640,
+    "height": 440,
+    "format": "webp",
+    "lossless": false,
+    "quality": 88,
+    "method": 6,
+    "exact": true,
+    "hasAlpha": true,
+    "trimThreshold": 10,
+    "cropBoxXYXY": [
+      32,
+      136,
+      1604,
+      912
+    ],
+    "sourceCanvas": [
+      1620,
+      971
+    ],
+    "scaledContent": [
+      620,
+      306
+    ],
+    "offsetXY": [
+      10,
+      67
+    ],
+    "resize": "Lanczos, aspect ratio preserved, transparent padding, original alpha preserved"
+  },
+  "scope": "Assets and integration checklist only. No code, migration, database, tests, deployment or repository mutation performed.",
+  "integration": {
+    "vehicleId": "ct5",
+    "variantId": "default",
+    "baselineDatabaseVersion": 9,
+    "nextMigrationIfUncontested": 10,
+    "requires": [
+      "store.py VEHICLE_APPEARANCES",
+      "schema.sql appearance CHECK and user_version",
+      "new incremental migration",
+      "store.py initialize version range and check",
+      "README upgrade documentation",
+      "design/README.md asset registration",
+      "migration and vehicle-save verification"
+    ]
+  },
+  "files": [
+    {
+      "path": "static/vehicles/ct5/default.webp",
+      "bytes": 49046,
+      "sha256": "b9737b1c21698e443c3a8236f428a5e6dcc7273101ff6c0d4334407c477b3887"
+    },
+    {
+      "path": "design/ct5/black-20261020/generated.png",
+      "bytes": 1624109,
+      "sha256": "bd0f356786fd9eee7b43a8ff45e84cea0ddfb3293e9c44b5034c698777787f0f"
+    },
+    {
+      "path": "design/ct5/black-20261020/default.png",
+      "bytes": 269381,
+      "sha256": "4f17083f845f5f5128cf7bafc13698086dce7f5e8f8d4ae0eb973ceefd745f92"
+    },
+    {
+      "path": "design/ct5/black-20261020/prompt.txt",
+      "bytes": 2677,
+      "sha256": "f5f625cd8e72c68ad071e3281bc66483877b6c628ad5da8d074df102e2b6c431"
+    },
+    {
+      "path": "design/ct5/black-20261020/README-original.md",
+      "bytes": 5240,
+      "sha256": "10934e3d246de594aee99cd474394acf09c64bcd56888134c5d6b68fe2caad3c"
+    }
+  ]
+}

@@ -17,7 +17,7 @@ CREATE TABLE vehicles (
     departure TEXT NOT NULL,
     departure_time TEXT NOT NULL DEFAULT '',
     plate TEXT NOT NULL DEFAULT '',
-    appearance TEXT NOT NULL DEFAULT 'su7' CHECK (appearance IN ('phantom', 'tricycle', 'su7', 'v800', 'kart', 'yadea', 'horse-carriage', 'wuling', 'dayun', 'mega')),
+    appearance TEXT NOT NULL DEFAULT 'su7' CHECK (appearance IN ('phantom', 'tricycle', 'su7', 'v800', 'kart', 'yadea', 'horse-carriage', 'wuling', 'dayun', 'mega', 'ct5')),
     color TEXT NOT NULL DEFAULT 'default',
     note TEXT NOT NULL DEFAULT '',
     UNIQUE (event_id, driver),
@@ -50,4 +50,4 @@ CREATE TABLE reminders (
     resolved_at TEXT
 );
 CREATE UNIQUE INDEX reminder_pending ON reminders(event_id, name) WHERE resolved_at IS NULL;
-PRAGMA user_version = 9;
+PRAGMA user_version = 10;

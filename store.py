@@ -11,7 +11,7 @@ import unicodedata
 VEHICLE_APPEARANCES = {
     'phantom': '劳斯莱斯幻影', 'tricycle': '农用三蹦子', 'su7': '小米 SU7',
     'v800': '尊界 V800', 'kart': '卡丁车', 'yadea': '雅迪电动车', 'horse-carriage': '宝马马车',
-    'wuling': '五菱宏光', 'dayun': '大运卡车', 'mega': '理想 MEGA',
+    'wuling': '五菱宏光', 'dayun': '大运卡车', 'mega': '理想 MEGA', 'ct5': '凯迪拉克 CT5 · 黑色',
 }
 DEFAULT_VEHICLE_APPEARANCE = 'su7'
 VEHICLE_COLORS = {
@@ -47,13 +47,13 @@ def initialize(path):
         if version == 0:
             sql = Path(__file__).with_name('schema.sql').read_text(encoding='utf-8')
             db.executescript('BEGIN IMMEDIATE;\n' + sql + '\nCOMMIT;')
-        elif version in (1, 2, 3, 4, 5, 6, 7, 8):
+        elif version in (1, 2, 3, 4, 5, 6, 7, 8, 9):
             if sqlite3.sqlite_version_info < (3, 35, 0):
                 raise RuntimeError('升级旧数据库需要 SQLite 3.35 或更新版本，请更新 Python 使用的 SQLite 后重试。')
             sql = '\n'.join((Path(__file__).parent / 'migrations' / f'migration_{target}.sql').read_text(encoding='utf-8')
-                            for target in range(version + 1, 10))
+                            for target in range(version + 1, 11))
             db.executescript('BEGIN IMMEDIATE;\n' + sql + '\nCOMMIT;')
-        elif version != 9:
+        elif version != 10:
             raise RuntimeError('数据库版本不匹配，请使用与数据版本对应的程序。')
     finally:
         db.close()

@@ -1,0 +1,23 @@
+{
+  "asset": "kart",
+  "status": "preview_pending_user_confirmation",
+  "generationMode": "built-in image_gen",
+  "prompt": "Use case: product-mockup.\nAsset type: a single transparent-background vehicle cutout for a friendly Chinese carpool website.\nPrimary request: create ONE recognizable red recreational racing go-kart, unoccupied, matching the moderately realistic polished 3D product-render style of existing automotive catalog cutout assets.\nSubject: low-slung single-seat go-kart with glossy red nose cone and side pods, black tubular chassis, four exposed chunky black slick tires, one small black bucket seat, a clearly visible steering wheel and plausible pedals, compact rear motor. Simple attractive realistic proportions, mechanically coherent.\nComposition: complete vehicle fully inside frame, centered with comfortable transparent margins. Front-left three-quarter camera view, camera slightly elevated so the seat and steering wheel are readable. Front points toward lower left of image, rear toward upper right. Vehicle fills most of the image and remains immediately readable at a small website thumbnail size.\nLighting: soft neutral studio light, realistic clean reflections, subtle contact shadow directly beneath tires and chassis only.\nScene/backdrop: truly transparent alpha background, including through all open gaps in chassis and steering wheel. No opaque white or checkerboard background.\nConstraints: exactly one kart, exactly four wheels, no driver, no helmet, no people, no text, no numbers, no manufacturer logos, no watermark. No road, grass, platform, parking bay, outline, ground plane or rectangular shadow. Do not create a toy diorama or a flat vector illustration. Preserve full wheels and bumpers, no cropping.",
+  "styleReference": "C:/svn/GoTogether/design/su7/study-20261014/su7-legacy.webp (visually inspected, not supplied as generation input)",
+  "originalPath": "C:/Users/李文韬/.codex/generated_images/01a1385b-23df-7871-b575-bd8a7ca856c8/exec-bf8fb47f-2df2-4e68-8b2b-dea0f33ab87f.png",
+  "savedPath": "C:/svn/GoTogether/design/kart/study-20261014/kart.png",
+  "transparentBackgroundRequested": true,
+  "websiteIntegrated": false,
+  "selectedPreviewPath": "C:/svn/GoTogether/design/kart/study-20261014/kart-v2.png",
+  "revisions": [
+  {
+    "generationMode": "built-in image_gen edit",
+    "prompt": "Use case: background-extraction.\nEdit the supplied kart image with ONE precise change: cleanly remove ALL surrounding background haze, red color fog, grey mist, rim glow, diffuse bloom and colored reflections outside the physical vehicle silhouette.\nPreserve the complete kart itself exactly: identical red paint, black chassis, all four tires, steering wheel, seat, engine, structure, fine details, materials, proportions, position and front-left three-quarter camera angle. Keep its crisp glossy red highlights ON the painted parts.\nThe result must be a professional clean product cutout with genuine transparent alpha. All areas outside the physical kart must be fully transparent (alpha 0), including the broad red/grey haze currently visible around the vehicle, all open spaces between tires and frame, and the opening inside the steering wheel. Keep only an extremely faint neutral contact shadow immediately below the tires, with no colored glow anywhere. NO opaque backdrop, NO gradient, NO checkerboard pattern painted into image, NO scene, NO floor, NO rectangle, NO outline.\nKeep the entire object inside the canvas with about 5% clean transparent margin on each side. Do not redesign or add anything.",
+    "inputPath": "C:/svn/GoTogether/design/kart/study-20261014/kart.png",
+    "originalPath": "C:/Users/李文韬/.codex/generated_images/01a1385b-23df-7871-b575-bd8a7ca856c8/exec-468e060a-3da5-4e9c-8638-f607a8f19321.png",
+    "savedPath": "C:/svn/GoTogether/design/kart/study-20261014/kart-v2.png",
+    "transparentBackgroundRequested": true,
+    "inspection": "Vehicle retained. RGBA samples in apparent background glow have alpha 0; preview tools may display hidden RGB. Use alpha-aware webpage preview for final visual confirmation."
+  }
+]
+}

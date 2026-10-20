@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GoTogether · 新车型预览</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #f6f4ed; color: #263d35; font: 15px/1.7 "Microsoft YaHei", system-ui, sans-serif; }
+main { max-width: 1160px; margin: auto; padding: 32px 24px 48px; }
+h1 { margin: 0 0 8px; font-size: 30px; }
+h2 { margin: 28px 0 12px; font-size: 20px; }
+p { margin: 0; color: #657265; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+.toolbar label { padding: 5px 12px; border: 1px solid #c5cdbc; border-radius: 24px; cursor: pointer; }
+input { accent-color: #426b53; }
+.gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+article { overflow: hidden; border: 1px solid #d7ddcd; border-radius: 16px; background: #fffdf7; }
+.stage { height: 290px; padding: 18px; display: flex; align-items: center; justify-content: center; }
+.stage, .small-row { background: #e4ebd8; }
+.stage img { width: 100%; height: 100%; object-fit: contain; }
+.caption { padding: 14px 20px; }
+.caption h2 { margin: 0; font-size: 18px; }
+.caption p { font-size: 13px; }
+a { color: #426b53; text-underline-offset: 3px; }
+.small-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; border-radius: 16px; padding: 24px 12px; }
+figure { width: 180px; margin: 0; text-align: center; }
+figure img { display: block; width: 180px; height: 139px; object-fit: contain; }
+figcaption { margin-top: 8px; font-size: 13px; }
+body:has(#dark:checked) .stage, body:has(#dark:checked) .small-row { background: #283b32; color: #e7eadf; }
+body:has(#checker:checked) .stage, body:has(#checker:checked) .small-row { background-color: #fff; background-image: conic-gradient(#e3e5df 25%, transparent 0 50%, #e3e5df 0 75%, transparent 0); background-size: 20px 20px; color: #263d35; }
+footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid #d7ddcd; font-size: 12px; color: #657265; }
+@media (max-width: 680px) { main { padding: 24px 16px; } .gallery { grid-template-columns: 1fr; } .stage { height: 250px; } h1 { font-size: 25px; } }
+</style>
+</head>
+<body><main>
+<header><h1>新车型，先看造型</h1><p>四款外观已加入网站，这里保留透明原图和尺寸对比。</p></header>
+<div class="toolbar" role="group" aria-label="预览背景">
+<label><input type="radio" name="background" id="light" checked> 浅色草地</label>
+<label><input type="radio" name="background" id="dark"> 深色草地</label>
+<label><input type="radio" name="background" id="checker"> 透明棋盘</label>
+</div>
+<section class="gallery" aria-label="新车型大图">
+<article><div class="stage"><img src="../../v800/study-20261014/v800.png" alt="金黑双色尊界 V800"></div><div class="caption"><h2>尊界 V800</h2><p>金黑双色 MPV，参考官方外观</p><a href="../../v800/study-20261014/v800.png">查看原图</a></div></article>
+<article><div class="stage"><img src="../../kart/study-20261014/kart-v2.png" alt="红色单座卡丁车"></div><div class="caption"><h2>卡丁车</h2><p>红色车身、外露宽胎、低矮单座</p><a href="../../kart/study-20261014/kart-v2.png">查看原图</a></div></article>
+<article><div class="stage"><img src="../../yadea/study-20261014/yadea-v2.png" alt="奶油白配浅绿色的雅迪电动踏板车"></div><div class="caption"><h2>雅迪电动车</h2><p>奶油白与浅绿，日常通勤踏板风格</p><a href="../../yadea/study-20261014/yadea-v2.png">查看原图</a></div></article>
+<article><div class="stage"><img src="../../horse-carriage/study-20261014/horse-carriage-v2.png" alt="一匹栗色马拉着深蓝木质敞篷马车"></div><div class="caption"><h2>“宝马”马车</h2><p>一匹马，拉着一辆小马车</p><a href="../../horse-carriage/study-20261014/horse-carriage-v2.png">查看原图</a></div></article>
+</section>
+<section aria-label="网页尺寸对比"><h2>缩小到网页里的大小</h2><p>每张图片都放进 180 × 139 像素图框，SU7 用作现有车型参照。</p>
+<div class="small-row">
+<figure><img src="../../su7/study-20261014/su7-legacy.webp" alt="现有小米 SU7"><figcaption>现有 SU7</figcaption></figure>
+<figure><img src="../../v800/study-20261014/v800.png" alt="尊界 V800 缩略图"><figcaption>尊界 V800</figcaption></figure>
+<figure><img src="../../kart/study-20261014/kart-v2.png" alt="卡丁车缩略图"><figcaption>卡丁车</figcaption></figure>
+<figure><img src="../../yadea/study-20261014/yadea-v2.png" alt="雅迪电动车缩略图"><figcaption>雅迪电动车</figcaption></figure>
+<figure><img src="../../horse-carriage/study-20261014/horse-carriage-v2.png" alt="宝马马车缩略图"><figcaption>“宝马”马车</figcaption></figure>
+</div></section>
+<footer>内置 imagegen 生成。雅迪为通勤车型概念稿，未对应某个具体型号。<br>
+<a href="https://hima.auto/zunjie/v800/">V800 官方参考</a> · 生成记录：<a href="../../v800/study-20261014/v800-prompt.json">V800</a> / <a href="../../kart/study-20261014/kart-prompt.json">卡丁车</a> / <a href="../../yadea/study-20261014/yadea-prompt.json">雅迪</a> / <a href="../../horse-carriage/study-20261014/horse-carriage-prompt.json">马车</a></footer>
+</main></body></html>

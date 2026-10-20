@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-14",
+  "purpose": "已选定第一种透明图片方案并接入网页；三蹦子采用大货斗旧农用款。保留原始素材、历史稿与来源记录。",
+  "webAssets": "static/vehicles/phantom/default.webp、static/vehicles/tricycle/default.webp；原 static/vehicles/su7.webp 已归档至 design/su7/study-20261014/su7-legacy.webp。由已选定 PNG 裁去透明留白、等比缩放并转为 WebP，保留透明背景。",
+  "defaultRepresentation": "raster",
+  "activePreview": "selected-preview-v2.html",
+  "svgStatus": "历史探索稿，当前方案不再使用或继续绘制。",
+  "rasterMethod": "内置 image_gen 根据参考图制作透明背景 PNG，含局部重绘与三蹦子视角调整，并非原模型渲染。",
+  "svgMethod": "手工编写的可编辑 SVG 特征重绘；车型比例有简化，不是精确复刻。",
+  "items": [
+    {
+      "id": "phantom",
+      "name": "劳斯莱斯幻影",
+      "raster": "../../phantom/study-20261014/raster/phantom.png",
+      "record": "../../phantom/study-20261014/sources.json"
+    },
+    {
+      "id": "tricycle",
+      "name": "老伙计 · 农用三蹦子",
+      "raster": "../../tricycle/study-20261014/raster/tricycle-rustic-v2.png",
+      "record": "../../tricycle/study-20261014/sources.json"
+    },
+    {
+      "id": "su7",
+      "name": "小米 SU7",
+      "raster": "../../su7/study-20261014/raster/su7.png",
+      "record": "../../su7/study-20261014/sources.json"
+    }
+  ],
+  "pathBase": "record-directory",
+  "webAssetPathBase": "project-root"
+}

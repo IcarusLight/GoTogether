@@ -1,0 +1,18 @@
+{
+  "mode": "built-in-imagegen",
+  "intent": "precise-object-edit",
+  "inputPath": "static/vehicles/yadea/default.webp",
+  "outputPath": "design/yadea/meituan-20261015/yadea-meituan.png",
+  "productionFile": "static/vehicles/yadea/meituan.webp",
+  "export": {
+    "width": 640,
+    "height": 440,
+    "format": "webp",
+    "lossless": true,
+    "resize": "Lanczos, full canvas, preserve alpha",
+    "sourceWidth": 1512,
+    "sourceHeight": 1040
+  },
+  "prompt": "Use case: precise-object-edit.\nAsset type: transparent cutout vehicle skin for the GoTogether website.\nInput image is the edit target: existing cream-white and sage-green YADEA scooter.\nPrimary request: add a prominent Meituan food delivery insulated cargo box securely mounted on the REAR luggage rack immediately behind the saddle. Keep the scooter's original cream-white and green body, YADEA badge, black seat, wheels, mirrors, lighting, camera angle and realistic 3D product style. The box is a large bright Meituan yellow rectangular soft-sided insulated delivery box with black piping, a closed padded lid, black straps and realistic attachment rack. Make its visible side strongly recognizable as 美团外卖: a bold black kangaroo emblem above large, legible, accurately written black Chinese text \"美团外卖\", and a smaller line \"送啥都快\". The yellow box should be large and highly visible at thumbnail scale, with the broad branded side facing the viewer in the same perspective as the scooter. It must rest behind the rider seat, not on the footboard or front. No rider, helmet or unrelated props.\nComposition: full scooter plus entire box and both mirrors completely inside a landscape canvas, centered with transparent margin at every edge. Preserve the original three-quarter front-left view. Real alpha transparent background, no floor, no colored backdrop, no cast shadow outside the object, no watermark.",
+  "visualReview": "Original cream/green YADEA scooter preserved. Rear-mounted yellow insulated delivery box has clear 美团外卖 text, black kangaroo graphic and 送啥都快 tagline. Transparent background retained."
+}

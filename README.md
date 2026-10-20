@@ -84,7 +84,7 @@ HTTP 内网地址下的剪贴板自动复制可能不可用，分享按钮会显
 - `templates/`：活动、登记、后台页面。
 - `static/`：场景模型、响应式布局与操作动画。
 - `static/vehicles/`：十种车辆按车辆 ID 分目录，默认外观为 `<车辆>/default.webp`，其他外观为 `<车辆>/<外观>.webp`；主图统一为 640 × 440 的透明 WebP。SU7 色卡保留 140 × 140 的 PNG，位于 `su7/swatches/<颜色>.png`。
-- `design/`：原始素材、提示词及来源记录；旧版 SU7 成品归档于 `vehicle-study-20261014/su7-legacy.webp`。各批次记录中的资源路径已同步到整理后的位置。
+- `design/`：按 `<车辆ID>/<主题-日期>/` 归档原始素材、参考图、提示词和来源记录；旧版 SU7 成品位于 `design/su7/study-20261014/su7-legacy.webp`。跨车型对比页、拼图和汇总索引集中在 `design/comparisons/`。
 - [车辆与皮肤资源规范](design/README.md)：图片规格、全部在用主图与色卡的来源对应表，以及新增车辆和皮肤的接入步骤。
 - `run.py`：Waitress 启动入口。
 - `manage.py`：管理员配置与备份。

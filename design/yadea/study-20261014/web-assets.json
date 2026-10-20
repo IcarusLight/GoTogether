@@ -1,0 +1,28 @@
+{
+  "status": "imported_into_website",
+  "approvedDate": "2026-10-14",
+  "generationMode": "built-in imagegen",
+  "export": {
+    "format": "webp",
+    "quality": 88,
+    "width": 640,
+    "height": 440,
+    "background": "transparent",
+    "trimThreshold": 10
+  },
+  "pathBase": "record-directory",
+  "webAssetPathBase": "project-root",
+  "assets": [
+    {
+      "id": "yadea",
+      "name": "雅迪电动车",
+      "source": "yadea-v2.png",
+      "prompt": "yadea-prompt.json",
+      "webAsset": "static/vehicles/yadea/default.webp",
+      "width": 640,
+      "height": 440,
+      "bytes": 48678,
+      "hasAlpha": true
+    }
+  ]
+}

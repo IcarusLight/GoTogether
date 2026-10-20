@@ -1,0 +1,65 @@
+{
+  "status": "imported_into_website",
+  "approvedDate": "2026-10-14",
+  "generationMode": "built-in imagegen",
+  "export": {
+    "format": "webp",
+    "quality": 88,
+    "width": 640,
+    "height": 440,
+    "background": "transparent",
+    "trimThreshold": 10
+  },
+  "assets": [
+    {
+      "id": "v800",
+      "name": "尊界 V800",
+      "source": "../../v800/study-20261014/v800.png",
+      "prompt": "../../v800/study-20261014/v800-prompt.json",
+      "webAsset": "static/vehicles/v800/default.webp",
+      "width": 640,
+      "height": 440,
+      "bytes": 47780,
+      "hasAlpha": true,
+      "record": "../../v800/study-20261014/web-assets.json"
+    },
+    {
+      "id": "kart",
+      "name": "卡丁车",
+      "source": "../../kart/study-20261014/kart-v2.png",
+      "prompt": "../../kart/study-20261014/kart-prompt.json",
+      "webAsset": "static/vehicles/kart/default.webp",
+      "width": 640,
+      "height": 440,
+      "bytes": 70312,
+      "hasAlpha": true,
+      "record": "../../kart/study-20261014/web-assets.json"
+    },
+    {
+      "id": "yadea",
+      "name": "雅迪电动车",
+      "source": "../../yadea/study-20261014/yadea-v2.png",
+      "prompt": "../../yadea/study-20261014/yadea-prompt.json",
+      "webAsset": "static/vehicles/yadea/default.webp",
+      "width": 640,
+      "height": 440,
+      "bytes": 48678,
+      "hasAlpha": true,
+      "record": "../../yadea/study-20261014/web-assets.json"
+    },
+    {
+      "id": "horse-carriage",
+      "name": "宝马马车",
+      "source": "../../horse-carriage/study-20261014/horse-carriage-v2.png",
+      "prompt": "../../horse-carriage/study-20261014/horse-carriage-prompt.json",
+      "webAsset": "static/vehicles/horse-carriage/default.webp",
+      "width": 640,
+      "height": 440,
+      "bytes": 99590,
+      "hasAlpha": true,
+      "record": "../../horse-carriage/study-20261014/web-assets.json"
+    }
+  ],
+  "pathBase": "record-directory",
+  "webAssetPathBase": "project-root"
+}

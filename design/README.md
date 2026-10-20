@@ -40,7 +40,7 @@
 
 ## 当前主图对应表
 
-共 14 种车辆、20 张在用主图。成品列相对于 `static/vehicles/`，原图与记录列相对于 `design/`。原图指实际用于导出成品的生成图；照片、官网配色图等参考材料见对应记录。
+共 15 种车辆、21 张在用主图，另有 Roadster Rocket 的车身、地影和冷气流三张动画分层。成品列相对于 `static/vehicles/`，原图与记录列相对于 `design/`。原图指实际用于导出成品的生成图；照片、官网配色图等参考材料见对应记录。
 
 | 车辆／外观 | 成品 | 原图 | 提示词、来源与导出记录 |
 | --- | --- | --- | --- |
@@ -64,6 +64,9 @@
 | 比亚迪汉／滴滴出行 | `han/didi.webp` | `han/skins-20261020/sources/han-didi-source.png` | 同批次 `sources.json`、`docs/didi-v2-prompt.txt`、`docs/export-qa.json`；原包来源记录保存在 `sources-original.json` |
 | 马自达 929 HC／黑色 | `mazda929/default.webp` | `mazda929/black-20261020/generated.png` | 同批次 `sources.json`、`prompt.txt`、`export-qa.json`；原包来源与说明保存在 `sources-original.json`、`README-original.md` |
 | 三体水滴／银色横向圆润版 | `droplet/default.webp` | `droplet/silver-rounded-20261020/generated.png` | 同批次 `sources.json`、`prompt.txt`、`export-qa.json`；原包来源、清单与说明保存在 `sources-original.json`、`manifest-original.json`、`README-original.md` |
+| 特斯拉 Roadster Rocket／银灰悬浮 | `roadsterRocket/default.webp`，动画使用同目录 `car.webp`、`shadow.webp`、`gas.webp` | `roadsterRocket/silver-20261020/package/design/roadster-rocket-silver-20261020/sources/` | `roadsterRocket/silver-20261020/sources.json`；用户交付包完整保存在同批次 `package/` |
+
+Roadster Rocket 沿用交付包的 `roadsterRocket` ID，为现有小写命名规范的例外。三个动画层保留相同的 640 × 440 透明画布，不分别裁切；选择列表使用静态合成图，停车区使用 CSS 悬浮动画。
 
 SU7 的 `capri-blue.png`、`sunset-purple.png` 等不带 `generated-` 前缀的图片是配色参考图，导出车辆主图使用表中的生成图。
 

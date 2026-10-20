@@ -5,7 +5,22 @@
 {% endmacro %}
 
 {% macro car_model(appearance, color='default') %}
-<span class="model-stage" aria-hidden="true"><img class="car-model" src="{{ url_for('static', filename=vehicle_image(appearance, color)) }}" alt="" width="640" height="440" draggable="false"><span class="boarder">↗</span></span>
+<span class="model-stage" aria-hidden="true">
+  {% if appearance == 'roadsterRocket' %}
+  <span class="car-model rocket-model">
+    <span class="rocket-canvas">
+      <img class="rocket-layer rocket-shadow" src="{{ url_for('static', filename='vehicles/roadsterRocket/shadow.webp') }}" alt="" width="640" height="440" draggable="false">
+      <span class="rocket-hover"><span class="rocket-body">
+        <img class="rocket-layer rocket-gas" src="{{ url_for('static', filename='vehicles/roadsterRocket/gas.webp') }}" alt="" width="640" height="440" draggable="false">
+        <img class="rocket-layer" src="{{ url_for('static', filename='vehicles/roadsterRocket/car.webp') }}" alt="" width="640" height="440" draggable="false">
+      </span></span>
+    </span>
+  </span>
+  {% else %}
+  <img class="car-model" src="{{ url_for('static', filename=vehicle_image(appearance, color)) }}" alt="" width="640" height="440" draggable="false">
+  {% endif %}
+  <span class="boarder">↗</span>
+</span>
 {% endmacro %}
 
 {% macro pickup_info(person) %}

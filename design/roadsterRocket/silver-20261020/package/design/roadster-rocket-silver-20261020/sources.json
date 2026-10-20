@@ -1,0 +1,103 @@
+{
+  "created": "2026-10-20",
+  "vehicle_id": "roadsterRocket",
+  "appearance_id": "default",
+  "canvas_1x": [
+    640,
+    440
+  ],
+  "canvas_2x": [
+    1280,
+    880
+  ],
+  "compositing_back_to_front": [
+    "shadow",
+    "gas",
+    "car"
+  ],
+  "alpha": "Generated alpha preserved through crop, resampling and opacity compositing; no background keying.",
+  "crop_box_thresholds_are_for_bounds_only": true,
+  "native_sources": {
+    "car": {
+      "size": [
+        1536,
+        1024
+      ],
+      "filename": "sources/car-generated.png"
+    },
+    "gas": {
+      "size": [
+        1024,
+        1536
+      ],
+      "filename": "sources/gas-generated.png"
+    },
+    "shadow": {
+      "size": [
+        1774,
+        887
+      ],
+      "filename": "sources/shadow-generated.png"
+    }
+  },
+  "crop_boxes": {
+    "car": [
+      42,
+      224,
+      1521,
+      816
+    ],
+    "gas": [
+      27,
+      191,
+      1002,
+      1428
+    ],
+    "shadow": [
+      16,
+      303,
+      1756,
+      750
+    ]
+  },
+  "car_1x_placement": {
+    "x": 20,
+    "y": 80,
+    "width": 600,
+    "height": 240.0
+  },
+  "shadow_1x_placement": {
+    "x": 29,
+    "y": 286.5,
+    "width": 580,
+    "height": 120,
+    "opacity": 0.7
+  },
+  "gas_1x_jets": [
+    [
+      109,
+      286,
+      82,
+      97,
+      0.34
+    ],
+    [
+      511,
+      247,
+      65,
+      88,
+      0.32
+    ]
+  ],
+  "artwork_type": "AI-generated 2D/2.5D visual interpretation of October 2026 Roadster Rocket. Not 3D model or engineering reference.",
+  "design_references": [
+    "https://www.tesla.com/roadster?redirect=no",
+    "https://digitalassets.tesla.com/tesla-contents/image/upload/f_auto,q_auto/Roadster-03-Carousel-Slide-1-Desktop.jpg",
+    "https://digitalassets.tesla.com/tesla-contents/image/upload/f_auto,q_auto/Roadster-02-Pilot-Desktop.jpg",
+    "https://www.caranddriver.com/news/a74145531/tesla-roadster-revealed/"
+  ],
+  "style_reference": "Previously created GoTogether black CT5 for camera / material style only.",
+  "reference_photos_not_redistributed": true,
+  "repository_modified": false,
+  "deployment_performed": false
+}

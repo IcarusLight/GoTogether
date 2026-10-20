@@ -1,0 +1,106 @@
+{
+  "car": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "nonzero_alpha_box": [
+      19,
+      79,
+      620,
+      320
+    ],
+    "transparent_corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "png_webp_rgba_identical": true,
+    "webp_bytes": 115042,
+    "png_sha256": "f86cc5c46e723a7101400c8f9a64b326dd1a41573fe09664d09044d21cd8428b"
+  },
+  "shadow": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      106
+    ],
+    "nonzero_alpha_box": [
+      29,
+      286,
+      609,
+      407
+    ],
+    "transparent_corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "png_webp_rgba_identical": true,
+    "webp_bytes": 13284,
+    "png_sha256": "00f1c0b9a07187ecc9a6a1060c35c6a20bc37dd748f269de0bcb127c0e3301c8"
+  },
+  "gas": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      90
+    ],
+    "nonzero_alpha_box": [
+      109,
+      248,
+      576,
+      383
+    ],
+    "transparent_corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "png_webp_rgba_identical": true,
+    "webp_bytes": 10558,
+    "png_sha256": "b9d4a4f193feb7060b4f95db35e436afd79ef7f40f67b6ab4aace392256a1de5"
+  },
+  "default": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "nonzero_alpha_box": [
+      19,
+      79,
+      620,
+      407
+    ],
+    "transparent_corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "png_webp_rgba_identical": true,
+    "webp_bytes": 143954,
+    "png_sha256": "574379f987ce0c9594979db3577d4a1d36cfbd7aa1dbb18d983ebc04d5a80661"
+  }
+}

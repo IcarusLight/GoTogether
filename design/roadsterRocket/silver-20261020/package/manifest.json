@@ -1,0 +1,119 @@
+{
+  "files": [
+    {
+      "path": "README-接入说明.md",
+      "bytes": 8152,
+      "sha256": "03006101f3e544b1f941558c3b83004ed177367d0fd791aa69d257b219d3a7ff"
+    },
+    {
+      "path": "export_assets.py",
+      "bytes": 12016,
+      "sha256": "60e625cbadbfb40f9770197dade6c5c8604e9c09021b505a3c63a5cff40f4157"
+    },
+    {
+      "path": "demo/Roadster-Rocket-悬浮演示.html",
+      "bytes": 188446,
+      "sha256": "eeaf621bbd7d5d8a4682071c08ae745d35e5d6af21ce8fb5a12247b9a747ea70"
+    },
+    {
+      "path": "preview/Roadster-Rocket-QA.jpg",
+      "bytes": 151637,
+      "sha256": "26e31d74f32543f7f7de36004f58e14b5ed983d652a3f687b410434dd8c1bdb5"
+    },
+    {
+      "path": "preview/Roadster-Rocket-预览.jpg",
+      "bytes": 185641,
+      "sha256": "ff72e6e8d4e77ab33fc3e638a80a452e889ef580e6eaa7bb977155db935093f4"
+    },
+    {
+      "path": "static/vehicles/roadsterRocket/gas.webp",
+      "bytes": 10558,
+      "sha256": "c2b359f95dd11433b4d478172c7ac96a092ed0fd6c05fc98e7d9d6fdec5cce59"
+    },
+    {
+      "path": "static/vehicles/roadsterRocket/car.webp",
+      "bytes": 115042,
+      "sha256": "b8f3133765c47fe61bdc60f2fa790e42b99ec52b6f018d9fa6199d0e71e5f685"
+    },
+    {
+      "path": "static/vehicles/roadsterRocket/default.webp",
+      "bytes": 143954,
+      "sha256": "995a62690c2cfec3b4c22e1ce723bfad62bb2f2db47901794f721f88e572fe5a"
+    },
+    {
+      "path": "static/vehicles/roadsterRocket/shadow.webp",
+      "bytes": 13284,
+      "sha256": "4d0b0a620c8ea22f031272c686abc867e9e75875608316e372dd104ff5a48d01"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/default.png",
+      "bytes": 218273,
+      "sha256": "574379f987ce0c9594979db3577d4a1d36cfbd7aa1dbb18d983ebc04d5a80661"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/gas.png",
+      "bytes": 18043,
+      "sha256": "b9d4a4f193feb7060b4f95db35e436afd79ef7f40f67b6ab4aace392256a1de5"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/sources.json",
+      "bytes": 2106,
+      "sha256": "61a5d4d942db870c9cfc435a2b70d402703b8e71a69e2762cde3c0e7660c0d70"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/car.png",
+      "bytes": 182512,
+      "sha256": "f86cc5c46e723a7101400c8f9a64b326dd1a41573fe09664d09044d21cd8428b"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/shadow.png",
+      "bytes": 23717,
+      "sha256": "00f1c0b9a07187ecc9a6a1060c35c6a20bc37dd748f269de0bcb127c0e3301c8"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/export-qa.json",
+      "bytes": 1705,
+      "sha256": "02b5e56ab674230fff0caf67a8f9e366117c68d20d3971f1ba02bcdae9c29d77"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/prompts.txt",
+      "bytes": 4197,
+      "sha256": "1df2dcfef898371b40509e80237c251f9bffec45789d6adbfa5485d865a96bc3"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/aligned-2x/shadow@2x.png",
+      "bytes": 94676,
+      "sha256": "33f7e75847628396026e1529ac3bd68c25e13292cb5794877887e71b8bd56f33"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/aligned-2x/car@2x.png",
+      "bytes": 654087,
+      "sha256": "c442e0ef809aa4b57d65e2b4da091d209d328f53f1fda46f1c8a14afad6ca6f8"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/aligned-2x/default@2x.png",
+      "bytes": 783887,
+      "sha256": "b6ef8195800f91c53f86528f9ce2f9b1fb3a75d089b65c4ab5a69fe147de148a"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/aligned-2x/gas@2x.png",
+      "bytes": 61828,
+      "sha256": "957bc0cd7f8f91edaf95f590fb69d8cc3cc330f2188b6906d68276b5f0c760a7"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/sources/gas-generated.png",
+      "bytes": 1431061,
+      "sha256": "b9233e21a5aa92f0bd160463930b65246a698195fb10f1dcecff534adaa72b24"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/sources/shadow-generated.png",
+      "bytes": 417574,
+      "sha256": "172d5c6f3654d4c021833abf6732ad99b54291075908e99b0d7ceb2ebe4fc6b1"
+    },
+    {
+      "path": "design/roadster-rocket-silver-20261020/sources/car-generated.png",
+      "bytes": 1460244,
+      "sha256": "93b910e12526a8f663e8c6f38d57c750e600a9e735ad6a384450d31f624a0e10"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "pathBase": "project-root",
+  "vehicleId": "roadsterRocket",
+  "variantId": "default",
+  "sourcePackage": "roadster-rocket-assets.zip (user supplied)",
+  "archiveDirectory": "design/roadsterRocket/silver-20261020/package",
+  "originalSources": "design/roadsterRocket/silver-20261020/package/design/roadster-rocket-silver-20261020/sources.json",
+  "promptFile": "design/roadsterRocket/silver-20261020/package/design/roadster-rocket-silver-20261020/prompts.txt",
+  "productionFiles": [
+    "static/vehicles/roadsterRocket/default.webp",
+    "static/vehicles/roadsterRocket/car.webp",
+    "static/vehicles/roadsterRocket/shadow.webp",
+    "static/vehicles/roadsterRocket/gas.webp"
+  ],
+  "import": "Copied unchanged from supplied package; retain shared transparent canvas.",
+  "export": {"width": 640, "height": 440, "format": "webp"},
+  "note": "Package documents and source claims are preserved as supplied. Runtime uses three layers in the parking scene and the composite in the picker."
+}

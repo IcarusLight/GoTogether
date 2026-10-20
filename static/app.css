@@ -192,6 +192,17 @@ nav a:hover { text-decoration: underline; }
 .boarding .boarder { animation: board 850ms ease-in-out; }
 .boarding .car-model { animation: spring 850ms ease-in-out; }
 .vehicle-arriving .car-model { animation: park 750ms cubic-bezier(.2, .8, .2, 1); }
+.rocket-model { display: flex; align-items: center; }
+.rocket-canvas { position: relative; display: block; width: 100%; aspect-ratio: 16 / 11; isolation: isolate; }
+.rocket-layer, .rocket-hover, .rocket-body { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.rocket-hover { animation: rocket-hover 3.6s ease-in-out infinite; }
+.rocket-shadow { transform-origin: 50% 82%; animation: rocket-shadow 3.6s ease-in-out infinite; }
+.rocket-gas { animation: rocket-gas 2.2s ease-in-out infinite; }
+.boarding .rocket-model { animation: none; }
+.boarding .rocket-body { transform-origin: center 80%; animation: spring 850ms ease-in-out; }
+@keyframes rocket-hover { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes rocket-shadow { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .83; transform: scale(.975, .94); } }
+@keyframes rocket-gas { 0%, 100% { opacity: .82; } 50% { opacity: 1; } }
 .arriving .train { animation: train-arrive 700ms cubic-bezier(.2, .8, .2, 1); }
 .arriving .train-door { animation: door-open 900ms ease-in-out; }
 .table-wrap { overflow-x: auto; }

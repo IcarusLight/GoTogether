@@ -1,0 +1,67 @@
+{
+  "name": "GoTogether 水滴探测器素材包",
+  "modelId": "droplet",
+  "appearance": "default",
+  "canvas": [
+    640,
+    440
+  ],
+  "main": "static/vehicles/droplet/default.webp",
+  "png": "design/droplet-silver-20261020/default.png",
+  "original": "design/droplet-silver-20261020/generated.png",
+  "preview": "preview/droplet-preview.jpg",
+  "qa": "preview/droplet-contact-sheet.jpg",
+  "readme": "README-接入说明.md",
+  "files": [
+    {
+      "path": "README-接入说明.md",
+      "bytes": 6446,
+      "sha256": "e5aedfdc3d0afa3ae8f1ea6223d13c8573f8497abf4e8bcbfee803bf8d7b092c"
+    },
+    {
+      "path": "design/droplet-silver-20261020/default.png",
+      "bytes": 115116,
+      "sha256": "e73723a9b0dc345328d6a9bcdf97503791264faf05c5c07cf8a8818547bc5ad6"
+    },
+    {
+      "path": "design/droplet-silver-20261020/export-qa.json",
+      "bytes": 1969,
+      "sha256": "6e16cc7f0e1958c36c884506c196e6074370f6a5f1a9f59bb4698242726f8af7"
+    },
+    {
+      "path": "design/droplet-silver-20261020/generated.png",
+      "bytes": 1187551,
+      "sha256": "b8bb8d464d9925facb94d9f2f7e3075db87b8d508f742781e4e5f424e691947a"
+    },
+    {
+      "path": "design/droplet-silver-20261020/prompt.txt",
+      "bytes": 2587,
+      "sha256": "306f59b2da15f444be1857c20b9311801b6ad4b8a5a8347dfca572265f0965b2"
+    },
+    {
+      "path": "design/droplet-silver-20261020/sources.json",
+      "bytes": 1931,
+      "sha256": "bed4ba4d5124966641f39504c4e57c3cdb3aebc91c99a079d10eacbfb96fa083"
+    },
+    {
+      "path": "export_assets.py",
+      "bytes": 6039,
+      "sha256": "c3e891c29a5cfc04d2fa9a048c991ec39a940088380258b1d66111de6ae6801a"
+    },
+    {
+      "path": "preview/droplet-contact-sheet.jpg",
+      "bytes": 145737,
+      "sha256": "a1c45aaba38e74757aaab5d16fac0c52140b3fcb367002d6a3df639d168ced2e"
+    },
+    {
+      "path": "preview/droplet-preview.jpg",
+      "bytes": 87853,
+      "sha256": "63f4e826c099f786c6c06b738356b6861bff463788edf65451e494cc28b9140f"
+    },
+    {
+      "path": "static/vehicles/droplet/default.webp",
+      "bytes": 78192,
+      "sha256": "3615757e65d11174bf52bfdd07030864084dfbb163dd8e16b41d2efd16c326e0"
+    }
+  ]
+}

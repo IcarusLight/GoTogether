@@ -1,0 +1,11 @@
+Use case: precise-object-edit.
+Edit target: the attached silver droplet probe sprite.
+User revision (verbatim): "我希望形状更加规整，并且横着不是倾斜着".
+Change only geometry and orientation to satisfy this revision while keeping the same polished seamless silver material, single-object presentation, transparent background, and soft hover shadow.
+Critical silhouette: a mathematically regular solid of revolution with a single perfectly straight HORIZONTAL long axis. The smooth round bulb nose faces LEFT; one long clean taper ends in a sharp point on the RIGHT. Nose midpoint and tail point are at exactly the SAME vertical height. The upper and lower OUTLINE are mirror-symmetric around a level horizontal centerline. The left nose is rounded, evenly convex, and the widest cross-section lies near the left quarter; both upper and lower sides taper evenly and gracefully to the tip. No bends, drooping, tilted tail, wobbles, dents, irregular bulges, asymmetric curves, or pinched shape.
+Composition: straight SIDE PROFILE, axis exactly parallel to the image's top and bottom edges, 0-degree tilt. DO NOT retain the old diagonal perspective. Still show rich realistic 3D volume through reflections and shading. Elongated droplet length about 3.4-4 times its maximum diameter, fully visible and centered in a landscape canvas, with generous transparent margin. One object only, no rotation diagram or multiple views.
+Surface: perfectly seamless polished silver/chrome mirror, controlled broad studio highlights and charcoal reflections, clean luxury catalogue quality. Keep no mechanical details or texture. Reflections may be asymmetric for volume; the OUTLINE must be symmetric and horizontal.
+Hover: faint semitransparent neutral-grey contact shadow directly below the entire probe, horizontal and soft, very low hover, no ground plane.
+Background: truly transparent RGBA cutout, preserve anti-aliased edges and semitransparent shadow, no opaque backdrop, no baked checkerboard.
+Avoid: diagonal axis, pointed tail rising or falling, pointed nose, upright drop, bent drop, skewed perspective, environment scenery, paint color, wings, wheels, engine, panels, seams, glowing exhaust, text, watermark, logo.
+Deliver one revised transparent sprite with full body and needle tip unclipped, suitable for 640x440 export.

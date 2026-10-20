@@ -1,0 +1,12 @@
+Use case: precise-object-edit.
+Edit target: the attached horizontal silver droplet probe.
+User revision (verbatim): "我感觉不需要这么宽，整体圆润一点".
+Interpretation: the existing object is far too stretched out horizontally. Redesign the actual silhouette to be substantially SHORTER, PLUMPER, ROUNDER and more compact, while preserving the silver seamless material and exactly horizontal orientation.
+Required geometry change: reduce total body length to maximum diameter ratio to approximately 2.6:1 (a compact rounded teardrop, rather than the old roughly 4.3:1 needle). The large rounded bulb takes up most of the form. The nose at LEFT is full, generous, smoothly hemispherical; the middle is visibly plump. A much SHORTER smooth taper at RIGHT ends in a modest clean point, not an extended needle. Tail section should be around the final one-third of total length; no long thin whip, spear or stretched spike.
+Keep upper/lower OUTLINE evenly balanced and essentially mirror symmetric about one perfectly horizontal axis. Nose midpoint and pointed tail end share the same height. Smooth mathematical solid-of-revolution feel, no dent, bend, kink or asymmetric swelling.
+Camera: straight horizontal side-profile, zero tilt. The shape has realistic 3D volume through reflection and lighting, but its long axis stays exactly level and parallel with top/bottom image edges. One probe only.
+Material invariants: seamless polished mirror silver chrome, controlled broad studio white highlights and charcoal reflections, clean elegant smooth surface, no panels/seams/wheels/engines/text.
+Composition: the complete compact form with generous transparent margins; do not stretch it to fill the canvas. Landscape canvas, isolated and centered. The revised object should occupy about 75-80% of the image width, keeping comfortable margin at both nose and tail.
+Hover and background: preserve a faint semitransparent soft grey hover shadow just underneath; genuinely transparent RGBA backdrop and clean anti-aliased edge. No opaque floor or baked checkerboard.
+Do not merely scale down, crop, or rotate the existing image; regenerate the geometry with a fuller bulb and much shorter taper. Do not add a second object, diagram, label, background or watermark.
+Deliver one refined shorter rounder horizontal droplet, with visible rounded body and short pointed tail, for a 640x440 parking-game sprite.

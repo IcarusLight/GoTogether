@@ -18,7 +18,7 @@
 
 设计资源先按车型分类，再按主题和日期分批。每款车的原图、参考图、SVG 历史稿、提示词和导出记录放在同一车型目录下；文件名保留版本信息。`comparisons/` 只保存跨车型的对比页、拼图、渲染脚本和汇总索引，通过相对路径引用各车型素材。
 
-当前目录包括 `phantom/`、`tricycle/`、`su7/`、`v800/`、`kart/`、`yadea/`、`horse-carriage/`、`wuling/`、`dayun/`、`mega/`、`ct5/`、`han/`、`mazda929/`。SU7 的早期研究与官方配色分别位于 `su7/study-20261014/` 和 `su7/official-colors-20261014/`；雅迪原版与外卖皮肤分别位于 `yadea/study-20261014/` 和 `yadea/meituan-20261015/`；黑色 CT5 位于 `ct5/black-20261020/`；比亚迪汉及滴滴涂装位于 `han/skins-20261020/`；黑色马自达 929 HC 位于 `mazda929/black-20261020/`。
+当前目录包括 `phantom/`、`tricycle/`、`su7/`、`v800/`、`kart/`、`yadea/`、`horse-carriage/`、`wuling/`、`dayun/`、`mega/`、`ct5/`、`han/`、`mazda929/`、`droplet/`。SU7 的早期研究与官方配色分别位于 `su7/study-20261014/` 和 `su7/official-colors-20261014/`；雅迪原版与外卖皮肤分别位于 `yadea/study-20261014/` 和 `yadea/meituan-20261015/`；黑色 CT5 位于 `ct5/black-20261020/`；比亚迪汉及滴滴涂装位于 `han/skins-20261020/`；黑色马自达 929 HC 位于 `mazda929/black-20261020/`；银色三体水滴当前使用 `droplet/silver-rounded-20261020/` 的横向圆润版，初版斜向长尾素材保留在 `droplet/silver-20261020/`。
 
 历史对比入口：[首批车型](comparisons/20261014/selected-preview-v2.html)、[首批图片与 SVG 对照](comparisons/20261014/preview-v1.html)、[第二批车型](comparisons/20261014-batch2/preview.html)。
 
@@ -40,7 +40,7 @@
 
 ## 当前主图对应表
 
-共 13 种车辆、19 张在用主图。成品列相对于 `static/vehicles/`，原图与记录列相对于 `design/`。原图指实际用于导出成品的生成图；照片、官网配色图等参考材料见对应记录。
+共 14 种车辆、20 张在用主图。成品列相对于 `static/vehicles/`，原图与记录列相对于 `design/`。原图指实际用于导出成品的生成图；照片、官网配色图等参考材料见对应记录。
 
 | 车辆／外观 | 成品 | 原图 | 提示词、来源与导出记录 |
 | --- | --- | --- | --- |
@@ -63,6 +63,7 @@
 | 比亚迪汉／红色原版 | `han/default.webp` | `han/skins-20261020/sources/han-red-source.png` | 同批次 `sources.json`、`docs/red-prompt.txt`、`docs/export-qa.json` |
 | 比亚迪汉／滴滴出行 | `han/didi.webp` | `han/skins-20261020/sources/han-didi-source.png` | 同批次 `sources.json`、`docs/didi-v2-prompt.txt`、`docs/export-qa.json`；原包来源记录保存在 `sources-original.json` |
 | 马自达 929 HC／黑色 | `mazda929/default.webp` | `mazda929/black-20261020/generated.png` | 同批次 `sources.json`、`prompt.txt`、`export-qa.json`；原包来源与说明保存在 `sources-original.json`、`README-original.md` |
+| 三体水滴／银色横向圆润版 | `droplet/default.webp` | `droplet/silver-rounded-20261020/generated.png` | 同批次 `sources.json`、`prompt.txt`、`export-qa.json`；原包来源、清单与说明保存在 `sources-original.json`、`manifest-original.json`、`README-original.md` |
 
 SU7 的 `capri-blue.png`、`sunset-purple.png` 等不带 `generated-` 前缀的图片是配色参考图，导出车辆主图使用表中的生成图。
 

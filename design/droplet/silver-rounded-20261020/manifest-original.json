@@ -1,0 +1,105 @@
+{
+  "name": "GoTogether 水滴探测器素材包",
+  "revision": 3,
+  "revisionName": "横向圆润紧凑版",
+  "modelId": "droplet",
+  "appearance": "default",
+  "canvas": [
+    640,
+    440
+  ],
+  "main": "static/vehicles/droplet/default.webp",
+  "png": "design/droplet-silver-20261020/default.png",
+  "original": "design/droplet-silver-20261020/generated.png",
+  "preview": "preview/droplet-preview.jpg",
+  "qa": "preview/droplet-contact-sheet.jpg",
+  "beforeAfter": "preview/droplet-before-after.jpg",
+  "readme": "README-接入说明.md",
+  "files": [
+    {
+      "path": "README-接入说明.md",
+      "bytes": 8124,
+      "sha256": "d8b058d5ac364f0b3870b18eb69cdd5ef42f76e2f282d1939f5ec2ee377234ac"
+    },
+    {
+      "path": "design/droplet-silver-20261020/default.png",
+      "bytes": 120894,
+      "sha256": "3cfeb156f2bbac0ec72b885c807ddca4b115415e60c2eee57eba8d30cc2da049"
+    },
+    {
+      "path": "design/droplet-silver-20261020/export-qa.json",
+      "bytes": 2923,
+      "sha256": "313f2bf5343061906996cf708361c7276ccaa9dc532d9b2e5890ecb843cd87d3"
+    },
+    {
+      "path": "design/droplet-silver-20261020/generated.png",
+      "bytes": 686694,
+      "sha256": "f303f797e6075b800d4150c654c4b263245ae45afc070dc1745dc26d9597a13d"
+    },
+    {
+      "path": "design/droplet-silver-20261020/history/default-v1.png",
+      "bytes": 115116,
+      "sha256": "e73723a9b0dc345328d6a9bcdf97503791264faf05c5c07cf8a8818547bc5ad6"
+    },
+    {
+      "path": "design/droplet-silver-20261020/history/default-v2.png",
+      "bytes": 76691,
+      "sha256": "d677b6bce36ce21d52dd2d9c54600accdadc54a6b18e785f7309f0cb50743019"
+    },
+    {
+      "path": "design/droplet-silver-20261020/history/generated-v1.png",
+      "bytes": 1187551,
+      "sha256": "b8bb8d464d9925facb94d9f2f7e3075db87b8d508f742781e4e5f424e691947a"
+    },
+    {
+      "path": "design/droplet-silver-20261020/history/generated-v2.png",
+      "bytes": 600368,
+      "sha256": "048d14b5b16bff3b705880a6cc78001a4098167edf4d398d06708ad39ab170bc"
+    },
+    {
+      "path": "design/droplet-silver-20261020/prompt-v1.txt",
+      "bytes": 2587,
+      "sha256": "306f59b2da15f444be1857c20b9311801b6ad4b8a5a8347dfca572265f0965b2"
+    },
+    {
+      "path": "design/droplet-silver-20261020/prompt-v2.txt",
+      "bytes": 2338,
+      "sha256": "16d4bab26835f994802fc673b017ae00d972632b538d0c41ca4bb8290c14511f"
+    },
+    {
+      "path": "design/droplet-silver-20261020/prompt.txt",
+      "bytes": 2411,
+      "sha256": "efa6f44a5c0d512db6752c2d7ad37d89d0c40df624a5e4f8e9be606d05ba51ac"
+    },
+    {
+      "path": "design/droplet-silver-20261020/sources.json",
+      "bytes": 2787,
+      "sha256": "e6bc60bdb7e3c40c2fc938a834750e065e63d049a6ad1358b07e01c1441e9ab6"
+    },
+    {
+      "path": "export_assets.py",
+      "bytes": 8129,
+      "sha256": "8dcb51029eeaf3056d6fe16ce9ff167805195d29818a3bbf2a06b8379aeca322"
+    },
+    {
+      "path": "preview/droplet-before-after.jpg",
+      "bytes": 64604,
+      "sha256": "ab0c972266f58f11f64a2d21ff192e7efe41493c74b0d49a683623823cb290fc"
+    },
+    {
+      "path": "preview/droplet-contact-sheet.jpg",
+      "bytes": 144641,
+      "sha256": "257174c94f3bfcfee08fe85e5b7a075ba12833e508cfdd66dc67fb3f5a67ceee"
+    },
+    {
+      "path": "preview/droplet-preview.jpg",
+      "bytes": 91236,
+      "sha256": "56eb67dd673af0869752cb4e4ca3e4758d46b0276243641bb63045b1fae5c991"
+    },
+    {
+      "path": "static/vehicles/droplet/default.webp",
+      "bytes": 86200,
+      "sha256": "f9919baf8f816c5ee5c7f4b2e47238f72594dcbead376f68e8710fc702a58d97"
+    }
+  ]
+}

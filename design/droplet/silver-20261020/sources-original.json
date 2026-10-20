@@ -1,0 +1,41 @@
+{
+  "createdAt": "2026-10-20",
+  "asset": "水滴探测器 / mirror-silver droplet probe",
+  "assetKind": "AI-generated transparent 2D sprite with 2.5D rendered appearance; not a 3D mesh",
+  "generator": "built-in image_gen.imagegen",
+  "transparent_background": true,
+  "generationCalls": 1,
+  "pathBase": "project-root",
+  "generatedOriginal": "design/droplet-silver-20261020/generated.png",
+  "prompt": "design/droplet-silver-20261020/prompt.txt",
+  "productionPng": "design/droplet-silver-20261020/default.png",
+  "productionWebp": "static/vehicles/droplet/default.webp",
+  "visualReferenceRoles": [
+    {
+      "label": "black CT5 sprite",
+      "role": "camera direction, realistic catalogue cutout style, canvas proportions; visually inspected only"
+    },
+    {
+      "label": "red Han EV sprite",
+      "role": "visual consistency; visually inspected only"
+    },
+    {
+      "label": "black Mazda 929 HC sprite",
+      "role": "visual consistency; visually inspected only"
+    }
+  ],
+  "externalImageInputs": [],
+  "conceptSource": "User-approved task brief referring to the Three-Body droplet concept. No external film frame or official design rendering used.",
+  "sourceOriginalSha256": "b8bb8d464d9925facb94d9f2f7e3075db87b8d508f742781e4e5f424e691947a",
+  "exportRecord": "design/droplet-silver-20261020/export-qa.json",
+  "exportScript": "export_assets.py",
+  "integrationBaseline": {
+    "repository": "https://github.com/IcarusLight/GoTogether",
+    "commit": "4b6762b1f91f13a5260935cdd10fd0ff762b4a03",
+    "databaseVersion": 9,
+    "provenance": "Baseline provided with this task; not re-fetched during asset generation. Re-check before integration.",
+    "repositoryModified": false,
+    "databaseModified": false
+  },
+  "rightsNote": "AI-generated interpretation of a fictional theme; not an officially licensed design or exact screen model. Relevant work and character names belong to their rights holders."
+}

@@ -1,0 +1,50 @@
+{
+  "createdAt": "2026-10-20",
+  "asset": "水滴探测器 / mirror-silver droplet probe",
+  "assetKind": "AI-generated transparent 2D sprite with 2.5D rendered appearance; not a 3D mesh",
+  "generator": "built-in image_gen.imagegen",
+  "transparent_background": true,
+  "generationCalls": 3,
+  "pathBase": "project-root",
+  "generatedOriginal": "design/droplet-silver-20261020/generated.png",
+  "prompt": "design/droplet-silver-20261020/prompt.txt",
+  "productionPng": "design/droplet-silver-20261020/default.png",
+  "productionWebp": "static/vehicles/droplet/default.webp",
+  "visualReferenceRoles": [
+    {
+      "label": "black CT5 sprite",
+      "role": "Initial-version style reference only; current horizontal orientation follows the revision request."
+    },
+    {
+      "label": "red Han EV sprite",
+      "role": "Initial-version style reference only; current horizontal orientation follows the revision request."
+    },
+    {
+      "label": "black Mazda 929 HC sprite",
+      "role": "Initial-version style reference only; current horizontal orientation follows the revision request."
+    }
+  ],
+  "externalImageInputs": [],
+  "conceptSource": "User-approved task brief referring to the Three-Body droplet concept. No external film frame or official design rendering used.",
+  "sourceOriginalSha256": "f303f797e6075b800d4150c654c4b263245ae45afc070dc1745dc26d9597a13d",
+  "exportRecord": "design/droplet-silver-20261020/export-qa.json",
+  "exportScript": "export_assets.py",
+  "integrationBaseline": {
+    "repository": "https://github.com/IcarusLight/GoTogether",
+    "commit": "4b6762b1f91f13a5260935cdd10fd0ff762b4a03",
+    "databaseVersion": 9,
+    "provenance": "Baseline provided with this task; not re-fetched during asset generation. Re-check before integration.",
+    "repositoryModified": false,
+    "databaseModified": false
+  },
+  "rightsNote": "AI-generated interpretation of a fictional theme; not an officially licensed design or exact screen model. Relevant work and character names belong to their rights holders.",
+  "revision": 3,
+  "editCalls": 2,
+  "currentOrientation": "Horizontal side profile, round nose left, short pointed tail right",
+  "revisionRequest": "我感觉不需要这么宽，整体圆润一点",
+  "editTarget": "design/droplet-silver-20261020/history/generated-v2.png",
+  "initialPrompt": "design/droplet-silver-20261020/prompt-v1.txt",
+  "revisionMethod": "Built-in image_gen edit with referenced image; no post-generation anisotropic scaling, rotation, warping or silhouette repainting.",
+  "previousPrompt": "design/droplet-silver-20261020/prompt-v2.txt",
+  "geometryRevision": "Compact fuller bulb and shorter taper; body length/height approx 2.34 instead of 4.3. Export preserves aspect ratio, with reduced horizontal occupancy."
+}

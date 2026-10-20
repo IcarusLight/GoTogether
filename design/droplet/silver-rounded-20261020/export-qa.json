@@ -1,0 +1,134 @@
+{
+  "source": {
+    "size": [
+      1512,
+      1040
+    ],
+    "mode": "RGBA",
+    "bytes": 686694,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "transparentPixels": 1080345,
+    "partialAlphaPixels": 492106,
+    "opaquePixels": 29,
+    "alphaAbove10BBox": [
+      143,
+      275,
+      1369,
+      860
+    ],
+    "sha256": "f303f797e6075b800d4150c654c4b263245ae45afc070dc1745dc26d9597a13d"
+  },
+  "png": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "bytes": 120894,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "transparentPixels": 186737,
+    "partialAlphaPixels": 94005,
+    "opaquePixels": 858,
+    "alphaAbove10BBox": [
+      51,
+      91,
+      590,
+      349
+    ],
+    "sha256": "3cfeb156f2bbac0ec72b885c807ddca4b115415e60c2eee57eba8d30cc2da049"
+  },
+  "webp": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "bytes": 86200,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "transparentPixels": 186737,
+    "partialAlphaPixels": 94005,
+    "opaquePixels": 858,
+    "alphaAbove10BBox": [
+      51,
+      91,
+      590,
+      349
+    ],
+    "sha256": "f9919baf8f816c5ee5c7f4b2e47238f72594dcbead376f68e8710fc702a58d97"
+  },
+  "cropBox": [
+    119,
+    251,
+    1393,
+    884
+  ],
+  "scaledSize": [
+    560,
+    278
+  ],
+  "offset": [
+    40,
+    81
+  ],
+  "resampling": "Pillow LANCZOS",
+  "alphaPreserved": true,
+  "webpEncoding": "lossless, method=6, exact=True",
+  "pngWebpPixelIdentical": true,
+  "allCanvasCornersTransparent": true,
+  "alphaNote": "Export retains generated alpha; it is not normalized or thresholded. The >10 threshold selects crop bounds only; >200 is measurement only.",
+  "horizontalAxisQA": {
+    "source": {
+      "method": "Least-squares line through midpoints of high-alpha (>200) body columns; approximate raster QA, not CAD certification",
+      "axisAngleDegrees": 0.694,
+      "centerlineYRange": [
+        537.0,
+        549.5
+      ],
+      "bodyBBox": [
+        145,
+        277,
+        1368,
+        799
+      ],
+      "bodyLengthHeightRatio": 2.343,
+      "centerlineYRangePixels": 12.5
+    },
+    "sprite": {
+      "method": "Least-squares line through midpoints of high-alpha (>200) body columns; approximate raster QA, not CAD certification",
+      "axisAngleDegrees": 0.69,
+      "centerlineYRange": [
+        206.5,
+        212.0
+      ],
+      "bodyBBox": [
+        52,
+        92,
+        589,
+        322
+      ],
+      "bodyLengthHeightRatio": 2.335,
+      "centerlineYRangePixels": 5.5
+    }
+  },
+  "visualChecks": [
+    "light UI",
+    "dark UI",
+    "checkerboard",
+    "180px width",
+    "full silhouette and short pointed tail visible",
+    "horizontal nose-left tail-right orientation",
+    "fuller rounded bulb with shorter taper",
+    "seamless reflective surface",
+    "small semitransparent hover shadow"
+  ],
+  "verificationScope": "Image export and visual QA only; no repository or database changes."
+}

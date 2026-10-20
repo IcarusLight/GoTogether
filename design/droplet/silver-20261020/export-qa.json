@@ -1,0 +1,98 @@
+{
+  "source": {
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "bytes": 1187551,
+    "alphaRange": [
+      0,
+      254
+    ],
+    "transparentPixels": 1129102,
+    "partialAlphaPixels": 443762,
+    "opaquePixels": 0,
+    "alphaAbove10BBox": [
+      43,
+      181,
+      1508,
+      936
+    ],
+    "sha256": "b8bb8d464d9925facb94d9f2f7e3075db87b8d508f742781e4e5f424e691947a"
+  },
+  "png": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "bytes": 115116,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "transparentPixels": 206895,
+    "partialAlphaPixels": 73793,
+    "opaquePixels": 912,
+    "alphaAbove10BBox": [
+      19,
+      65,
+      620,
+      374
+    ],
+    "sha256": "e73723a9b0dc345328d6a9bcdf97503791264faf05c5c07cf8a8818547bc5ad6"
+  },
+  "webp": {
+    "size": [
+      640,
+      440
+    ],
+    "mode": "RGBA",
+    "bytes": 78192,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "transparentPixels": 206895,
+    "partialAlphaPixels": 73793,
+    "opaquePixels": 912,
+    "alphaAbove10BBox": [
+      19,
+      65,
+      620,
+      374
+    ],
+    "sha256": "3615757e65d11174bf52bfdd07030864084dfbb163dd8e16b41d2efd16c326e0"
+  },
+  "cropBox": [
+    19,
+    157,
+    1532,
+    960
+  ],
+  "scaledSize": [
+    620,
+    329
+  ],
+  "offset": [
+    10,
+    55
+  ],
+  "resampling": "Pillow LANCZOS",
+  "alphaPreserved": true,
+  "webpEncoding": "lossless, method=6, exact=True",
+  "pngWebpPixelIdentical": true,
+  "allCanvasCornersTransparent": true,
+  "alphaNote": "Generated source has maximum alpha 254. Export retains alpha; it is not normalized or thresholded. The >10 threshold selects crop bounds only.",
+  "visualChecks": [
+    "light UI",
+    "dark UI",
+    "checkerboard",
+    "180px width",
+    "full silhouette and needle tip visible",
+    "seamless reflective surface",
+    "small semitransparent hover shadow"
+  ],
+  "verificationScope": "Image export and visual QA only; no repository or database changes."
+}
